@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  at-client_production:
+    container_name: at-client_production
+    # build: .
+    image: ${AT_CLIENT_IMAGE}
+    expose:
+      - 80
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      VIRTUAL_PORT: ${AT_CLIENT_VIRTUAL_PORT}
+      VIRTUAL_HOST: ${PRODUCTION_CLIENT_DOMAIN}
+      LETSENCRYPT_HOST: ${PRODUCTION_CLIENT_DOMAIN}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+      DEV_GRAPHQL_ENDPOINT: ${DEV_GRAPHQL_ENDPOINT}
+      PROD_GRAPHQL_ENDPOINT: ${PROD_GRAPHQL_ENDPOINT}
+      PROD_WEBSOCKET_URL: ${PROD_WEBSOCKET_URL}
+      DEV_WEBSOCKET_URL: ${DEV_WEBSOCKET_URL}
+      GRAPHQL_PORT: ${GRAPHQL_PORT}
+
+      PRODUCTION_CLIENT_DOMAIN: ${PRODUCTION_CLIENT_DOMAIN}
+      PRODUCTION_API_DOMAIN: ${PRODUCTION_API_DOMAIN}
+      STAGING_API_DOMAIN: ${STAGING_API_DOMAIN}
+
+      AT_CLIENT_IMAGE: ${AT_CLIENT_IMAGE}
+      AT_CLIENT_VIRTUAL_PORT: ${AT_CLIENT_VIRTUAL_PORT}
+
+networks:
+  default:
+    external:
+      name: ${NETWORK}

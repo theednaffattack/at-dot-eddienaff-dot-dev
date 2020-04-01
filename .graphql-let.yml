@@ -1,0 +1,13 @@
+generateDir: __generated__
+# schema: "**/*.graphqls" # LOCAL FILE
+# schema: `https://atapi.eddienaff.dev/graphql` # PROD GQL ENDPOINT
+schema: "http://192.168.1.6:7000/graphql" # DEV GQL ENDPOINT
+documents: "lib/**/*.graphql"
+plugins:
+  - typescript
+  - typescript-operations
+  - typescript-react-apollo
+  - typescript-resolvers
+respectGitIgnore: true
+# schema: ${DEV_GRAPHQL_ENDPOINT} # DEV SERVER
+# schema: atapi.eddienaff.dev/graphql # PROD SERVER (doesn't work)

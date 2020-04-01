@@ -1,0 +1,8 @@
+query GetMyMessages($input: GetMessagesInput!) {
+  getMyMessages(input: $input) {
+    id
+    message
+    createdAt
+    sentBy
+  }
+}

@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  at-client_development:
+    container_name: atclient_development
+    build: ../
+    # image: ${ATAPI_IMAGE}
+    # expose:
+    #   - 80
+    ports:
+      - "${AT_CLIENT_VIRTUAL_PORT}:${AT_CLIENT_VIRTUAL_PORT}"
+    environment:
+      NODE_ENV: development
+      VIRTUAL_PORT: ${AT_CLIENT_VIRTUAL_PORT}
+      VIRTUAL_HOST: ${PRODUCTION_CLIENT_DOMAIN}
+      LETSENCRYPT_HOST: ${PRODUCTION_CLIENT_DOMAIN}
+      LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}

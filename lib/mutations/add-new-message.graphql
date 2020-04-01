@@ -1,0 +1,3 @@
+mutation AddNewMessage($message: String!, $sentBy: String!) {
+  addNewMessage(message: $message, sentBy: $sentBy)
+}
