@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import { Flex } from "./primitives/styled-rebass";
 import Header from "./header";
-import { TApolloClient } from "../lib/with-apollo";
+import { TApolloClient } from "../lib/with-apollo_v2";
 
 interface LayoutProps {
   title?: string;
@@ -34,10 +34,13 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
   );
 };
 
-type Page = ReactElement;
+type Page = ReactElement & { title: string; children: ReactElement };
+
+// type Page = JSX.Element;
 
 export const getLayout = (page: Page) => {
-  return <Layout title={page.props.title}>{page}</Layout>;
+  console.log("VIEW PAGE PROPS IN LAYOUT", page);
+  return <Layout title={page.title}>{page.children}</Layout>;
 };
 
 export default Layout;
