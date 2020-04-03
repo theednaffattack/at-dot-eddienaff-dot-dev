@@ -7,7 +7,7 @@ import { getLayout } from "../../../components/layout.v2";
 import { Button } from "../../../components/primitives/styled-rebass";
 import { NextPageStaticVariableProps } from "../../../typings/types";
 import { useChangePasswordFromTokenMutation } from "../../../lib/mutations/change-password-from-token.graphql";
-import withApollo from "../../../lib/with-apollo";
+import { withApollo } from "../../../lib/with-apollo_v2";
 
 interface ChangePasswordProps extends Partial<NextPageContext> {
   token: string;
@@ -116,7 +116,7 @@ ChangePassword.displayName = "Change Password";
 ChangePassword.getLayout = getLayout;
 ChangePassword.title = "Change password";
 
-export default withApollo(ChangePassword);
+export default withApollo()(ChangePassword);
 
 interface DisplayResponseDataProps {
   data: any;

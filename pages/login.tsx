@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { LoginForm } from "../components/login-form";
 import { NextPageStaticVariableProps } from "../typings/types";
-import withApollo from "../lib/with-apollo";
+import { withApollo } from "../lib/with-apollo_v2";
 import { getLayout } from "../components/layout.v2";
 
 interface LoginProps extends Partial<NextPageContext> {}
@@ -33,4 +33,4 @@ Login.displayName = "LoginPage";
 Login.getLayout = getLayout;
 Login.title = "Login";
 
-export default withApollo(Login);
+export default withApollo()(Login);

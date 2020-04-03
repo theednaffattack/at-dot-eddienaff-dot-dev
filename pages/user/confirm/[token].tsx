@@ -2,7 +2,7 @@ import React from "react";
 import { NextPage } from "next";
 
 import { getLayout } from "../../../components/layout.v2";
-import withApollo from "../../../lib/with-apollo";
+import { withApollo } from "../../../lib/with-apollo_v2";
 import redirect from "../../../utils/redirect";
 import {
   ConfirmUserDocument,
@@ -97,4 +97,4 @@ Confirm.getLayout = getLayout;
 
 Confirm.title = "Confirm";
 
-export default withApollo(Confirm);
+export default withApollo()(Confirm);

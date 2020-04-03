@@ -5,7 +5,7 @@ import {
   NextPageStaticVariableProps,
   NextPageContextApollo
 } from "../typings/types";
-import withApollo from "../lib/with-apollo";
+import { withApollo } from "../lib/with-apollo_v2";
 import { getLayout } from "../components/layout.v2";
 import { LogoutDocument } from "../lib/mutations/logout.graphql";
 import redirect from "../utils/redirect";
@@ -52,4 +52,4 @@ Logout.displayName = "LogoutPage";
 Logout.getLayout = getLayout;
 Logout.title = "Logout";
 
-export default withApollo(Logout);
+export default withApollo()(Logout);

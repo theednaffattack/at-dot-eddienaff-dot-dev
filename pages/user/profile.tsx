@@ -6,12 +6,22 @@ import { ApolloError } from "apollo-client";
 import { NextPageStaticVariableProps } from "../../typings/types";
 import { getLayout } from "../../components/layout.v2";
 import { Text } from "../../components/primitives/styled-rebass";
-import withApollo from "../../lib/with-apollo";
+import { withApollo } from "../../lib/with-apollo_v2";
 import { useMeQuery, MeQuery } from "../../lib/queries/me.graphql";
 
 import ChangePassword from "../../components/profile/change-password";
 
 interface ProfileProps extends Partial<NextPageContext> {}
+
+const StyledH1 = styled["h1"]``;
+
+const LoadingSpan = styled.span`
+  &&:empty {
+    background-image: linear-gradient(#ccc, #ccc);
+    background-size: 190px, 20px;
+    background-repeat: no-repeat;
+  }
+`;
 
 const Profile: NextPage<ProfileProps> & NextPageStaticVariableProps = () => {
   const { data, error, loading } = useMeQuery();
@@ -57,7 +67,7 @@ Profile.getLayout = getLayout;
 
 Profile.title = "Profile";
 
-export default withApollo(Profile);
+export default withApollo()(Profile);
 
 interface RenderH1Props {
   data: MeQuery | undefined;
@@ -78,7 +88,6 @@ const RenderH1: React.FC<RenderH1Props> = ({
   loading,
   renderKey
 }) => {
-  const StyledH1 = styled["h1"]``;
   if (error) {
     return <StyledH1>Error!</StyledH1>;
   }
@@ -113,14 +122,6 @@ const RenderText: React.FC<RenderTextProps> = ({
     <Text mb={2}>{loading ? <LoadingSpan /> : data?.me?.[renderKey]}</Text>
   );
 };
-
-const LoadingSpan = styled.span`
-  &&:empty {
-    background-image: linear-gradient(#ccc, #ccc);
-    background-size: 190px, 20px;
-    background-repeat: no-repeat;
-  }
-`;
 
 // const LoadingSvg = () => (
 //   <svg

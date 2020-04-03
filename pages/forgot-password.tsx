@@ -8,7 +8,7 @@ import { getLayout } from "../components/layout.v2";
 import { InputField } from "../components/form-fields/input-field";
 import { useForgotPasswordMutation } from "../__generated__/__intermediate__/lib/mutations/forgot-password.graphql-45fb3cb153db88a8356083d0e021e7e13bbf348f";
 import { DisplayResponseData } from "./user/change-password/[token]";
-import withApollo from "../lib/with-apollo";
+import { withApollo } from "../lib/with-apollo_v2";
 import { NextPageStaticVariableProps } from "../typings/types";
 
 interface ForgotPasswordProps extends Partial<NextPageContext> {}
@@ -89,4 +89,4 @@ ForgotPassword.displayName = "Forgot password";
 ForgotPassword.getLayout = getLayout;
 ForgotPassword.title = "Forgot password";
 
-export default withApollo(ForgotPassword);
+export default withApollo()(ForgotPassword);

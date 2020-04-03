@@ -9,7 +9,7 @@ import { ApolloClient } from "apollo-client";
 import { getMainDefinition } from "apollo-utilities";
 // import { IntrospectionFragmentMatcher } from "apollo-cache-inmemory";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
+import { createHttpLink } from "apollo-link-http";
 import { onError } from "apollo-link-error";
 import fetch from "isomorphic-unfetch";
 import { setContext } from "apollo-link-context";
@@ -52,6 +52,8 @@ export default function withApollo(
     ...pageProps
   }: InitialProps) => {
     const client = apolloClient || initApolloClient(apolloState);
+
+    console.log("VIEW APOLLO CLIENT", { isBrowser, client });
 
     return (
       <ApolloProvider client={client}>
@@ -108,6 +110,11 @@ export default function withApollo(
           try {
             // Run all GraphQL queries
             const { getDataFromTree } = await import("@apollo/react-ssr");
+            console.log("VIEW BEFORE GETDATAFROMTREE", {
+              pageProps,
+              reqHeaders: ctx.req ? ctx.req.headers : {},
+              AppTree
+            });
             await getDataFromTree(
               <AppTree
                 pageProps={{
@@ -156,15 +163,30 @@ function initApolloClient(initialState?: any, req?: NextPageContext["req"]) {
 
   // Reuse client on the client-side
   if (!globalApolloClient) {
-    globalApolloClient = createApolloClient(initialState, req);
+    globalApolloClient = createApolloClient(initialState);
   }
 
   return globalApolloClient;
 }
 
 function parseCookies(req?: NextPageContext["req"], options = {}) {
+  console.log("READ COOKIE PARSE", {
+    isBrowser,
+    document: isBrowser ? document.cookie : "server-side",
+    reqCheck:
+      !isBrowser && req
+        ? req.headers.cookie
+          ? req.headers.cookie
+          : ""
+        : document.cookie,
+    options
+  });
   return cookie.parse(
-    req && req.headers ? req.headers.cookie || "" : document.cookie,
+    !isBrowser && req
+      ? req.headers.cookie
+        ? req.headers.cookie
+        : ""
+      : document.cookie,
     options
   );
 }
@@ -177,16 +199,6 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
   const ssrMode = !isBrowser;
   const cache = new InMemoryCache().restore(initialState || {});
 
-  // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
-  return new ApolloClient({
-    connectToDevTools: isBrowser,
-    ssrMode, // Disables forceFetch on the server (so queries are only run once)
-    link: createIsomorphLink(req),
-    cache
-  });
-}
-
-function createIsomorphLink(req?: NextPageContext["req"]) {
   // on the server we refer to a locally generated schema
   // this should be faster
   // if (!isBrowser) {
@@ -198,10 +210,16 @@ function createIsomorphLink(req?: NextPageContext["req"]) {
 
   const gqlUri = process.env.GRAPHQL_URL;
 
-  const httpLink = new HttpLink({
-    uri: gqlUri, // Server URL (must be absolute)
-    credentials: "include", // Additional fetch() options like `credentials` or `headers`
-    fetch
+  // const httpLink = new HttpLink({
+  //   uri: gqlUri, // Server URL (must be absolute)
+  //   credentials: "include", // Additional fetch() options like `credentials` or `headers`
+  //   fetch
+  // });
+
+  const httpLink = createHttpLink({
+    uri: gqlUri,
+    credentials: "include",
+    fetch: !isBrowser ? fetch : undefined
   });
 
   // Create a WebSocket link:
@@ -253,16 +271,110 @@ function createIsomorphLink(req?: NextPageContext["req"]) {
 
   const authLink = setContext((_, { headers }) => {
     const token = parseCookies(req).atg;
+    console.log("CHECK HEADERS & TOKEN", { _, headers, token });
 
-    const authLinkToReturn = {
+    // const authLinkToReturn = {
+    //   headers: {
+    //     ...headers,
+    //     cookie: token ? `atg=${token}` : ""
+    //   }
+    // };
+
+    return {
       headers: {
         ...headers,
         cookie: token ? `atg=${token}` : ""
       }
     };
-
-    return authLinkToReturn;
   });
 
-  return errorLink.concat(authLink.concat(splitLink));
+  // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
+  return new ApolloClient({
+    connectToDevTools: isBrowser,
+    ssrMode, // Disables forceFetch on the server (so queries are only run once)
+    link: errorLink.concat(authLink.concat(splitLink)), // createIsomorphLink(req),
+    cache
+  });
 }
+
+// function createIsomorphLink(req?: NextPageContext["req"]) {
+//   // on the server we refer to a locally generated schema
+//   // this should be faster
+//   // if (!isBrowser) {
+//   //   const { SchemaLink } = require("apollo-link-schema");
+//   //   const schema = require("./schema").default;
+//   //   return new SchemaLink({ schema });
+//   // } else {
+//   // on the client we ping the API server
+
+//   const gqlUri = process.env.GRAPHQL_URL;
+
+//   const httpLink = new HttpLink({
+//     uri: gqlUri, // Server URL (must be absolute)
+//     credentials: "include", // Additional fetch() options like `credentials` or `headers`
+//     fetch
+//   });
+
+//   // Create a WebSocket link:
+//   const wsLink = isBrowser
+//     ? new WebSocketLink({
+//         uri: process.env.WEBSOCKET_URL!,
+//         options: {
+//           reconnect: true
+//         }
+//       })
+//     : null;
+
+//   const splitLink = isBrowser
+//     ? split(
+//         // split based on operation type
+//         ({ query }) => {
+//           const definition = getMainDefinition(query);
+//           console.log("LOOK AT DEFINITIONS", { definition });
+//           return (
+//             definition.kind === "OperationDefinition" &&
+//             definition.operation === "subscription"
+//           );
+//         },
+//         wsLink!,
+//         httpLink
+//       )
+//     : httpLink;
+
+//   const errorLink = onError(({ graphQLErrors, networkError }) => {
+//     if (graphQLErrors)
+//       graphQLErrors.map(({ message, locations, path }) => {
+//         let authErrorMessage = "Not authenticated";
+//         if (isBrowser && message.includes(authErrorMessage)) {
+//           Router.replace(`/login?message=${authErrorMessage}`);
+//         } else {
+//           console.log(
+//             `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
+//               locations,
+//               null,
+//               2
+//             )}, Path: ${path}`
+//           );
+//         }
+//       });
+//     if (networkError) {
+//       console.log(`[Network Error]: ${networkError}`);
+//     }
+//   });
+
+//   const authLink = setContext((_, { headers }) => {
+//     const token = parseCookies(req).atg;
+//     console.log("CHECK TOKEN", token);
+
+//     const authLinkToReturn = {
+//       headers: {
+//         ...headers,
+//         cookie: token ? `atg=${token}` : ""
+//       }
+//     };
+
+//     return authLinkToReturn;
+//   });
+
+//   return errorLink.concat(authLink.concat(splitLink));
+// }
