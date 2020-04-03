@@ -35,6 +35,7 @@
     "next-cookies": "latest",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-is": "16.8.0",
     "rebass": "^4.0.7",
     "styled-components": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
