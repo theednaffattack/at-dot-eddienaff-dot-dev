@@ -39,7 +39,6 @@ type Page = ReactElement & { title: string; children: ReactElement };
 // type Page = JSX.Element;
 
 export const getLayout = (page: Page) => {
-  console.log("VIEW PAGE PROPS IN LAYOUT", page);
   return <Layout title={page.title}>{page.children}</Layout>;
 };
 
