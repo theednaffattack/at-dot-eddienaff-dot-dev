@@ -2,10 +2,12 @@ import App from "next/app";
 import React from "react";
 import { ThemeProvider } from "styled-components";
 import { NextPage } from "next";
+import { DefaultSeo } from "next-seo";
 
 import { GlobalStyles } from "../components/styles/global-styles";
 import { theme } from "../components/styles/theme";
 import { withAuthSync } from "../utils/auth";
+import SEO from "../config/next-seo-config";
 
 interface StaticPageProps {
   getLayout: any;
@@ -24,7 +26,8 @@ class MyApp extends App<MyAppTooProps> {
     const title = Component.title || "Welcome to Atlas Travel";
 
     return (
-      <>
+      <React.Fragment>
+        <DefaultSeo {...SEO} />
         <GlobalStyles />
         <div
           id="modal"
@@ -33,7 +36,7 @@ class MyApp extends App<MyAppTooProps> {
         <ThemeProvider theme={theme}>
           {getLayout(<Component title={title} {...pageProps} />)}
         </ThemeProvider>
-      </>
+      </React.Fragment>
     );
   }
 }

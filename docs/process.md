@@ -11,3 +11,7 @@ combined: `docker build -t theednaffattack/at-client_production:first_try . && d
 ### Pull down built images from Docker Registry
 
 docker-compose pull && docker-compose up
+
+### General Next SEO config
+
+[https://github.com/garmeeh/next-seo#nextseo-options](https://github.com/garmeeh/next-seo#nextseo-options)

@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Head from "next/head";
+// import Head from "next/head";
 
 import { Flex } from "./primitives/styled-rebass";
 import Header from "./header";
@@ -12,18 +12,9 @@ interface LayoutProps {
 
 export const breakWidths = [1, 1, 1, "960px"];
 
-const Layout: React.FunctionComponent<LayoutProps> = ({
-  children,
-  title = "This is the default title"
-}) => {
+const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
   return (
     <Flex m={[0]} minHeight="100vh" flexDirection="column" width={1}>
-      <Head>
-        <title>{title}</title>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-
       <Flex justifyContent="center" alignItems="center">
         <Header />
       </Flex>
@@ -34,12 +25,12 @@ const Layout: React.FunctionComponent<LayoutProps> = ({
   );
 };
 
-type Page = ReactElement & { title: string; children: ReactElement };
+type Page = ReactElement;
 
 // type Page = JSX.Element;
 
 export const getLayout = (page: Page) => {
-  return <Layout title={page.title}>{page.children}</Layout>;
+  return <Layout>{page}</Layout>;
 };
 
 export default Layout;
