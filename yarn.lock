@@ -2353,6 +2353,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/next-seo@^1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@types/next-seo/-/next-seo-1.10.0.tgz#ac26f243e9b563f3d6776605458b9fa67ed2eb6b"
+  integrity sha512-G/Q2EDAyXwo/+c6EbUxmKBawLTFL1g3Y96lZRlKujhy+rX7uWPQFNRmwCOxhK7jitzqlteLEU5Nd3xbW13kVPQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/node-fetch@2.5.5":
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.5.tgz#cd264e20a81f4600a6c52864d38e7fef72485e92"
@@ -8094,6 +8101,11 @@ next-cookies@latest:
   integrity sha512-YVCQzwZx+sz+KqLO4y9niHH9jjz6jajlEQbAKfsYVT6DOfngb/0k5l6vFK4rmpExVug96pGag8OBsdSRL9FZhQ==
   dependencies:
     universal-cookie "^4.0.2"
+
+next-seo@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-4.4.0.tgz#490f1064e89af55043559459c9cd04220e4d651d"
+  integrity sha512-8ySgeXpntn4mdcyuDQo9A2ESes8hLZ/G+YwzIg5fLrK8CxqrAVCUoCxAO/BJZf1QgMddSDUDlKtlLJspJ89Jtg==
 
 next-tick@~1.0.0:
   version "1.0.0"
