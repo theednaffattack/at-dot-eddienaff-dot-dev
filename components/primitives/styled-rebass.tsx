@@ -2,14 +2,15 @@ import React, { DetailedHTMLProps, OlHTMLAttributes } from "react";
 import Link from "next/link";
 import {
   Box as BoxBase,
-  Button,
+  Button as ButtonBase,
   Flex as FlexBase,
   Card as CardBase,
   Heading,
   Image,
   Text,
   FlexProps,
-  BoxProps
+  BoxProps,
+  ButtonProps,
 } from "rebass/styled-components";
 import {
   // backgroundColor,
@@ -55,7 +56,7 @@ import {
   LeftProps,
   OverflowProps,
   LayoutProps,
-  layout
+  layout,
 } from "styled-system";
 import styled, { StyledComponent } from "styled-components";
 
@@ -97,10 +98,10 @@ export const StyledListItem = styled.li<StyledListProps>`
   ${space}
   /* height: 100%; */
   list-style: none;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.highlight ? "rgba(0,0,0,0.3)" : "transparent"};
   :hover {
-    background-color: ${props =>
+    background-color: ${(props) =>
       props.setBackgroundColor
         ? props.setBackgroundColor
         : "rgba(0, 0, 0, 0.3)"};
@@ -120,7 +121,7 @@ const StyledLinkV1 = styled.a<StyledLinkV1Props>`
   text-decoration: none;
 
   :hover {
-    color: ${props => (props.hoverColor ? props.hoverColor : "inherit")};
+    color: ${(props) => (props.hoverColor ? props.hoverColor : "inherit")};
     cursor: pointer;
   }
 `;
@@ -136,7 +137,7 @@ const SidebarLinkAnchor = styled.a<StyledLinkV1Props>`
   overflow: hidden;
   display: block;
   :hover {
-    color: ${props => (props.hoverColor ? props.hoverColor : "inherit")};
+    color: ${(props) => (props.hoverColor ? props.hoverColor : "inherit")};
     cursor: pointer;
   }
 `;
@@ -167,7 +168,7 @@ interface IAvatarProps {
 export const Avatar: React.FunctionComponent<IAvatarProps> = ({
   height,
   src,
-  width
+  width,
 }) => {
   let checkWidth = width ? width : 0;
   let checkHeight = height ? height : 0;
@@ -179,7 +180,7 @@ export const Avatar: React.FunctionComponent<IAvatarProps> = ({
         sx={{
           width: checkWidth,
           height: checkHeight,
-          borderRadius: 9999
+          borderRadius: 9999,
         }}
       />
     );
@@ -402,7 +403,10 @@ ${maxWidth}
 ${borders}
 `;
 
-export const MinButton = styled(Button)`
+export const MinButton = styled(ButtonBase)<
+  ButtonProps & BorderRadiusProps & MinHeightProps
+>`
+  ${borderRadius}
   ${minHeight}
 `;
 
@@ -410,7 +414,7 @@ export const Card = styled(CardBase)`
   ${maxWidth}
 `;
 
-interface FlexMinHeightBordersProps
+export interface FlexMinHeightBordersProps
   extends BordersProps,
     FlexProps,
     SpaceProps,
@@ -437,12 +441,7 @@ export const PositionFlex = styled(FlexBase)<
   ${borders}
 `;
 
-export const Box: StyledComponent<
-  React.FunctionComponent<BordersProps & BoxProps>,
-  any,
-  {},
-  never
-> = styled(BoxBase)`
+export const Box = styled(BoxBase)<BoxProps & BordersProps>`
   ${borders}
 `;
 
@@ -514,7 +513,7 @@ outline: none;
 box-sizing:border-box;
 transition: all 0.30s ease-in-out;
 :focus {
-  border-bottom: 2.5px lawngreen solid;
+  border-bottom: 2.5px rgba(244, 50, 127, 1) solid;
   // box-shadow: 0 1px 1px rgba(229, 103, 23, 0.075) inset, 0 0 8px rgba(229, 103, 23, 0.6);
   
 }
@@ -565,7 +564,7 @@ export const Label = styled.label<
 
   font-size: inherit;
   color: white;
-  background-color: ${props => (props.bg ? props.bg : "#eee")};
+  background-color: ${(props) => (props.bg ? props.bg : "#eee")};
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -577,6 +576,10 @@ export const Label = styled.label<
   border: 0;
   border-radius: 4px;
   border-radius: 4px;
+`;
+
+export const Button = styled(ButtonBase)<ButtonProps & BorderRadiusProps>`
+  ${borderRadius}
 `;
 
 export const TeamWrapper = styled.div`
@@ -650,7 +653,7 @@ ${color}
   
   border-style: solid;
     border-width: thick;
-    border-color: ${props => (props.highlight ? "#767676" : "transparent")};
+    border-color: ${(props) => (props.highlight ? "#767676" : "transparent")};
   :hover{
     border-style: solid;
     border-width: thick;
@@ -670,7 +673,8 @@ ${color}
   
   /* border-style: solid;
     border-width: thick;
-    border-color: ${props => (props.highlight ? "#767676" : "transparent")}; */
+    border-color: ${(props) =>
+      props.highlight ? "#767676" : "transparent"}; */
   :hover{
     background-color: #eee;
   }
@@ -678,4 +682,22 @@ ${color}
   transition: 0.3s;
 `;
 
-export { Button, Heading, Image, Text };
+export const CustomButton = styled(Button)<ButtonProps>`
+  border-radius: 23px;
+  /* padding: 12px; */
+  /* border: 1px solid rgba(0, 0, 0, 0.25); */
+  box-shadow: 0px 10px 27px 0px rgba(0, 0, 0, 0.1);
+  background-color: #d23078;
+  background-image: linear-gradient(
+    0deg,
+    rgba(210, 48, 120, 0.2),
+    rgba(254, 97, 97, 0.2),
+    rgba(255, 121, 85, 0.2)
+  );
+  /* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.125)); */
+`;
+
+// 6%,
+//  74%,
+// 100%
+export { Heading, Image, Text };
