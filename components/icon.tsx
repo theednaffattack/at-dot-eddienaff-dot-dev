@@ -600,8 +600,6 @@ const Icon: React.FC<NewIconProps> = ({
   size,
   ...props
 }) => {
-  console.log(pathObj[name]);
-  // if (!pathObj[name]) throw Error("Error: There is no icon by that name!");
   return (
     <Flex
       alignItems="center"
