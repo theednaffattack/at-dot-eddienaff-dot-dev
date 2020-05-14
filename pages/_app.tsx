@@ -23,7 +23,7 @@ class MyApp extends App<MyAppTooProps> {
   render() {
     const { Component, pageProps } = this.props;
     const getLayout = Component.getLayout || ((page: any) => page);
-    const title = Component.title || "Welcome to Atlas Travel";
+    const title = Component.title;
 
     return (
       <React.Fragment>
@@ -34,7 +34,13 @@ class MyApp extends App<MyAppTooProps> {
           // style={{ position: "fixed", top: 0, right: 0, left: 0, bottom: 0 }}
         />
         <ThemeProvider theme={theme}>
-          {getLayout(<Component title={title} {...pageProps} />)}
+          {getLayout(
+            <Component
+              style={(theme: any) => ({ fontFamily: theme.fonts.montserrat })}
+              title={title}
+              {...pageProps}
+            />
+          )}
         </ThemeProvider>
       </React.Fragment>
     );
