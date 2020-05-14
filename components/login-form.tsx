@@ -3,7 +3,6 @@ import Router from "next/router";
 
 import { InputField } from "../components/form-fields/input-field";
 import {
-  Button,
   CustomButton,
   Flex,
   Form,
@@ -83,9 +82,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
           return;
         }
 
-        // let pathname =
-        //   referer && referer.length > 0 ? referer : "/welcome";
-        console.log("IS THIS SUBMITTING?", response);
         // if the user comes to login and wants to continue
         // on their intended path...
         if (
@@ -155,10 +151,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
                 type="checkbox"
                 shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
                 component={ToggleCheckbox}
-                // component={Checkbox}
               />
             </Flex>
-            {/* <ToggleCheckbox /> */}
           </Flex>
 
           <Flex justifyContent="center">
@@ -171,20 +165,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
                 borderRadius: "30px",
               }}
             >
-              <Text fontFamily="montserrat">Login</Text>
+              <Text>Login</Text>
             </CustomButton>
-            {/* <Button
-              mt={2}
-              width="340px"
-              height="47px"
-              type="submit"
-              sx={{
-                borderRadius: "30px",
-                FlexShadow: "0px 10px 27px 0px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <Text fontFamily="montserrat">Login</Text>
-            </Button> */}
           </Flex>
         </Form>
       )}
