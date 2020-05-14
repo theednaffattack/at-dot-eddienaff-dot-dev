@@ -113,13 +113,13 @@ export default function withApollo(
             console.log("VIEW BEFORE GETDATAFROMTREE", {
               pageProps,
               reqHeaders: ctx.req ? ctx.req.headers : {},
-              AppTree
+              AppTree,
             });
             await getDataFromTree(
               <AppTree
                 pageProps={{
                   ...pageProps,
-                  apolloClient
+                  apolloClient,
                 }}
               />
             );
@@ -141,7 +141,7 @@ export default function withApollo(
 
       return {
         ...pageProps,
-        apolloState
+        apolloState,
       };
     };
   }
@@ -179,7 +179,7 @@ function parseCookies(req?: NextPageContext["req"], options = {}) {
           ? req.headers.cookie
           : ""
         : document.cookie,
-    options
+    options,
   });
   return cookie.parse(
     !isBrowser && req
@@ -219,7 +219,7 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
   const httpLink = createHttpLink({
     uri: gqlUri,
     credentials: "include",
-    fetch: !isBrowser ? fetch : undefined
+    fetch: !isBrowser ? fetch : undefined,
   });
 
   // Create a WebSocket link:
@@ -227,8 +227,8 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
     ? new WebSocketLink({
         uri: process.env.WEBSOCKET_URL!,
         options: {
-          reconnect: true
-        }
+          reconnect: true,
+        },
       })
     : null;
 
@@ -237,7 +237,7 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
         // split based on operation type
         ({ query }) => {
           const definition = getMainDefinition(query);
-          console.log("LOOK AT DEFINITIONS", { definition });
+
           return (
             definition.kind === "OperationDefinition" &&
             definition.operation === "subscription"
@@ -283,8 +283,8 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
     return {
       headers: {
         ...headers,
-        cookie: token ? `atg=${token}` : ""
-      }
+        cookie: token ? `atg=${token}` : "",
+      },
     };
   });
 
@@ -293,7 +293,7 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
     connectToDevTools: isBrowser,
     ssrMode, // Disables forceFetch on the server (so queries are only run once)
     link: errorLink.concat(authLink.concat(splitLink)), // createIsomorphLink(req),
-    cache
+    cache,
   });
 }
 
