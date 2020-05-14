@@ -23,7 +23,7 @@ export default function createApolloClient(
   const httpLink = new HttpLink({
     uri: gqlUri, // Server URL (must be absolute)
     credentials: "include", // Additional fetch() options like `credentials` or `headers`
-    fetch
+    fetch,
   });
 
   // Create a WebSocket link:
@@ -31,8 +31,8 @@ export default function createApolloClient(
     ? new WebSocketLink({
         uri: process.env.WEBSOCKET_URL!,
         options: {
-          reconnect: true
-        }
+          reconnect: true,
+        },
       })
     : null;
 
@@ -41,7 +41,7 @@ export default function createApolloClient(
         // split based on operation type
         ({ query }) => {
           const definition = getMainDefinition(query);
-          console.log("LOOK AT DEFINITIONS", { definition });
+
           return (
             definition.kind === "OperationDefinition" &&
             definition.operation === "subscription"
@@ -78,8 +78,8 @@ export default function createApolloClient(
     return {
       headers: {
         ...headers,
-        Cookie: token ? `atg=$P{token}` : null
-      }
+        Cookie: token ? `atg=$P{token}` : null,
+      },
     };
   });
 
@@ -87,6 +87,6 @@ export default function createApolloClient(
     connectToDevTools: isBrowser,
     ssrMode: Boolean(ctx),
     link: errorLink.concat(authLink.concat(splitLink)),
-    cache: new InMemoryCache().restore(initialState)
+    cache: new InMemoryCache().restore(initialState),
   });
 }
