@@ -1,27 +1,34 @@
 import React, { ReactElement } from "react";
-// import Head from "next/head";
+import Head from "next/head";
 
 import { Flex } from "./primitives/styled-rebass";
 import Header from "./header";
-import { TApolloClient } from "../lib/with-apollo_v2";
+// import { TApolloClient } from "../lib/with-apollo_v2";
 
-interface LayoutProps {
-  title?: string;
-  apolloClient?: TApolloClient;
-}
+// interface LayoutProps {
+//   title?: string;
+//   apolloClient?: TApolloClient;
+// }
 
 export const breakWidths = [1, 1, 1, "960px"];
 
-const Layout: React.FunctionComponent<LayoutProps> = ({ children }) => {
+const Layout = ({ children, title }: any) => {
+  const { children: subChildren } = children;
+  console.log("BEING CALLED?");
   return (
-    <Flex m={[0]} minHeight="100vh" flexDirection="column" width={1}>
-      <Flex justifyContent="center" alignItems="center">
-        <Header />
+    <>
+      <Head>
+        <title>{children && children.title ? children.title : title}</title>
+      </Head>
+      <Flex m={[0]} minHeight="100vh" flexDirection="column" width={1}>
+        <Flex justifyContent="center" alignItems="center">
+          <Header />
+        </Flex>
+        <Flex width={1} flexDirection="column" alignItems="center">
+          {subChildren ? subChildren : children}
+        </Flex>
       </Flex>
-      <Flex width={1} flexDirection="column" alignItems="center">
-        {children}
-      </Flex>
-    </Flex>
+    </>
   );
 };
 
