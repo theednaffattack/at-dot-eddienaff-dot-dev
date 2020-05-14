@@ -4,11 +4,13 @@ import Router from "next/router";
 import { InputField } from "../components/form-fields/input-field";
 import {
   Button,
+  CustomButton,
   Flex,
   Form,
-  Text
+  Text,
 } from "../components/primitives/styled-rebass";
 import { useLoginMutation } from "../lib/mutations/login.graphql";
+import { ToggleCheckbox } from "./form-fields/checkbox-custom";
 
 interface LoginFormProps {}
 
@@ -30,8 +32,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
           response = await loginFunc({
             variables: {
               email: data.email,
-              password: data.password
-            }
+              password: data.password,
+            },
             // update: (_, { data }) => {
             //   if (!data || !data.login) {
             //     console.log("!DATA || !DATA.LOGIN");
@@ -76,7 +78,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
         if (response && response.data && !response.data.login) {
           setErrors({
-            email: "invalid login"
+            email: "invalid login",
           });
           return;
         }
@@ -99,13 +101,25 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
       initialValues={{
         email: "",
         password: "",
-        keepMeSigned: true
+        keepMeSignedIn: false,
       }}
     >
       {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
+        <Form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            color: "#444444",
+          }}
+        >
+          <Flex alignItems="center" justifyContent="center">
+            <Text fontSize={4}>Sign in</Text>
+          </Flex>
           {data ? JSON.stringify(data, null, 2) : null}
           <Field
+            autoComplete="email"
             label="email"
             id="email"
             name="email"
@@ -114,6 +128,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
             component={InputField}
           />
           <Field
+            autoComplete="current_password"
             label="password"
             id="password"
             name="password"
@@ -122,39 +137,54 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
             component={InputField}
           />
 
-          {/*               
-              <Flex my={2}>
-                <Box mr="auto">
-                  <Text htmlFor="keepMeSignedIn" fontFamily="main">
-                    Keep me logged in
-                  </Text>
-                </Box>
-                <Box mr={2}>
-                  <label>
-                    <Field
-                      id="keepMeSignedIn"
-                      name="keepMeSignedIn"
-                      type="checkbox"
-                      shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
-                      component={Checkbox}
-                    />
-                  </label>
-                </Box>
-              </Flex> */}
+          <Flex my={2}>
+            <Flex mr="auto">
+              <Text htmlFor="keepMeSignedIn" fontFamily="main">
+                Keep me logged in
+              </Text>
+            </Flex>
+            <Flex
+              mr={2}
+              style={{
+                position: "relative",
+              }}
+            >
+              <Field
+                id="keepMeSignedIn"
+                name="keepMeSignedIn"
+                type="checkbox"
+                shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
+                component={ToggleCheckbox}
+                // component={Checkbox}
+              />
+            </Flex>
+            {/* <ToggleCheckbox /> */}
+          </Flex>
 
           <Flex justifyContent="center">
-            <Button
+            <CustomButton
               mt={2}
               width="340px"
               height="47px"
               type="submit"
               sx={{
                 borderRadius: "30px",
-                boxShadow: "0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
               }}
             >
               <Text fontFamily="montserrat">Login</Text>
-            </Button>
+            </CustomButton>
+            {/* <Button
+              mt={2}
+              width="340px"
+              height="47px"
+              type="submit"
+              sx={{
+                borderRadius: "30px",
+                FlexShadow: "0px 10px 27px 0px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <Text fontFamily="montserrat">Login</Text>
+            </Button> */}
           </Flex>
         </Form>
       )}
