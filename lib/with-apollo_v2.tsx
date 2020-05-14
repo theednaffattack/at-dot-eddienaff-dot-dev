@@ -58,7 +58,7 @@ export const initOnContext = (ctx: any) => {
   const apolloClient =
     ctx.apolloClient ||
     initApolloClient(ctx.apolloState || {}, inAppContext ? ctx.ctx : ctx, {
-      getToken: () => getCookie(ctx).atg
+      getToken: () => getCookie(ctx).atg,
     });
 
   // We send the Apollo Client as a prop to the component to avoid calling initApollo() twice in the server.
@@ -93,14 +93,14 @@ const initApolloClient = (
   // isn't shared between connections (which would be bad)
   if (typeof window === "undefined") {
     return createApolloClient(initialState, ctx, {
-      getToken
+      getToken,
     });
   }
 
   // Reuse client on the client-side
   if (!globalApolloClient) {
     globalApolloClient = createApolloClient(initialState, ctx, {
-      getToken
+      getToken,
     });
   }
 
@@ -131,11 +131,12 @@ export const withApollo = ({ ssr = false } = {}) => (PageComponent: any) => {
     } else {
       // Happens on: next.js csr
       client = initApolloClient(apolloState, undefined, {
-        getToken: () => getCookie().atg
+        getToken: () => getCookie().atg,
       });
     }
     const Layout = PageComponent.getLayout;
     const pageTitle = PageComponent.title;
+
     return (
       <ApolloProvider client={client}>
         <Layout title={pageTitle}>
@@ -215,7 +216,7 @@ export const withApollo = ({ ssr = false } = {}) => (PageComponent: any) => {
         apolloState: apolloClient.cache.extract(),
         // Provide the client for ssr. As soon as this payload
         // gets JSON.stringified it will remove itself.
-        apolloClient: ctx.apolloClient
+        apolloClient: ctx.apolloClient,
       };
     };
   }
