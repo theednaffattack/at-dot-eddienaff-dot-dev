@@ -16,6 +16,7 @@ const Errors = styled.span`
 `;
 
 export const InputField = ({
+  autoComplete,
   field,
   form: { errors, touched },
   ...props
@@ -31,10 +32,11 @@ export const InputField = ({
         id={field && props.id ? props.id : field.name}
         type={type}
         name={field.name}
+        autoComplete={autoComplete}
         {...field}
         fontSize={1}
         width={1}
-        bg="rgba(0,0,0,0.1)"
+        bg="transparent"
         color="text"
         borderRadius={0}
         p={2}
@@ -42,7 +44,7 @@ export const InputField = ({
         mb={3}
         letterSpacing=".1em"
         border="0"
-        borderBottom="2.5px rgba(244, 50, 127, 1) solid"
+        borderBottom="2.5px #ccc solid" // "2.5px rgba(244, 50, 127, 1) solid"
       />
 
       {errorMessage ? <Errors>{errorMessage}</Errors> : null}
