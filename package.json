@@ -38,6 +38,7 @@
     "next-cookies": "latest",
     "next-seo": "^4.4.0",
     "react": "^16.12.0",
+    "react-compound-slider": "3.0.0-beta.1",
     "react-dom": "^16.12.0",
     "react-is": "16.8.0",
     "rebass": "^4.0.7",
