@@ -157,6 +157,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
 
           <Flex justifyContent="center">
             <CustomButton
+              backgroundColor="#d23078"
+              backgroundImage="linear-gradient(
+                                0deg,
+                                rgba(210, 48, 120, 0.2),
+                                rgba(254, 97, 97, 0.2),
+                                rgba(255, 121, 85, 0.2)
+                                )"
+              boxShadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
+              borderRadius="23px"
               mt={2}
               width="340px"
               height="47px"

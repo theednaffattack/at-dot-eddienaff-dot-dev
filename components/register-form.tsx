@@ -169,7 +169,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
               </label>
             </Flex>
             <Flex>
-              <Text htmlFor="keepMeSignedIn" fontFamily="main" fontSize={[1]}>
+              <Text fontFamily="main" fontSize={[1]}>
                 Agreee to our{" "}
                 <Link href="terms_and_conditions">
                   <a>Terms & Stuff</a>
@@ -179,7 +179,19 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
           </Flex>
 
           <Flex mt={3} justifyContent="center">
-            <CustomButton p="12px" width="340px">
+            <CustomButton
+              backgroundColor="#d23078"
+              backgroundImage="linear-gradient(
+                                0deg,
+                                rgba(210, 48, 120, 0.2),
+                                rgba(254, 97, 97, 0.2),
+                                rgba(255, 121, 85, 0.2)
+                                )"
+              boxShadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
+              borderRadius="23px"
+              p="12px"
+              width="340px"
+            >
               <Text fontFamily="montserrat">Sign up</Text>
             </CustomButton>
           </Flex>

@@ -47,7 +47,19 @@ const Login: NextPage<LoginProps> & NextPageStaticVariableProps = () => {
           width={1}
         >
           <span onClick={() => router.push("/", "/")}>
-            <CustomButton minHeight="16px" width="200px">
+            <CustomButton
+              backgroundColor="#d23078"
+              backgroundImage="linear-gradient(
+                                0deg,
+                                rgba(210, 48, 120, 0.2),
+                                rgba(254, 97, 97, 0.2),
+                                rgba(255, 121, 85, 0.2)
+                                )"
+              boxShadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
+              borderRadius="23px"
+              minHeight="16px"
+              width="200px"
+            >
               Got it!
             </CustomButton>
           </span>
