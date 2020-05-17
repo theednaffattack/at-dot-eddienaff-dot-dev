@@ -10,6 +10,16 @@ export const size = {
   desktop: "2560px",
 };
 
+const breakpoints = [
+  "320px",
+  "375px",
+  "425px",
+  "768px",
+  "1024px",
+  "1440px",
+  "2560px",
+];
+
 export const device = {
   mobileS: `(min-width: ${size.mobileS})`,
   mobileM: `(min-width: ${size.mobileM})`,
@@ -22,15 +32,7 @@ export const device = {
 };
 
 export const theme = {
-  breakpoints: [
-    size.mobileS,
-    size.mobileM,
-    size.mobileL,
-    size.tablet,
-    size.laptop,
-    size.laptopL,
-    size.desktop,
-  ],
+  breakpoints,
   borders: {
     crimson: "2px crimson dashed",
     lime: "2px limegreen dashed",
