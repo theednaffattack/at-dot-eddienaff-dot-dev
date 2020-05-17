@@ -8,12 +8,12 @@ import {
   Heading,
   Image,
   Text,
-  FlexProps,
   BoxProps,
+  FlexProps,
   ButtonProps,
 } from "rebass/styled-components";
 import {
-  // backgroundColor,
+  background,
   borders,
   boxShadow,
   borderRadius,
@@ -36,6 +36,8 @@ import {
   right,
   top,
   overflow,
+  BackgroundProps,
+  BoxShadowProps,
   SpaceProps,
   WidthProps,
   FontSizeProps,
@@ -417,6 +419,7 @@ export const Card = styled(CardBase)`
 export interface FlexMinHeightBordersProps
   extends BordersProps,
     FlexProps,
+    FlexboxProps,
     SpaceProps,
     LayoutProps,
     MinHeightProps {}
@@ -682,21 +685,26 @@ ${color}
   transition: 0.3s;
 `;
 
-export const CustomButton = styled(Button)<ButtonProps>`
-  border-radius: 23px;
-  /* padding: 12px; */
-  /* border: 1px solid rgba(0, 0, 0, 0.25); */
-  box-shadow: 0px 10px 27px 0px rgba(0, 0, 0, 0.1);
-  background-color: #d23078;
-  background-image: linear-gradient(
-    0deg,
-    rgba(210, 48, 120, 0.2),
-    rgba(254, 97, 97, 0.2),
-    rgba(255, 121, 85, 0.2)
-  );
-  /* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.125)); */
+export const CustomButton = styled(Button)<
+  ButtonProps & BorderRadiusProps & BackgroundProps & BoxShadowProps
+>`
+  ${borderRadius}
+  ${background}
+  ${boxShadow}
 `;
 
+// border-radius: 23px;
+
+// box-shadow: 0px 10px 27px 0px rgba(0, 0, 0, 0.1);
+// background-color: #d23078;
+
+// background-image: linear-gradient(
+//   0deg,
+//   rgba(210, 48, 120, 0.2),
+//   rgba(254, 97, 97, 0.2),
+//   rgba(255, 121, 85, 0.2)
+// );
+// /* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.125)); */
 // 6%,
 //  74%,
 // 100%
