@@ -4,6 +4,8 @@ export const GlobalStyles = createGlobalStyle`
 html {
   box-sizing: border-box;
   padding: 0;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
 }
 body {
   margin: 0;
