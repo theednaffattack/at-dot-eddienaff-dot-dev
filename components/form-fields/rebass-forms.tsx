@@ -50,7 +50,7 @@ const SVG = ({ size = 24, ...props }) => (
 );
 
 export const Label = forwardRef<LabelRefType, {}>((props, ref) => (
-  <Flex ref={ref} as="label" tx="forms" variant="label" {...props} />
+  <Flex ref={ref} as="label" variant="label" {...props} />
 ));
 
 export const Input = forwardRef<InputRefType, { _css: any }>((props, ref) => (
@@ -275,6 +275,7 @@ export const Checkbox = forwardRef<InputRefType, RebassFormProps>(
         {...getSystemProps(props)}
         __css={{
           mr: 2,
+
           borderRadius: 4,
           color: "prime_pink",
           "input:checked ~ &": {
@@ -299,7 +300,7 @@ export const Slider = forwardRef<InputRefType, RebassFormProps>(
       tx="forms"
       variant="slider"
       {...props}
-      __css={{
+      sx={{
         display: "block",
         width: "100%",
         height: 4,
