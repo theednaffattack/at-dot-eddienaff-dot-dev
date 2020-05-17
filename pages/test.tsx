@@ -1,8 +1,11 @@
 import React from "react";
 import { NextSeo } from "next-seo";
+import Link from "next/link";
 
-import { getLayout } from "../components/layout.v2";
+import { getLayout } from "../components/layout-authorized";
 import { NextContext } from "../typings/types";
+import { withApollo } from "../lib/with-apollo_v2";
+import { Flex } from "../components/primitives/styled-rebass";
 
 interface PageProps extends NextContext {}
 
@@ -11,7 +14,7 @@ interface TestPageProps {
 
   getInitialProps: ({
     pathname,
-    query
+    query,
   }: NextContext) => Promise<{
     pathname: NextContext["pathname"];
     query: NextContext["query"];
@@ -48,21 +51,21 @@ const DisplayPagePropInformation: React.FC<DisplayPagePropInformationProps> = ({
               url: "https://www.example.ie/og-image-01.jpg",
               width: 800,
               height: 600,
-              alt: "Og Image Alt"
+              alt: "Og Image Alt",
             },
             {
               url: "https://www.example.ie/og-image-02.jpg",
               width: 900,
               height: 800,
-              alt: "Og Image Alt Second"
+              alt: "Og Image Alt Second",
             },
             { url: "https://www.example.ie/og-image-03.jpg" },
-            { url: "https://www.example.ie/og-image-04.jpg" }
+            { url: "https://www.example.ie/og-image-04.jpg" },
           ],
-          site_name: "SiteName"
+          site_name: "SiteName",
         }}
       />
-      <div style={{ border: "1px rebeccapurple solid" }}>
+      <Flex flexDirection="column" width={1} border="purp">
         Quick route diagnosis (getInitialProps):
         <p>path: </p>
         <pre>{JSON.stringify(pathname)}</pre>
@@ -70,7 +73,13 @@ const DisplayPagePropInformation: React.FC<DisplayPagePropInformationProps> = ({
         <pre>{JSON.stringify(query)}</pre>
         <p>Other props</p>
         <pre>{JSON.stringify(props, null, 2)}</pre>
-      </div>
+      </Flex>
+      <Link href="/test?filterModal=isOpen&referer=/test" as="/test">
+        <a>open filter modal</a>
+      </Link>
+      <Link href="/test?viewHotelModal=isOpen&referer=/test" as="/test">
+        <a>open hotel view modal</a>
+      </Link>
     </React.Fragment>
   );
 };
@@ -82,11 +91,10 @@ const Test: TestPageProps = ({ pathname, query }) => {
 Test.displayName = `TestPage`;
 
 Test.getInitialProps = async ({ query, pathname }) => {
-  console.log("is initial props running?");
   return {
     query,
     pathname,
-    hello: "hello"
+    hello: "hello",
   };
 };
 
@@ -94,4 +102,4 @@ Test.getLayout = getLayout;
 
 Test.title = "Test";
 
-export default Test;
+export default withApollo()(Test);
