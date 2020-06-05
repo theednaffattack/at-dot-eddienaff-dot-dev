@@ -6,8 +6,36 @@ import { getLayout } from "../components/layout-authorized";
 import { NextContext } from "../typings/types";
 import { withApollo } from "../lib/with-apollo_v2";
 import { Flex } from "../components/primitives/styled-rebass";
+// import { HotelSimpleViewCarousel } from "../components/hotel-view-rename-carousel";
+// import {
+//   FakeSlide,
+//   HotelViewHooksCarousel,
+// } from "../components/hotel-view-hooks-carousel";
+import {
+  CarouselContainer,
+  CarouselChild,
+} from "../components/example-florian-rappl-carousel-too";
+import styled from "styled-components";
 
 interface PageProps extends NextContext {}
+
+// const slides: FakeSlide[] = [
+//   {
+//     title: "numero uno",
+//     message: "yep the first one",
+//     id: "1-blerg",
+//   },
+//   {
+//     title: "the second",
+//     message: "and another one",
+//     id: "2-fang",
+//   },
+//   {
+//     title: "a third post of sublime purity",
+//     message: "once again it's the incredible",
+//     id: "3-burp",
+//   },
+// ];
 
 interface TestPageProps {
   ({ pathname, query }: PageProps): JSX.Element;
@@ -25,6 +53,22 @@ interface TestPageProps {
   title: string;
   displayName?: string;
 }
+
+const Slide = styled.div<{ bgImage?: string }>`
+  height: 500px;
+  max-height: 70vh;
+  background-color: black;
+  background-image: ${({ bgImage }) => (bgImage ? bgImage : null)};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: 2px limegreen solid;
+`;
 
 interface DisplayPagePropInformationProps {
   pathname: NextContext["pathname"];
@@ -66,13 +110,7 @@ const DisplayPagePropInformation: React.FC<DisplayPagePropInformationProps> = ({
         }}
       />
       <Flex flexDirection="column" width={1} border="purp">
-        Quick route diagnosis (getInitialProps):
-        <p>path: </p>
-        <pre>{JSON.stringify(pathname)}</pre>
-        <p>query: </p>
-        <pre>{JSON.stringify(query)}</pre>
-        <p>Other props</p>
-        <pre>{JSON.stringify(props, null, 2)}</pre>
+        {/* <HotelViewHooksCarousel slides={slides} interval={3000} /> */}
       </Flex>
       <Link href="/test?filterModal=isOpen&referer=/test" as="/test">
         <a>open filter modal</a>
@@ -80,6 +118,21 @@ const DisplayPagePropInformation: React.FC<DisplayPagePropInformationProps> = ({
       <Link href="/test?viewHotelModal=isOpen&referer=/test" as="/test">
         <a>open hotel view modal</a>
       </Link>
+      {/* <HotelSimpleViewCarousel /> */}
+      <CarouselContainer>
+        <CarouselChild>
+          ONE
+          {/* <Slide bgImage="url(https://via.placeholder.com/900x150/0000FF/808080?Text=First" /> */}
+        </CarouselChild>
+        <CarouselChild>
+          TWO
+          <img src="https://via.placeholder.com/900x150/0000FF/808080?Text=Second" />
+          <Slide bgImage="url(https://via.placeholder.com/900x150/0000FF/808080?Text=Second" />
+        </CarouselChild>
+        <CarouselChild>
+          <Slide bgImage="url(https://via.placeholder.com/900x150/0000FF/808080?Text=Third" />
+        </CarouselChild>
+      </CarouselContainer>
     </React.Fragment>
   );
 };
