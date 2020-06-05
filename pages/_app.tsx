@@ -33,6 +33,10 @@ class MyApp extends App<MyAppTooProps> {
           id="modal"
           // style={{ position: "fixed", top: 0, right: 0, left: 0, bottom: 0 }}
         />
+        <div
+          id="overlay_modal"
+          // style={{ position: "fixed", top: 0, right: 0, left: 0, bottom: 0 }}
+        />
         <ThemeProvider theme={theme}>
           {getLayout(
             <Component
