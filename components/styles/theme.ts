@@ -25,6 +25,7 @@ export const device = {
   mobileM: `(min-width: ${size.mobileM})`,
   mobileL: `(min-width: ${size.mobileL})`,
   tablet: `(min-width: ${size.tablet})`,
+  tabletMax: `(max-width: ${size.tablet})`,
   laptop: `(min-width: ${size.laptop})`,
   laptopL: `(min-width: ${size.laptopL})`,
   desktop: `(min-width: ${size.desktop})`,
@@ -36,6 +37,7 @@ export const theme = {
   borders: {
     crimson: "2px crimson dashed",
     lime: "2px limegreen dashed",
+    pink: "2px pink dashed",
     purp: "2px rebeccapurple dashed",
     primary: "1px #ccc solid",
     faded: "1px rgba(255,255,255,0.5) solid",
