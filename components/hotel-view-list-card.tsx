@@ -1,16 +1,22 @@
 import React from "react";
-import { CardProps } from "rebass/styled-components";
+// import { CardProps } from "rebass/styled-components";
 
 import { Card, CustomButton } from "./primitives/styled-rebass";
+import { HotelViewCardProps } from "./hotel-view-modal";
 
-interface HotelViewListCardProps {
-  bg: CardProps["bg"];
+interface HotelViewListCardProps extends HotelViewCardProps {
   router: any;
 }
 
-export const HotelViewListCard: React.FC<HotelViewListCardProps> = ({ bg }) => {
+export const HotelViewListCard: React.FC<HotelViewListCardProps> = ({
+  bg,
+  p,
+  width,
+}) => {
   return (
     <Card
+      width={width}
+      p={p}
       bg={bg}
       my={1}
       sx={{
