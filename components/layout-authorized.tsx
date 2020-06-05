@@ -27,17 +27,30 @@ const AuthorizedLayout = ({ children, title }: any) => {
       <Head>
         <title>{children && children.title ? children.title : title}</title>
       </Head>
-      <Flex m={[0]} minHeight="100vh" flexDirection="column" width={1}>
+      <Flex
+        m={[0]}
+        // minHeight="100vh"
+        flexDirection="column"
+        width={1}
+        sx={{
+          position: children.title === "Messages" ? "absolute" : "relative",
+          top: children.title === "Messages" ? 0 : undefined,
+          right: children.title === "Messages" ? 0 : undefined,
+          bottom: children.title === "Messages" ? 0 : undefined,
+          left: children.title === "Messages" ? 0 : undefined,
+          overflow: children.title === "Messages" ? "hidden" : "auto",
+        }}
+      >
         {subChildren}
       </Flex>
       {filterModalViewController === "isOpen" ? (
         <FilterModal viewState={filterModalViewController} />
       ) : null}
       {viewHotelModalViewController === "isOpen" ? (
-        <HotelViewModal viewState={"isOpen"} />
+        <HotelViewModal viewState="isOpen" />
       ) : null}
       {mapViewModalViewController === "isOpen" ? (
-        <MapViewModal viewState={"isOpen"} />
+        <MapViewModal viewState="isOpen" />
       ) : null}
     </>
   );
