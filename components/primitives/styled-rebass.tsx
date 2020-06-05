@@ -82,9 +82,10 @@ interface StyledHrProps extends SpaceProps {}
 
 export const Form = styled.form``;
 
-export const StyledHr = styled.hr<StyledHrProps>`
+export const StyledHr = styled.hr<StyledHrProps & { width: string | number }>`
   border: 0;
-  height: 0;
+  height: 1;
+  width: ${({ width }) => width};
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   ${space}
@@ -583,6 +584,10 @@ export const Label = styled.label<
 
 export const Button = styled(ButtonBase)<ButtonProps & BorderRadiusProps>`
   ${borderRadius}
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+  }
 `;
 
 export const TeamWrapper = styled.div`
