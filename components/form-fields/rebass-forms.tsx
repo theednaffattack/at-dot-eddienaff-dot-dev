@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import { props as systemProps } from "@styled-system/should-forward-prop";
-
 import { SxProps, BoxProps } from "rebass/styled-components";
+import { BordersProps } from "styled-system";
 
 import { Box, Flex } from "../primitives/styled-rebass";
 
@@ -53,28 +53,32 @@ export const Label = forwardRef<LabelRefType, {}>((props, ref) => (
   <Flex ref={ref} as="label" variant="label" {...props} />
 ));
 
-export const Input = forwardRef<InputRefType, { _css: any }>((props, ref) => (
-  <Box
-    ref={ref}
-    as="input"
-    type="text"
-    tx="forms"
-    variant="input"
-    {...props}
-    sx={{
-      display: "block",
-      width: "100%",
-      p: 2,
-      appearance: "none",
-      fontSize: "inherit",
-      lineHeight: "inherit",
-      border: "1px solid",
-      borderRadius: "default",
-      color: "inherit",
-      bg: "transparent",
-    }}
-  />
-));
+export const Input = forwardRef<InputRefType, BoxProps & BordersProps>(
+  (props, ref) => {
+    return (
+      <Box
+        ref={ref}
+        as="input"
+        type="text"
+        tx="forms"
+        variant="input"
+        {...props}
+        sx={{
+          display: "block",
+          width: "100%",
+          p: 2,
+          appearance: "none",
+          fontSize: "inherit",
+          lineHeight: "inherit",
+          // border: "1px solid",
+          // borderRadius: "default",
+          color: "inherit",
+          // bg: "transparent",
+        }}
+      />
+    );
+  }
+);
 
 const DownArrow: React.FC<SxProps> = (props) => (
   <SVG {...props}>
