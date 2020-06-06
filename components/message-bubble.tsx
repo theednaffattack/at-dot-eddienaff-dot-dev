@@ -5,7 +5,7 @@ import {
   calculateWordWidths,
   calculateNumberOfLines,
 } from "./helpers";
-import { CalculatedPath } from "../pages/calculated-path";
+import { CalculatedPath } from "./calculated-path";
 import { Flex } from "./primitives/styled-rebass";
 // import { MessageBubbleError } from "./message-bubble-error";
 
