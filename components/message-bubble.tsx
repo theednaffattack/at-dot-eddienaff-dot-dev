@@ -4,9 +4,9 @@ import styled from "styled-components";
 import {
   calculateWordWidths,
   calculateNumberOfLines,
-} from "../components/helpers";
-import { CalculatedPath } from "./calculated-path";
-import { Flex } from "../components/primitives/styled-rebass";
+} from "./helpers";
+import { CalculatedPath } from "../pages/calculated-path";
+import { Flex } from "./primitives/styled-rebass";
 // import { MessageBubbleError } from "./message-bubble-error";
 
 interface MessageBubbleProps {

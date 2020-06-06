@@ -1,8 +1,8 @@
 import React from "react";
 
-import { Flex, Button, Box } from "../components/primitives/styled-rebass";
-import Icon from "../components/icon";
-import { Input } from "../components/form-fields/rebass-forms";
+import { Flex, Button, Box } from "./primitives/styled-rebass";
+import Icon from "./icon";
+import { Input } from "./form-fields/rebass-forms";
 // import { singleMessageThreadWidths } from "../components/messages-page-component-single-message-thread-pane";
 
 interface MessagesInputProps {}

@@ -2,7 +2,7 @@ import React from "react";
 
 import { Flex, Text } from "./primitives/styled-rebass";
 import { User } from "./messages-page-component-threads-pane";
-import { MessageBubbleSvg } from "../pages/message-bubble";
+import { MessageBubbleSvg } from "./message-bubble";
 import { MessagesPageComponentSingleMessageThreadPaneNamePlate } from "./messages-page-component-single-message-thread-pane-name-plate";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
 import { Thread, MessageThreadsState } from "../pages/messages";

@@ -15,6 +15,7 @@ body {
   margin: 0;
   padding: 0;
   text-size-adjust: 100%;
+  display: flex;
   font-family: "Montserrat", sans-serif;
 }
 *,
@@ -23,5 +24,5 @@ body {
   box-sizing: inherit;
 }
 
-#__next {  height: 100%;  display: flex; justify-content: center; }
+#__next {  height: 100%; width: 100%;  display: flex; justify-content: center; }
 `;

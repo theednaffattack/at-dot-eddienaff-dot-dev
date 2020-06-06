@@ -13,7 +13,7 @@ import {
 } from "../components/messages-page-component-threads-pane";
 import { MessagesPageComponentSingleMessageThreadPane } from "../components/messages-page-component-single-message-thread-pane";
 import { LayoutAuthorizedHeader } from "../components/layout-authorized-header";
-import { MessagesInput } from "./messages-input";
+import { MessagesInput } from "../components/messages-input";
 
 interface MessagesPageProps extends NextPageContext {}
 

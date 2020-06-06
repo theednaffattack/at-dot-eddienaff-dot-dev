@@ -54,7 +54,9 @@ export default class MyDocument extends Document {
           {styleTags}
         </Head>
         <body>
-          <div className="root">{main}</div>
+          <div className="root" style={{ display: "flex", width: "100%" }}>
+            {main}
+          </div>
           <NextScript />
         </body>
       </html>
