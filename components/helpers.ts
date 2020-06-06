@@ -18,9 +18,9 @@ export const icons: IconsInterface[] = [
   {
     active: false,
     fill: "#aaa",
-    name: "travels",
+    name: "traveling",
     label: "Traveling",
-    route: "/travels",
+    route: "/traveling",
     size: "20px",
   },
   {

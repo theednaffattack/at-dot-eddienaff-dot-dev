@@ -73,7 +73,7 @@ export interface IconProps {
     | "subscription"
     | "sun"
     | "swimming"
-    | "travels"
+    | "traveling"
     | "wifi";
 }
 
@@ -138,7 +138,7 @@ const viewBoxes = {
   subscription: "0 0 64 48",
   sun: "0 0 84 84",
   swimming: "0 0 69 50",
-  travels: "0 0 124 88",
+  traveling: "0 0 124 88",
   wifi: "0 0 27 26",
   // wifi: "0 0 78 76",
 };
@@ -713,7 +713,7 @@ const pathObj = {
       />
     );
   },
-  travels: ({
+  traveling: ({
     fill = "rgb(204, 204, 204)", // light grey
     active,
     activeColor = "rgb(233, 72, 109)", // basically a backup active fill
