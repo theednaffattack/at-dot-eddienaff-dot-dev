@@ -9,7 +9,7 @@ import { icons } from "./helpers";
 
 interface LayoutAuthorizedHeaderProps {}
 
-const authLayoutWidths = [
+export const authLayoutWidths = [
   size.mobileS,
   size.mobileM,
   size.mobileS,
