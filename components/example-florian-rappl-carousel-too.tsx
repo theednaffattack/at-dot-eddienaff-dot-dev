@@ -3,17 +3,21 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { useCarousel } from "./use-carousel";
+import { CustomButton } from "./primitives/styled-rebass";
+import Icon from "./icon";
+// import { CustomButton } from "./primitives/styled-rebass";
+// import Icon from "./icon";
 
 const Carousel = styled.div`
   position: relative;
-  border: 2px pink dashed;
   overflow: hidden;
+  /* outline: 2px pink solid; */
 `;
 
 const CarouselIndicators = styled.ol`
   position: absolute;
   right: 0;
-  bottom: 0.5em;
+  bottom: 20px;
   left: 0;
   z-index: 15;
   display: flex;
@@ -28,11 +32,12 @@ const CarouselIndicatorSingle = styled.div<{
 }>`
   position: relative;
   flex: 0 1 auto;
-  width: 1.5em;
-  height: 0.3em;
+  width: 10px;
+  height: 10px;
   margin: 0 0.3em;
+  border-radius: 50%;
   background: ${({ active }) =>
-    active === "isActive" ? "pink" : "rgba(0,0,0,0.3)"};
+    active === "isActive" ? "rgba(255,255,255,1)" : "rgba(255,255,255,.5)"};
   cursor: ${({ active }) => (active === "isActive" ? "pointer" : "default")};
   &:hover {
     background: rgba(255, 192, 203, 0.5);
@@ -45,11 +50,11 @@ const CarouselContent = styled.div`
   flex-wrap: nowrap;
   overflow: hidden;
   position: relative;
-  height: 500px;
-  border: 2px crimson solid;
+  height: auto;
+  /* height: 500px; */
 `;
 
-const CarouselItem = styled.li`
+const CarouselItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -58,7 +63,6 @@ const CarouselItem = styled.li`
   flex-wrap: nowrap;
   overflow: hidden;
   position: relative;
-  border: 2px limegreen dashed;
 `;
 
 function makeIndices(start: number, delta: number, num: number) {
@@ -91,7 +95,7 @@ export const CarouselContainer: React.FC<CarouselContainerProps> = ({
   const beforeIndices = makeIndices(slides.length - 1, -1, numActive);
   const afterIndices = makeIndices(0, +1, numActive);
 
-  console.log({ slides, length, numActive, active });
+  // console.log({ slides, length, numActive, active });
   if (length > 0) {
     return (
       <Carousel>
@@ -106,15 +110,41 @@ export const CarouselContainer: React.FC<CarouselContainerProps> = ({
         </CarouselIndicators>
         <CarouselContent {...handlers} style={style}>
           {beforeIndices.map((i) => (
-            <CarouselChild key={i}>{slides[i]}</CarouselChild>
+            <CarouselChild key={i + "-before"}>{slides[i]}</CarouselChild>
           ))}
           {slides.map((slide, index) => (
-            <CarouselChild key={index}>{slide}</CarouselChild>
+            <CarouselChild key={index + "-slide-child"}>{slide}</CarouselChild>
           ))}
           {afterIndices.map((i) => (
-            <CarouselChild key={i}>{slides[i]}</CarouselChild>
+            <CarouselChild key={i + "-after"}>{slides[i]}</CarouselChild>
           ))}
         </CarouselContent>
+
+        <CustomButton
+          width="50px"
+          height="50px"
+          borderRadius="50%"
+          alignSelf="center"
+          bg="#fff"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            zIndex: 9000,
+            // right: 30,
+            // bottom: 30,
+            bottom: [3, 3, 3, 3, 3, 3, 3],
+            right: [3, 3, 3, 3, 3, 3, 3],
+          }}
+        >
+          <Icon
+            name="bookmarkOutline"
+            fill="fuchsia"
+            size="20px"
+            active={false}
+          />
+        </CustomButton>
       </Carousel>
     );
   }
