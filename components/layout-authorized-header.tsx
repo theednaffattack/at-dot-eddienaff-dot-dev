@@ -1,11 +1,11 @@
 import React from "react";
-
-import { Flex, Text } from "./primitives/styled-rebass";
-import Icon from "./icon";
-import { size, device } from "./styles/theme";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+
+import { Flex, Text } from "./primitives/styled-rebass";
+import { size, device } from "./styles/theme";
 import { icons } from "./helpers";
+import Icon from "./icon";
 
 interface LayoutAuthorizedHeaderProps {}
 
@@ -68,7 +68,7 @@ const MenuButton: React.FC<MenuButtonProps> = () => {
   return (
     <FlexMenuButton alignItems="center" justifyContent="center">
       <Flex>
-        <Icon name="menu" size="20px" fill="#aaa" active={false} />
+        <Icon name="menu" size="20px" fill="#aaa" />
       </Flex>
       <Flex ml={2} alignItems="center" justifyContent="center">
         <Text color="#aaa">Menu</Text>
