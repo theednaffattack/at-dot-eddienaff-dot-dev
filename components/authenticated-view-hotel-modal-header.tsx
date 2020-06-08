@@ -1,7 +1,7 @@
 import React from "react";
 
 import { AbFlex, Box, Flex } from "./primitives/styled-rebass";
-import Icon from "./icon";
+import { HeaderIcons as Icon } from "./header-icons";
 import Link from "next/link";
 import { FlyOverMenuStatuses, OverlayModalsActions } from "./hotel-view-modal";
 
@@ -45,7 +45,7 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
           router.push(`${referer ? referer : "/index"}`, `${referer}`)
         }
       >
-        <Icon active={false} name="close" fill="#888" size="17px" />
+        <Icon name="close" fill="#fff" size="17px" />
       </AbFlex>
       {/* <Text>{title}</Text> */}
       <AbFlex position="absolute" pr={[2, 2, 2, 2, 4, 4, 4]} right={0}>
@@ -60,7 +60,7 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
               setSidebarViewStatus({ type: "openDayPlansSidebar" });
             }}
           >
-            <Icon active={false} name="dayPlans" fill="#aaaaaa" size="20px" />
+            <Icon name="dayPlans" fill="#aaaaaa" size="20px" />
           </a>
           {/* </Link> */}
         </Box>
@@ -70,7 +70,7 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
             as="/test"
           >
             <a>
-              <Icon active={false} name="share" fill="#aaaaaa" size="20px" />
+              <Icon name="share" fill="#aaaaaa" size="20px" />
             </a>
           </Link>
         </Box>
@@ -80,7 +80,7 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
             as="/test"
           >
             <a>
-              <Icon active={false} name="more" fill="#aaaaaa" size="20px" />
+              <Icon name="more_vertical" fill="#aaaaaa" size="20px" />
             </a>
           </Link>
         </Box>
