@@ -105,7 +105,7 @@ function swiped(
   length: number,
   dir: 1 | -1,
   container: HTMLElement
-) {
+): void {
   const t = container.clientWidth * threshold;
   const d = dir * delta;
 
