@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, Text, CustomButton } from "./primitives/styled-rebass";
-import Icon, { IconProps } from "./icon";
+import Icon from "./icon";
+import { IconProps } from "./icon-types";
 
 type FeaturesTypes = Partial<IconProps["name"]>;
 
