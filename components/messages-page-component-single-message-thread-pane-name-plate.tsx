@@ -1,7 +1,8 @@
 import React from "react";
 
 import { Button, Flex, Text } from "./primitives/styled-rebass";
-import Icon, { IconProps } from "./icon";
+import { IconProps } from "./icon-types";
+import Icon from "./icon";
 import { User } from "./messages-page-component-threads-pane";
 
 interface NamePlateProps {

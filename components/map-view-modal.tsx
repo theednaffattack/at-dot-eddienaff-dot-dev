@@ -7,7 +7,8 @@ import { useLockBodyScroll } from "./use-lock-body-scroll";
 import { useRouter } from "next/router";
 import { AuthenticatedModalHeader } from "./authenticated-modal-header";
 import { MapCardPopover } from "./map-card-popover";
-import Icon, { IconProps } from "./icon";
+import Icon from "./icon";
+import { IconProps } from "./icon-types";
 
 type ModalStates = "isOpen" | "isClosed";
 

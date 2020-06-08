@@ -1,5 +1,6 @@
-import { IconProps } from "./icon";
 import { CSSProperties, ReactChild } from "react";
+
+import { IconProps } from "./icon-types";
 
 interface IconsInterface {
   name: IconProps["name"];
