@@ -1,23 +1,16 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
 import { useRouter } from "next/router";
-import { CardProps, Button } from "rebass/styled-components";
+import { CardProps } from "rebass/styled-components";
 import Head from "next/head";
 
-// @ts-ignore
-import { AbFlex, Box, Flex, Image } from "./primitives/styled-rebass";
+import { AbFlex, Flex } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
-import { HotelViewTitleCard } from "./hotel-view-title-card";
-import { HotelViewInfoCard } from "./hotel-view-info-card";
-import { HotelViewFeaturesCard } from "./hotel-view-features-card";
-import { HotelViewMapViewCard } from "./hotel-view-map-view-card";
-import { HotelViewListCard } from "./hotel-view-list-card";
 import { AuthenticatedViewHotelModalHeader } from "./authenticated-view-hotel-modal-header";
-// @ts-ignore
 import DayPlansModal from "./day-plans-modal_v1";
-import Icon from "./icon";
-// import { HotelViewDayPlansSidebar } from "./hotel-view-day-plans-sidebar";
+import { HotelViewLeftLane } from "./hotel-view-left-lane";
+import { HotelViewRightLane } from "./hotel-view-right-lane";
 
 interface HotelViewModalProps {
   userInfo?: MeQuery["me"] | undefined;
@@ -34,16 +27,6 @@ export interface HotelViewCardProps {
 const cardWidths = [1, 1, 1, 1, 1, 1, "800px"];
 
 export type FlyOverMenuStatuses = "isOpen" | "isClosed";
-
-// type FlyOverMenuActions = {
-//   type:
-//     | "openDayPlansSidebar"
-//     | "closeDayPlansSidebar"
-//     | "openShareMenu"
-//     | "closeShareMenu"
-//     | "openMoreMenu"
-//     | "closeMoreMenu";
-// };
 
 export type OverlayModalsActions =
   | { type: "openDayPlansSidebar" }
@@ -160,7 +143,6 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
             right={0}
             bottom={0}
             zIndex={9}
-            // overflow="hidden"
           >
             {overlayModalsState.dayPlansSidebar === "isOpen" ? (
               <DayPlansModal
@@ -173,7 +155,6 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
               <AuthenticatedViewHotelModalHeader
                 sidebarViewStatus={overlayModalsState.dayPlansSidebar}
                 setSidebarViewStatus={overlayModalsDispatch}
-                // setSidebarViewStatus={() => {}}
                 bg="#eee"
                 referer={referer}
                 mt={0}
@@ -181,104 +162,33 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
                 title="View Hotel"
               />
             </AbFlex>
-            {/* <HotelViewDayPlansSidebar
-              sidebarViewStatus={hotelViewHeaderState.dayPlansSidebar}
-              setSidebarViewStatus={hotelViewHeaderDispatch}
-            /> */}
+
             <Flex
               bg="#eee"
               flexDirection="column"
               flex="1 1 auto"
-              border="purp"
-              overflowX="auto"
+              overflowY="auto"
             >
               <Flex
-                // minHeight="100%"
-                // flex={1}
                 alignItems="flex-start"
                 style={{ position: "relative" }}
                 flexWrap="wrap"
               >
                 {/* BEG: LEFT LANE */}
-                <Flex
-                  flexDirection="column"
-                  pr={imageMarginRight}
-                  width={laneWidths}
-                  border="lime"
-                  sx={{ position: "relative" }}
-                >
-                  {/* <Box
-                    width={[1, 1, 1, 1, 1, 1, "800px"]}
-                    sx={{ position: "relative" }}
-                    border="crimson" 
-                  >*/}
-                  <Image
-                    src="https://images.unsplash.com/photo-1587148987975-47786588f0e0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=600&ixlib=rb-1.2.1&q=80&w=800"
-                    srcSet=""
-                  />
-                  <Button
-                    height="50px"
-                    width="50px"
-                    bg="#fff"
-                    sx={{
-                      borderRadius: "50%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      bottom: [0, 0, 3, 0, 0, 0, 60],
-                      right: [0, 0, 3, 0, 0, 0, 60],
-                    }}
-                  >
-                    <Icon
-                      name="bookmarkOutline"
-                      fill="fuchsia"
-                      size="20px"
-                      active={false}
-                    />
-                  </Button>
-                  {/* </Box> */}
-                </Flex>
+                <HotelViewLeftLane
+                  imageMarginRight={imageMarginRight}
+                  laneWidths={laneWidths}
+                />
                 {/* END: LEFT LANE */}
 
                 {/* BEG: RIGHT LANE */}
-                <Flex
-                  mt={laneMarginTops}
-                  // pr={5}
-                  px={4}
-                  flexDirection="column"
-                  width={laneWidths}
-                  border="crimson"
-                >
-                  <HotelViewTitleCard
-                    p={hotelCardPadding}
-                    bg="transparent"
-                    width={cardWidths}
-                  />
-
-                  <HotelViewInfoCard
-                    p={hotelCardPadding}
-                    bg="#fff"
-                    width={cardWidths}
-                  />
-                  <HotelViewFeaturesCard
-                    p={hotelCardPadding}
-                    bg="#fff"
-                    width={cardWidths}
-                  />
-                  <HotelViewMapViewCard
-                    p={hotelCardPadding}
-                    bg="#fff"
-                    router={router}
-                    width={cardWidths}
-                  />
-                  <HotelViewListCard
-                    p={hotelCardPadding}
-                    bg="#fff"
-                    router={router}
-                    width={cardWidths}
-                  />
-                </Flex>
+                <HotelViewRightLane
+                  cardWidths={cardWidths}
+                  hotelCardPadding={hotelCardPadding}
+                  laneMarginTops={laneMarginTops}
+                  laneWidths={laneWidths}
+                  router={router}
+                />
                 {/* END: RIGHT LANE */}
               </Flex>
             </Flex>
