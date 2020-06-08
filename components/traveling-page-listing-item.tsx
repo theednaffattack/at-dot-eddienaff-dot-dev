@@ -18,7 +18,11 @@ export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> =
   original_price,
 }) => {
   return (
-    <Flex width={[1, 1, 1, 1, 1 / 2, 1 / 2, 1 / 2]} pl={4} pb={3} pr={4}>
+    <Flex
+      width={[1, 1, 1, 1, 1 / 2, 1 / 2, 1 / 2]}
+      px={[0, 0, 0, 0, 3, 3, 4]}
+      pb={3}
+    >
       <Flex
         borderRadius="10px"
         bg="#fff"
@@ -32,7 +36,11 @@ export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> =
         <Flex width={1 / 3}>
           {images
             ? images.map((image) => (
-                <Image src={image.uri} sx={image.sx ? image.sx : null} />
+                <Image
+                  key={image.id}
+                  src={image.uri}
+                  sx={image.sx ? image.sx : null}
+                />
               ))
             : null}
         </Flex>

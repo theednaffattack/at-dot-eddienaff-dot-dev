@@ -38,7 +38,7 @@ export const TravelingPageTitlePriceAndOptions: React.FC<TravelingPageTitlePrice
           </Text>
         </Flex>
       </Flex>
-      <Icon active={false} name="more" size="17px" fill="#aaa" />
+      <Icon active={false} name="more_vertical" size="17px" fill="#aaa" />
     </Flex>
   );
 };

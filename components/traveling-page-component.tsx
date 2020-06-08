@@ -3,16 +3,28 @@ import React from "react";
 
 import {
   LayoutAuthorizedHeader,
+  // @ts-ignore
   authLayoutWidths,
 } from "./layout-authorized-header";
 import { Flex } from "./primitives/styled-rebass";
 import { TravelingPageListingItem } from "./traveling-page-listing-item";
 import { TravelingPageInfoAndFilterButton } from "./traveling-page-info-and-filter-button";
+import { size } from "./styles/theme";
 
 interface TravelingPageComponent {
   // pathname: NextContext["pathname"];
   // query: NextContext["query"];
 }
+
+const localLayoutWidths = [
+  size.mobileS,
+  size.mobileM,
+  size.mobileL,
+  size.tablet,
+  size.laptop,
+  size.laptop,
+  size.laptopL,
+];
 
 export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => {
   return (
@@ -48,10 +60,10 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => 
         // mb={[2, 2, 2, 2, 2, 2, 4]}
         justifyContent="center"
         width={1}
-        px={[2, 2, 2, 2, 4, 4, 0]}
+        // px={[0, 0, 0, 0, 4, 4, 0]}
       >
         <Flex
-          width={authLayoutWidths}
+          width={localLayoutWidths}
           borderBottom="2px rgba(170, 170, 170, 0.6) solid"
           alignItems="center"
           pb={[3, 3, 3, 3, 0, 0, 0]}
@@ -82,6 +94,7 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => 
 };
 
 interface ImageInterface {
+  id: string;
   uri: string;
   sx?: any;
 }
@@ -105,6 +118,7 @@ const Hotels: HotelInterface[] = [
     id: "1-hotel",
     images: [
       {
+        id: "1-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
@@ -123,6 +137,7 @@ const Hotels: HotelInterface[] = [
     id: "2-hotel",
     images: [
       {
+        id: "2-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
@@ -141,6 +156,7 @@ const Hotels: HotelInterface[] = [
     id: "3-hotel",
     images: [
       {
+        id: "3-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
@@ -159,6 +175,7 @@ const Hotels: HotelInterface[] = [
     id: "4-hotel",
     images: [
       {
+        id: "4-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
@@ -177,6 +194,7 @@ const Hotels: HotelInterface[] = [
     id: "5-hotel",
     images: [
       {
+        id: "5-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
@@ -195,6 +213,7 @@ const Hotels: HotelInterface[] = [
     id: "6-hotel",
     images: [
       {
+        id: "6-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
@@ -213,6 +232,7 @@ const Hotels: HotelInterface[] = [
     id: "7-hotel",
     images: [
       {
+        id: "7-image",
         uri: "https://source.unsplash.com/random/1024x768?sky",
         sx: {
           borderRadius: "10px",
