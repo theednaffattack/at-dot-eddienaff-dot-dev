@@ -143,6 +143,7 @@ export function useCarousel(
     onSwipedRight(e) {
       swiped(e, dispatch, length, -1);
     },
+    preventDefaultTouchmoveEvent: true,
     trackMouse: true,
     trackTouch: true,
   });
