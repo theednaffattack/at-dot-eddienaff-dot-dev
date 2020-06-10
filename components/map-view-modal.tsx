@@ -9,6 +9,7 @@ import { AuthenticatedModalHeader } from "./authenticated-modal-header";
 import { MapCardPopover } from "./map-card-popover";
 import Icon from "./icon";
 import { IconProps } from "./icon-types";
+import { Map } from "./map";
 
 type ModalStates = "isOpen" | "isClosed";
 
@@ -61,6 +62,7 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
               sx={{ position: "relative" }}
               ref={contentRef}
             >
+              <Map />
               <MapCardPopover />
               <MapViewZoomButtonContainer />
             </Flex>
