@@ -2,11 +2,11 @@ require("dotenv").config();
 const internalIp = require("internal-ip");
 const {
   PHASE_DEVELOPMENT_SERVER,
-  PHASE_PRODUCTION_BUILD
+  PHASE_PRODUCTION_BUILD,
 } = require("next/constants");
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.BUNDLE_ANALYZE === "true"
+  enabled: process.env.BUNDLE_ANALYZE === "true",
 });
 
 module.exports = {
@@ -14,20 +14,20 @@ module.exports = {
     config.module.rules.push({
       test: /\.graphql$/,
       exclude: /node_modules/,
-      use: [options.defaultLoaders.babel, { loader: "graphql-let/loader" }]
+      use: [options.defaultLoaders.babel, { loader: "graphql-let/loader" }],
     });
 
     config.module.rules.push({
       test: /\.graphqls$/,
       exclude: /node_modules/,
-      loader: "graphql-tag/loader"
+      loader: "graphql-tag/loader",
     });
 
     return config;
-  }
+  },
 };
 
-const config = phase => {
+const config = (phase) => {
   const clientIpAddress = internalIp.v4.sync();
   // when started in development mode `next dev` or `npm run dev` regardless of the value of STAGING environmental variable
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
@@ -70,24 +70,25 @@ const config = phase => {
         if (isStaging)
           return `wss://${process.env.STAGING_SERVER_DOMAIN}/subscriptions`;
         return "WEBSOCKET_URL:not (isDev,isProd && !isStaging,isProd && isStaging)";
-      })()
+      })(),
+      MAPBOX_KEY: (() => `${process.env.MAPBOX_API_TOKEN}`)(),
     },
     webpack: (webpackConfig, options) => {
       webpackConfig.module.rules.push({
         test: /\.graphql$/,
         exclude: /node_modules/,
-        use: [options.defaultLoaders.babel, { loader: "graphql-let/loader" }]
+        use: [options.defaultLoaders.babel, { loader: "graphql-let/loader" }],
       });
 
       webpackConfig.module.rules.push({
         test: /\.graphqls$/,
         exclude: /node_modules/,
-        loader: "graphql-tag/loader"
+        loader: "graphql-tag/loader",
       });
 
       return webpackConfig;
-    }
+    },
   };
 };
 
-module.exports = phase => withBundleAnalyzer(config(phase));
+module.exports = (phase) => withBundleAnalyzer(config(phase));
