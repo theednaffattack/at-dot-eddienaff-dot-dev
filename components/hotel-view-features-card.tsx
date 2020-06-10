@@ -21,7 +21,12 @@ export const HotelViewFeaturesCard: React.FC<HotelViewCardProps> = ({
     >
       <Flex alignItems="center" justifyContent="space-around" flexWrap="wrap">
         {featureList.map((feature) => (
-          <Flex flexDirection="column" alignItems="center" p={3}>
+          <Flex
+            key={feature.name}
+            flexDirection="column"
+            alignItems="center"
+            p={3}
+          >
             <Flex
               bg="rgba(94,104,112,.1)"
               height="50px"
