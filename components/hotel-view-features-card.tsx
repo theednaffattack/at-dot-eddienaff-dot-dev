@@ -19,6 +19,7 @@ export const HotelViewFeaturesCard: React.FC<HotelViewCardProps> = ({
         boxShadow: "0px 13px 13px 0px rgba(0, 0, 0, 0.05)",
       }}
     >
+      <Text fontWeight="bold">Amenities</Text>
       <Flex alignItems="center" justifyContent="space-around" flexWrap="wrap">
         {featureList.map((feature) => (
           <Flex
