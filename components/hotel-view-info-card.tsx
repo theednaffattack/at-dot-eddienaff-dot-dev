@@ -10,6 +10,7 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
   p,
   width,
 }) => {
+  const slicedUsers = users.slice(0, 3);
   return (
     <Card
       width={width}
@@ -20,7 +21,7 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
         boxShadow: "0px 13px 13px 0px rgba(0, 0, 0, 0.05)",
       }}
     >
-      <Flex>
+      <Flex sx={{ position: "relative" }}>
         <Flex borderRight="2px #aaa solid">
           <Flex mr={3}>
             <Icon active={false} name="sun" size="30px" fill="#aaa" />
@@ -41,7 +42,7 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
             <Text color="#aaa">+6k Votes</Text>
           </Flex>
           <Flex>
-            {Array.from(Array(5), () => (
+            {Array.from(Array(5), (_, index) => (
               <Icon
                 key={`${index}-amenity`}
                 active={false}
@@ -52,8 +53,13 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
             ))}
           </Flex>
         </Flex>
-        <Flex alignItems="center" sx={{ position: "relative" }}>
-          {users.map((user, index) => (
+        <Flex
+          ml={3}
+          alignItems="center"
+          sx={{ position: "relative" }}
+          width={(slicedUsers.length - 1) * 40 + "px"}
+        >
+          {slicedUsers.map((user, index) => (
             <ImageCircle
               key={`${index}-${user.userId}`}
               imgUri={user.profilePicUri}
