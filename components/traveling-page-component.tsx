@@ -10,6 +10,7 @@ import { Flex } from "./primitives/styled-rebass";
 import { TravelingPageListingItem } from "./traveling-page-listing-item";
 import { TravelingPageInfoAndFilterButton } from "./traveling-page-info-and-filter-button";
 import { size } from "./styles/theme";
+import { Hotels } from "./helpers";
 
 interface TravelingPageComponent {
   // pathname: NextContext["pathname"];
@@ -56,12 +57,7 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => 
           site_name: "SiteName",
         }}
       />
-      <Flex
-        // mb={[2, 2, 2, 2, 2, 2, 4]}
-        justifyContent="center"
-        width={1}
-        // px={[0, 0, 0, 0, 4, 4, 0]}
-      >
+      <Flex justifyContent="center" width={1}>
         <Flex
           width={localLayoutWidths}
           borderBottom="2px rgba(170, 170, 170, 0.6) solid"
@@ -109,140 +105,3 @@ export interface HotelInterface {
   original_price?: string;
   price: string;
 }
-
-// @ts-ignore
-const Hotels: HotelInterface[] = [
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "1-hotel",
-    images: [
-      {
-        id: "1-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "2-hotel",
-    images: [
-      {
-        id: "2-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "3-hotel",
-    images: [
-      {
-        id: "3-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "4-hotel",
-    images: [
-      {
-        id: "4-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "5-hotel",
-    images: [
-      {
-        id: "5-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "6-hotel",
-    images: [
-      {
-        id: "6-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-  {
-    city: "Chicago",
-    comments: "766",
-    id: "7-hotel",
-    images: [
-      {
-        id: "7-image",
-        uri: "https://source.unsplash.com/random/1024x768?sky",
-        sx: {
-          borderRadius: "10px",
-          boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.075)",
-        },
-      },
-    ],
-    likes: "4k",
-    name: "Hotel Corazon",
-    original_price: "$554",
-    price: "$334",
-  },
-];
