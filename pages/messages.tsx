@@ -52,7 +52,7 @@ const initialMessageThreadsState: MessageThreadsState<Thread[]> = {
   loading: true,
 };
 
-const users: User[] = [
+export const users: User[] = [
   {
     userId: "user-1",
     name: "Ryu Ruggins",
