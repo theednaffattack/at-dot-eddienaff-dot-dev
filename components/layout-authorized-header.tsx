@@ -6,6 +6,7 @@ import { Flex, Text } from "./primitives/styled-rebass";
 import { size, device } from "./styles/theme";
 import { icons } from "./helpers";
 import Icon from "./icon";
+import Link from "next/link";
 
 interface LayoutAuthorizedHeaderProps {}
 
@@ -79,7 +80,7 @@ const MenuButton: React.FC<MenuButtonProps> = () => {
 
 interface NavIconsProps {}
 
-const standardNavIconSize = "40px";
+const standardNavIconSize = "30px";
 
 const navBarWidths = [
   "200px",
@@ -130,18 +131,31 @@ const NavIcons: React.FC<NavIconsProps> = () => {
           width={1 / 5}
           pb={3}
         >
-          <Icon
-            name={icon["name"]}
-            size={standardNavIconSize}
-            fill="#aaa"
-            active={router.pathname === icon.route}
-          />
-          <Text
-            color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
-            pt={2}
-          >
-            {icon.label}
-          </Text>
+          <Link href={icon.route}>
+            <a
+              style={{
+                textDecoration: "none",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Icon
+                name={icon["name"]}
+                size={
+                  icon.route === "/traveling" ? "40px" : standardNavIconSize
+                }
+                fill="#aaa"
+                active={router.pathname === icon.route}
+              />
+              <Text
+                color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                pt={2}
+              >
+                {icon.label}
+              </Text>
+            </a>
+          </Link>
         </Flex>
       ))}
     </FlexMain>
