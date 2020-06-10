@@ -3,14 +3,23 @@ import { Flex, Text, CustomButton } from "./primitives/styled-rebass";
 import Icon from "./icon";
 import { IconProps } from "./icon-types";
 
-type FeaturesTypes = Partial<IconProps["name"]>;
+export type FeaturesTypes = {
+  name: Partial<IconProps["name"]>;
+  label:
+    | "Wi-Fi"
+    | "Restaurant"
+    | "Swimming Pool"
+    | "Bar / Nightclub"
+    | "Parking";
+  pixelSize: string;
+};
 
-const featureList: FeaturesTypes[] = [
-  "wifi",
-  "restaurant",
-  "swimming",
-  "bar",
-  "parking",
+export const featureList: FeaturesTypes[] = [
+  { name: "wifi", label: "Wi-Fi", pixelSize: "35px" },
+  { name: "restaurant", label: "Restaurant", pixelSize: "22px" },
+  { name: "swimming", label: "Swimming Pool", pixelSize: "28px" },
+  { name: "bar", label: "Bar / Nightclub", pixelSize: "28px" },
+  { name: "parking", label: "Parking", pixelSize: "30px" },
 ];
 
 interface FilterFeaturesProps {}
@@ -120,16 +129,16 @@ export const FeaturesContainer: React.FC<FeaturesContainerProps> = ({
               >
                 <Icon
                   active={false}
-                  name={singleFeature}
-                  mt={singleFeature === "wifi" ? "12px" : null}
-                  size={singleFeature === "wifi" ? "33px" : "20px"}
+                  name={singleFeature.name}
+                  mt={singleFeature.name === "wifi" ? "12px" : null}
+                  size={singleFeature.name === "wifi" ? "33px" : "20px"}
                   fill={iconFill}
                 />
               </Text>
             </CustomButton>
 
             <Text pt={3} color="rgba(34,34,34,0.50)">
-              {singleFeature}
+              {singleFeature.label}
             </Text>
           </Flex>
         );
