@@ -1,6 +1,7 @@
 // adapted from: https://github.com/FlorianRappl/react-carousel-hook-example/blob/master/src/DemoCarousel.tsx
 import * as React from "react";
 import styled from "styled-components";
+import { bottom, BottomProps } from "styled-system";
 
 import { useCarousel } from "./use-carousel";
 import { CustomButton } from "./primitives/styled-rebass";
@@ -14,10 +15,11 @@ const Carousel = styled.div`
   /* outline: 2px pink solid; */
 `;
 
-const CarouselIndicators = styled.ol`
+const CarouselIndicators = styled.ol<BottomProps>`
   position: absolute;
   right: 0;
-  bottom: 20px;
+  ${bottom}
+  /* bottom: 20px; */
   left: 0;
   z-index: 15;
   display: flex;
@@ -99,7 +101,7 @@ export const CarouselContainer: React.FC<CarouselContainerProps> = ({
   if (length > 0) {
     return (
       <Carousel>
-        <CarouselIndicators>
+        <CarouselIndicators bottom={[3, 3, 3, 3, 3, 4, 4]}>
           {slides.map((_, index) => (
             <CarouselIndicatorSingle
               onClick={() => setActive(index)}
@@ -132,16 +134,14 @@ export const CarouselContainer: React.FC<CarouselContainerProps> = ({
             justifyContent: "center",
             position: "absolute",
             zIndex: 9000,
-            // right: 30,
-            // bottom: 30,
-            bottom: [3, 3, 3, 3, 3, 3, 3],
-            right: [3, 3, 3, 3, 3, 3, 3],
+            bottom: [3, 3, 3, 3, 3, 4, 4],
+            right: [3, 3, 3, 3, 3, 4, 4],
           }}
         >
           <Icon
             name="bookmarkOutline"
-            fill="fuchsia"
-            size="20px"
+            fill="#f4327f"
+            size="16px"
             active={false}
           />
         </CustomButton>
