@@ -74,7 +74,7 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
             </a>
           </Link>
         </Box>
-        <Box>
+        <Box pr={[3, 3, 3, 3, 0, 0, 0]}>
           <Link
             href="/test?moreModal=isOpen&referer=/test?viewHotelModal=isOpen"
             as="/test"
