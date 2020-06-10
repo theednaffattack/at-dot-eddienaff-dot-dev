@@ -1,5 +1,4 @@
 import React from "react";
-// import { CardProps } from "rebass/styled-components";
 
 import {
   Card,
@@ -9,11 +8,6 @@ import {
   StyledHr,
 } from "./primitives/styled-rebass";
 import { HotelViewCardProps } from "./hotel-view-modal";
-
-// interface HotelViewTitleCardProps {
-//   bg?: CardProps["bg"];
-//   p?: CardProps["p"];
-// }
 
 export const HotelViewTitleCard: React.FC<HotelViewCardProps> = ({
   bg,
