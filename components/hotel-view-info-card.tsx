@@ -43,6 +43,7 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
           <Flex>
             {Array.from(Array(5), () => (
               <Icon
+                key={`${index}-amenity`}
                 active={false}
                 name="star"
                 size="15px"
