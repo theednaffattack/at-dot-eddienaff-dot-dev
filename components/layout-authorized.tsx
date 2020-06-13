@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 const FilterModal = dynamic(() => import("./filter-modal"));
 const HotelViewModal = dynamic(() => import("./hotel-view-modal"));
-const MapViewModal = dynamic(() => import("./map-view-modal"));
+// const MapViewModal = dynamic(() => import("./map-view-modal"));
 
 import { Flex } from "./primitives/styled-rebass";
 import { useRouter } from "next/router";
@@ -19,8 +19,8 @@ const AuthorizedLayout = ({ children, title }: any) => {
   const viewHotelModalViewController =
     router.query && router.query.viewHotelModal ? "isOpen" : "isClosed";
 
-  const mapViewModalViewController =
-    router.query && router.query.mapViewModal ? "isOpen" : "isClosed";
+  // const mapViewModalViewController =
+  //   router.query && router.query.mapViewModal ? "isOpen" : "isClosed";
 
   return (
     <>
@@ -49,9 +49,9 @@ const AuthorizedLayout = ({ children, title }: any) => {
       {viewHotelModalViewController === "isOpen" ? (
         <HotelViewModal viewState="isOpen" />
       ) : null}
-      {mapViewModalViewController === "isOpen" ? (
+      {/* {mapViewModalViewController === "isOpen" ? (
         <MapViewModal viewState="isOpen" />
-      ) : null}
+      ) : null} */}
     </>
   );
 };

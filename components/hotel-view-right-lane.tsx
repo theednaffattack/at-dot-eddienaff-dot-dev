@@ -6,20 +6,34 @@ import { HotelViewFeaturesCard } from "./hotel-view-features-card";
 import { HotelViewMapViewCard } from "./hotel-view-map-view-card";
 import { HotelViewListCard } from "./hotel-view-list-card";
 import { NextRouter } from "next/router";
+import {
+  OverlayModalsActions,
+  OverlayModalsStateInterface,
+} from "./hotel-view-modal";
 
 interface HotelViewRightLaneProps {
   cardWidths: (string | number)[];
+  coordinates: number[][];
   hotelCardPadding: number[];
   laneWidths: number[];
   laneMarginTops: number[];
+  name: string;
+  overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
+  overlayModalsState: OverlayModalsStateInterface;
+  price: number;
   router: NextRouter;
 }
 
 export const HotelViewRightLane: React.FC<HotelViewRightLaneProps> = ({
   cardWidths,
+  coordinates,
   hotelCardPadding,
   laneMarginTops,
   laneWidths,
+  name,
+  overlayModalsDispatch,
+  overlayModalsState,
+  price,
   router,
 }) => {
   return (
@@ -43,6 +57,11 @@ export const HotelViewRightLane: React.FC<HotelViewRightLaneProps> = ({
         width={cardWidths}
       />
       <HotelViewMapViewCard
+        coordinates={coordinates}
+        name={name}
+        overlayModalsDispatch={overlayModalsDispatch}
+        overlayModalsState={overlayModalsState}
+        price={price}
         p={hotelCardPadding}
         bg="#fff"
         router={router}

@@ -3,12 +3,15 @@ import { UniversalPortal } from "@jesstelford/react-portal-universal";
 import { useRouter } from "next/router";
 import { CardProps } from "rebass/styled-components";
 import Head from "next/head";
+import dynamic from "next/dynamic";
+
+const MapViewModal = dynamic(() => import("./map-view-modal"));
+const DayPlansModal = dynamic(() => import("./day-plans-modal_v1"));
 
 import { AbFlex, Flex } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
 import { AuthenticatedViewHotelModalHeader } from "./authenticated-view-hotel-modal-header";
-import DayPlansModal from "./day-plans-modal_v1";
 import { HotelViewLeftLane } from "./hotel-view-left-lane";
 import { HotelViewRightLane } from "./hotel-view-right-lane";
 
@@ -28,9 +31,20 @@ const cardWidths = [1, 1, 1, 1, 1, 1, "800px"];
 
 export type FlyOverMenuStatuses = "isOpen" | "isClosed";
 
+interface HotelDataInterface {
+  coordinates: number[][] | null;
+  name: string | null;
+  price: number | null;
+}
+
 export type OverlayModalsActions =
   | { type: "openDayPlansSidebar" }
   | { type: "closeDayPlansSidebar" }
+  | {
+      type: "openMapViewOverlay";
+      data: HotelDataInterface;
+    }
+  | { type: "closeMapViewOverlay" }
   | { type: "openShareMenu" }
   | { type: "closeShareMenu" }
   | { type: "openMoreMenu" }
@@ -52,36 +66,68 @@ function overlayModalsActionsReducer(
     case "openDayPlansSidebar":
       return {
         dayPlansSidebar: "isOpen",
+        mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
       };
     case "closeDayPlansSidebar":
       return {
         dayPlansSidebar: "isClosed",
+        mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
       };
+
+    case "openMapViewOverlay":
+      return {
+        dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: {
+          status: "isOpen",
+          hotelData: {
+            coordinates: action.data.coordinates,
+            name: action.data.name,
+            price: action.data.price,
+          },
+        },
+        moreMenu: state.moreMenu,
+        shareMenu: state.shareMenu,
+      };
+    case "closeMapViewOverlay":
+      return {
+        dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: {
+          status: "isClosed",
+          hotelData: { coordinates: null, name: null, price: null },
+        },
+        moreMenu: state.moreMenu,
+        shareMenu: state.shareMenu,
+      };
+
     case "closeMoreMenu":
       return {
         dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: state.mapViewOverlay,
         moreMenu: "isClosed",
         shareMenu: state.shareMenu,
       };
     case "openMoreMenu":
       return {
         dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: state.mapViewOverlay,
         moreMenu: "isOpen",
         shareMenu: state.shareMenu,
       };
     case "openShareMenu":
       return {
         dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: "isOpen",
       };
     case "closeShareMenu":
       return {
         dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: "isClosed",
       };
@@ -89,20 +135,36 @@ function overlayModalsActionsReducer(
     default:
       return {
         dayPlansSidebar: "isClosed",
+        mapViewOverlay: {
+          status: "isClosed",
+          hotelData: {
+            coordinates: null,
+            name: null,
+            price: null,
+          },
+        },
         shareMenu: "isClosed",
         moreMenu: "isClosed",
       };
   }
 }
 
-interface OverlayModalsStateInterface {
+export interface OverlayModalsStateInterface {
   dayPlansSidebar: FlyOverMenuStatuses;
+  mapViewOverlay: {
+    status: FlyOverMenuStatuses;
+    hotelData: HotelDataInterface;
+  };
   shareMenu: FlyOverMenuStatuses;
   moreMenu: FlyOverMenuStatuses;
 }
 
 const initialOverlayModalsState: OverlayModalsStateInterface = {
   dayPlansSidebar: "isClosed",
+  mapViewOverlay: {
+    status: "isClosed",
+    hotelData: { coordinates: null, name: null, price: null },
+  },
   shareMenu: "isClosed",
   moreMenu: "isClosed",
 };
@@ -119,7 +181,12 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
   const router = useRouter();
 
   const {
-    query: { referer: refererBase },
+    query: {
+      referer: refererBase,
+      coordinates,
+      name: nameBase,
+      price: priceBase,
+    },
   } = router;
   const referer =
     typeof refererBase === "string"
@@ -127,13 +194,17 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
       : Array.isArray(refererBase)
       ? refererBase[0]
       : "none";
+  const asNumbers = convertNumerals(coordinates);
+  const name = typeof nameBase === "string" ? nameBase : nameBase[0];
+  const price = typeof priceBase === "string" ? priceBase : priceBase[0];
+  // const numeralCoorindates = coordinates[0].map((lngLat) => parseFloat(lngLat));
   return (
     <>
       <Head>
         <title>View Hotel</title>
       </Head>
       {viewState === "isOpen" ? (
-        <UniversalPortal selector="#modal">
+        <UniversalPortal selector="#map_modal">
           <AbFlex
             position="fixed"
             flexDirection="column"
@@ -149,6 +220,17 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
                 sidebarViewStatus={overlayModalsState.dayPlansSidebar}
                 overlayModalDispatch={overlayModalsDispatch}
                 viewState={overlayModalsState.dayPlansSidebar}
+              />
+            ) : null}
+            {overlayModalsState &&
+            overlayModalsState.mapViewOverlay &&
+            overlayModalsState.mapViewOverlay.status === "isOpen" ? (
+              <MapViewModal
+                viewState={overlayModalsState.mapViewOverlay.status}
+                overlayModalsDispatch={overlayModalsDispatch}
+                // sidebarViewStatus={overlayModalsState.dayPlansSidebar}
+                // overlayModalDispatch={overlayModalsDispatch}
+                // viewState={overlayModalsState.dayPlansSidebar}
               />
             ) : null}
             <AbFlex position="absolute" left={0} right={0} zIndex={9000}>
@@ -184,9 +266,14 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
                 {/* BEG: RIGHT LANE */}
                 <HotelViewRightLane
                   cardWidths={cardWidths}
+                  coordinates={[asNumbers]}
                   hotelCardPadding={hotelCardPadding}
                   laneMarginTops={laneMarginTops}
                   laneWidths={laneWidths}
+                  overlayModalsDispatch={overlayModalsDispatch}
+                  overlayModalsState={overlayModalsState}
+                  name={name}
+                  price={parseFloat(price)}
                   router={router}
                 />
                 {/* END: RIGHT LANE */}
@@ -202,3 +289,19 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
 };
 
 export default HotelViewModal;
+
+export function convertNumerals(lngLat: string | string[]): number[] {
+  // if it's a string lngLat should look like: "-93.23432, 45.940004"
+  // so split on the comma
+  if (typeof lngLat === "string") {
+    const lngLatAsArray = lngLat.split(",");
+    const numeralCoorindates = lngLatAsArray.map((coordinate) =>
+      parseFloat(coordinate)
+    );
+    return numeralCoorindates;
+  }
+  // if it's already an array return as-is.
+  // if (Array.isArray(lngLat)) {
+  return lngLat.map((string) => parseFloat(string));
+  // }
+}

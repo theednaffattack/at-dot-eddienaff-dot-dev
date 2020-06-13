@@ -7,17 +7,31 @@ import {
   Flex,
   Box,
 } from "./primitives/styled-rebass";
-import { HotelViewCardProps } from "./hotel-view-modal";
+import {
+  HotelViewCardProps,
+  OverlayModalsActions,
+  OverlayModalsStateInterface,
+} from "./hotel-view-modal";
 import Icon from "./icon";
 
 interface HotelViewMapViewCardProps extends HotelViewCardProps {
   router: any;
+  coordinates: number[][];
+  name: string;
+  overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
+  overlayModalsState: OverlayModalsStateInterface;
+  price: number;
 }
 
 export const HotelViewMapViewCard: React.FC<HotelViewMapViewCardProps> = ({
   bg,
+  coordinates,
+  name,
+  overlayModalsDispatch,
+  // overlayModalsState,
+  price,
   p,
-  router,
+  // router,
   width,
 }) => {
   return (
@@ -64,11 +78,16 @@ export const HotelViewMapViewCard: React.FC<HotelViewMapViewCardProps> = ({
               width="auto"
               height="40px"
               type="submit"
-              onClick={() =>
-                router.push(
-                  "/traveling?mapViewModal=isOpen&referer=/traveling",
-                  "/traveling"
-                )
+              onClick={
+                () =>
+                  overlayModalsDispatch({
+                    type: "openMapViewOverlay",
+                    data: { coordinates, name, price },
+                  })
+                // router.push(
+                //   `/traveling?mapViewModal=isOpen&referer=/traveling&coordinates=${coordinates[0]}&name=${name}&price=${price}`,
+                //   "/traveling"
+                // )
               }
             >
               Check it >
