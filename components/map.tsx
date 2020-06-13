@@ -1,9 +1,5 @@
 import React from "react";
-import ReactMapGL, {
-  Popup,
-  FullscreenControl,
-  ViewportProps,
-} from "react-map-gl";
+import ReactMapGL, { Popup, ViewportProps } from "react-map-gl";
 import dynamic from "next/dynamic";
 import axios from "axios";
 
@@ -25,22 +21,6 @@ export interface ViewportState {
   longitude: number;
   zoom: number;
 }
-
-const fullscreenControlStyle: React.CSSProperties = {
-  position: "absolute",
-  top: 70,
-  left: 70,
-  padding: "10px",
-  // outline: "2px limegreen solid",
-};
-
-// const initialViewportState = {
-//   width: "100%",
-//   height: "100%",
-//   latitude: 41.5868,
-//   longitude: -93.625,
-//   zoom: 13,
-// };
 
 export type ViewportActions =
   | {
@@ -246,10 +226,6 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
           />
         </Popup>
       ) : null}
-
-      <div style={fullscreenControlStyle}>
-        <FullscreenControl />
-      </div>
 
       {name && price && lngLat[0] && lngLat[1] ? (
         <Pins
