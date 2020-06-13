@@ -10,7 +10,7 @@ interface TravelingPageListingItemProps extends HotelInterface {}
 export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> = ({
   city,
   comments,
-  // id,
+  coordinates,
   images,
   likes,
   name,
@@ -49,6 +49,7 @@ export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> =
             name={name}
             price={price}
             original_price={original_price ?? ""}
+            coordinates={coordinates}
           />
           <TravelingPageLocationLikesAndComments
             city={city}
