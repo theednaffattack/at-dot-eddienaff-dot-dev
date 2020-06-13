@@ -1,25 +1,32 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
 import { AbFlex, Button, Flex, Box } from "./primitives/styled-rebass";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
 import { useRouter } from "next/router";
 import { AuthenticatedModalHeader } from "./authenticated-modal-header";
-import { MapCardPopover } from "./map-card-popover";
+// import { MapCardPopover } from "./map-card-popover";
 import Icon from "./icon";
 import { IconProps } from "./icon-types";
-import { Map } from "./map";
+import { ViewportActions, ViewportState } from "./map";
+import { convertNumerals, OverlayModalsActions } from "./hotel-view-modal";
+const MapNoSSR = dynamic(() => import("./map"), {
+  ssr: false,
+});
 
 type ModalStates = "isOpen" | "isClosed";
 
 interface MapViewModalProps {
+  overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
   viewState: ModalStates;
 }
 
 const contentRef = React.createRef<HTMLDivElement>();
 
 const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
+  overlayModalsDispatch,
   viewState,
 }) => {
   useLockBodyScroll();
@@ -28,17 +35,28 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
   // const contentRect = useRect(contentRef);
 
   const {
-    query: { referer: refererBase },
+    query: {
+      referer: refererBase,
+      coordinates,
+      name: nameBase,
+      price: priceBase,
+    },
   } = router;
+
   const referer =
     typeof refererBase === "string" ? refererBase : refererBase[0];
+  const name = typeof nameBase === "string" ? nameBase : nameBase[0];
+  const price = typeof priceBase === "string" ? priceBase : priceBase[0];
+
+  const asNumbers = convertNumerals(coordinates);
+
   return (
     <>
       <Head>
         <title>Map View</title>
       </Head>
       {viewState === "isOpen" ? (
-        <UniversalPortal selector="#modal">
+        <UniversalPortal selector="#map_modal">
           <AbFlex
             position="absolute"
             bg="rgba(0, 0, 0, 0.7)"
@@ -51,6 +69,10 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
           >
             <AuthenticatedModalHeader
               bg="#eee"
+              closeFunc={() =>
+                overlayModalsDispatch({ type: "closeMapViewOverlay" })
+              }
+              viewState={viewState}
               referer={referer}
               router={router}
               title="Map View"
@@ -62,9 +84,9 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
               sx={{ position: "relative" }}
               ref={contentRef}
             >
-              <Map />
-              <MapCardPopover />
-              <MapViewZoomButtonContainer />
+              <MapNoSSR lngLat={asNumbers} name={name} price={price} />
+              {/* <MapCardPopover /> */}
+              {/* <MapViewZoomButtonContainer /> */}
             </Flex>
           </AbFlex>
         </UniversalPortal>
@@ -106,12 +128,18 @@ const MapViewZoomButton: React.FC<MapViewZoomButtonProps> = ({
   );
 };
 
-interface MapViewZoomButtonContainerProps {}
+interface MapViewZoomButtonContainerProps {
+  viewportDispatch: React.Dispatch<ViewportActions>;
+  viewportState: ViewportState;
+}
 
-const MapViewZoomButtonContainer: React.FC<MapViewZoomButtonContainerProps> = ({}) => {
+export const MapViewZoomButtonContainer: React.FC<MapViewZoomButtonContainerProps> = ({
+  viewportDispatch,
+  viewportState,
+}) => {
   return (
     <AbFlex
-      bottom={[3, 3, 3, 3, 3, 3, 4]}
+      bottom={[4]}
       left={[3, 3, 3, 3, 3, 3, 4]}
       position="absolute"
       // ml={[2, 2, 2, 2, 2, 2, 3]}
@@ -119,13 +147,23 @@ const MapViewZoomButtonContainer: React.FC<MapViewZoomButtonContainerProps> = ({
       <Box mr={2}>
         <MapViewZoomButton
           buttonText="minus"
-          onClick={() => alert("minus clicked")}
+          onClick={() => {
+            viewportDispatch({
+              type: "zoom",
+              value: viewportState.zoom - 2,
+            });
+          }}
         />
       </Box>
       <Box ml={2}>
         <MapViewZoomButton
           buttonText="plus"
-          onClick={() => alert("plus clicked")}
+          onClick={() => {
+            viewportDispatch({
+              type: "zoom",
+              value: viewportState.zoom + 2,
+            });
+          }}
         />
       </Box>
     </AbFlex>
