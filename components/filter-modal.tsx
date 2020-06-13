@@ -92,6 +92,8 @@ const FilterModal: React.FunctionComponent<FilterModalProps> = ({
                   }}
                 >
                   <AuthenticatedModalHeader
+                    closeFunc={() => console.log("filter close func fired!")}
+                    viewState="isOpen"
                     referer={referer ?? ""}
                     router={router}
                     title="Filters"
