@@ -1,6 +1,8 @@
 import { CSSProperties, ReactChild } from "react";
 
 import { IconProps } from "./icon-types";
+import { HotelInterface } from "./traveling-page-component";
+import { Hotel } from "*/add-new-message.graphql";
 
 interface IconsInterface {
   name: IconProps["name"];
@@ -64,11 +66,37 @@ export const icons: IconsInterface[] = [
 
 // faux hotel - BEG
 
-// @ts-ignore
+export const OtherHotels: Hotel[] = [
+  {
+    address: "1529 Taylor Street",
+    averageRating: 3.4,
+    city: "SF",
+    commentCount: 766,
+    coordinates: { X: 41.5868, Y: -63.625 },
+    distanceKm: "2.2",
+    id: "1-hotel",
+    photos: [
+      {
+        id: "1-image",
+        uri: "https://source.unsplash.com/random/1024x768?sky",
+        name: "fake",
+        description: "",
+        isPublished: true,
+      },
+    ],
+    name: "Hotel Corazon",
+    price: 334,
+    reviewCount: 100,
+    state: "CA",
+    zipCode: "10011",
+  },
+];
+
 export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "1-hotel",
     images: [
       {
@@ -88,6 +116,7 @@ export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "2-hotel",
     images: [
       {
@@ -107,6 +136,7 @@ export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "3-hotel",
     images: [
       {
@@ -126,6 +156,7 @@ export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "4-hotel",
     images: [
       {
@@ -145,6 +176,7 @@ export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "5-hotel",
     images: [
       {
@@ -164,6 +196,7 @@ export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "6-hotel",
     images: [
       {
@@ -183,6 +216,7 @@ export const Hotels: HotelInterface[] = [
   {
     city: "Chicago",
     comments: "766",
+    coordinates: [[-122.1597943, 38.0691839]],
     id: "7-hotel",
     images: [
       {
