@@ -74,6 +74,7 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => 
                 key={hotel.id}
                 city={hotel.city}
                 comments={hotel.comments}
+                coordinates={hotel.coordinates}
                 id={hotel.id}
                 images={hotel.images}
                 likes={hotel.likes}
@@ -104,4 +105,5 @@ export interface HotelInterface {
   name: string;
   original_price?: string;
   price: string;
+  coordinates: number[][];
 }
