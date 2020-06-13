@@ -3,19 +3,24 @@ import React from "react";
 import { AbFlex, Flex, Text } from "./primitives/styled-rebass";
 import Icon from "./icon";
 
+type ModalStates = "isOpen" | "isClosed";
+
 interface AuthenticatedModalHeaderProps {
   bg?: string;
   mt?: string | number;
+  closeFunc: () => void;
   referer?: string;
   router: any;
   title: string;
+  viewState: ModalStates;
 }
 
 export const AuthenticatedModalHeader: React.FC<AuthenticatedModalHeaderProps> = ({
   bg,
   mt = 4,
-  referer,
-  router,
+  closeFunc,
+  // referer,
+  // router,
   title,
 }) => {
   return (
@@ -33,8 +38,9 @@ export const AuthenticatedModalHeader: React.FC<AuthenticatedModalHeaderProps> =
         position="absolute"
         pl={4}
         left={0}
-        onClick={() =>
-          router.push(`${referer ? referer : "/index"}`, `${referer}`)
+        onClick={
+          closeFunc
+          // router.push(`${referer ? referer : "/index"}`, `${referer}`)
         }
       >
         <Icon active={false} name="close" fill="#444" size="20px" />
