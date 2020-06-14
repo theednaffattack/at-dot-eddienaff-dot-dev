@@ -2,7 +2,7 @@ import { CSSProperties, ReactChild } from "react";
 
 import { IconProps } from "./icon-types";
 import { HotelInterface } from "./traveling-page-component";
-import { Hotel } from "*/add-new-message.graphql";
+import { Hotel, User } from "*/add-new-message.graphql";
 
 interface IconsInterface {
   name: IconProps["name"];
@@ -351,3 +351,38 @@ export const isNamedChildrenSlot = (
 // ================================================
 //  message bubble, children checking - END
 // ================================================
+
+//
+// fake users
+//
+
+export const users: User[] = [
+  {
+    id: "user-1",
+    name: "Ryu Ruggins",
+    images: [],
+    profileImageUri:
+      "https://images.unsplash.com/photo-1544435253-f0ead49638fa?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
+  },
+  {
+    id: "user-2",
+    name: "Barbora Polednova",
+    images: [],
+    profileImageUri:
+      "https://images.unsplash.com/photo-1546422401-68b415cbf8de?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
+  },
+  {
+    id: "user-3",
+    name: "Diana Palmer",
+    images: [],
+    profileImageUri:
+      "https://images.unsplash.com/photo-1505033575518-a36ea2ef75ae?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
+  },
+  {
+    id: "user-4",
+    name: "Juliana Sousa",
+    images: [],
+    profileImageUri:
+      "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80",
+  },
+];
