@@ -21,9 +21,14 @@ import { FilterDistance } from "./filter-distance";
 import { FilterRoomGuests } from "./filter-room-guests";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
 import { AuthenticatedModalHeader } from "./authenticated-modal-header";
+import {
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 
 interface FilterModalProps {
-  viewState: "isOpen" | "isClosed";
+  modalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
+  viewState: AuthorizedLayoutModalOverlayState;
   teamId?: string;
   userInfo?: MeQuery["me"] | undefined;
 }
@@ -34,22 +39,23 @@ const FilterModal: React.FunctionComponent<FilterModalProps> = ({
   // modalState,
   // teamId,
   // userInfo,
+  modalDispatch,
   viewState,
 }) => {
   useLockBodyScroll();
   const router = useRouter();
 
-  const {
-    query: { referer: refererBase },
-  } = router;
-  const referer =
-    typeof refererBase === "string" ? refererBase : refererBase[0];
+  // const {
+  //   query: { referer: refererBase },
+  // } = router;
+  // const referer =
+  //   typeof refererBase === "string" ? refererBase : refererBase[0];
   return (
     <>
       <Head>
         <title>Filters</title>
       </Head>
-      {viewState === "isOpen" ? (
+      {viewState.filterModal === "isOpen" ? (
         <UniversalPortal selector="#modal">
           <Formik
             validateOnBlur={false}
@@ -92,9 +98,14 @@ const FilterModal: React.FunctionComponent<FilterModalProps> = ({
                   }}
                 >
                   <AuthenticatedModalHeader
-                    closeFunc={() => console.log("filter close func fired!")}
+                    closeFunc={() =>
+                      modalDispatch({
+                        type: "filterModalClosed",
+                        action: "overlayModalClosed",
+                      })
+                    }
                     viewState="isOpen"
-                    referer={referer ?? ""}
+                    referer={""}
                     router={router}
                     title="Filters"
                   />
