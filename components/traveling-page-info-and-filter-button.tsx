@@ -1,11 +1,16 @@
-import Router from "next/router";
+// import Router from "next/router";
 
 import { Flex, CustomButton, Text } from "./primitives/styled-rebass";
 import Icon from "./icon";
+import { AuthorizedLayoutModalOverlayActions } from "./layout-authorized";
 
-interface TravelingPageInfoAndFilterButtonProps {}
+interface TravelingPageInfoAndFilterButtonProps {
+  modalOverlayDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
+}
 
-export const TravelingPageInfoAndFilterButton: React.FC<TravelingPageInfoAndFilterButtonProps> = () => {
+export const TravelingPageInfoAndFilterButton: React.FC<TravelingPageInfoAndFilterButtonProps> = ({
+  modalOverlayDispatch,
+}) => {
   return (
     <Flex my={4} width={1} alignItems="center" overflowY="hidden" mx="auto">
       <Flex flexDirection="column" mr="auto">
@@ -31,11 +36,16 @@ export const TravelingPageInfoAndFilterButton: React.FC<TravelingPageInfoAndFilt
         width="105px"
         height="40px"
         type="submit"
-        onClick={() =>
-          Router.push(
-            "/traveling?filterModal=isOpen&referer=/traveling",
-            "/traveling"
-          )
+        onClick={
+          () =>
+            modalOverlayDispatch({
+              action: "overlayModalOpen",
+              type: "filterModalOpen",
+            })
+          // Router.push(
+          //   "/traveling?filterModal=isOpen&referer=/traveling",
+          //   "/traveling"
+          // )
         }
       >
         <Flex alignItems="center" justifyContent="center">

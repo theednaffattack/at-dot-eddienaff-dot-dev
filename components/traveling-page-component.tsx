@@ -11,8 +11,9 @@ import { TravelingPageListingItem } from "./traveling-page-listing-item";
 import { TravelingPageInfoAndFilterButton } from "./traveling-page-info-and-filter-button";
 import { size } from "./styles/theme";
 import { Hotels } from "./helpers";
+import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 
-interface TravelingPageComponent {
+interface TravelingPageComponent extends ClonedChildrenFromAuthLayout {
   // pathname: NextContext["pathname"];
   // query: NextContext["query"];
 }
@@ -27,7 +28,10 @@ const localLayoutWidths = [
   size.laptopL,
 ];
 
-export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => {
+export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
   return (
     <React.Fragment>
       <NextSeo
@@ -65,8 +69,13 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({}) => 
           pb={[3, 3, 3, 3, 0, 0, 0]}
           flexDirection="column"
         >
-          <LayoutAuthorizedHeader />
-          <TravelingPageInfoAndFilterButton />
+          <LayoutAuthorizedHeader
+            modalOverlayDispatch={modalOverlayDispatch}
+            modalOverlayState={modalOverlayState}
+          />
+          <TravelingPageInfoAndFilterButton
+            modalOverlayDispatch={modalOverlayDispatch}
+          />
 
           <Flex width={1} flex={1} mx="auto" overflowY="auto" flexWrap="wrap">
             {Hotels.map((hotel) => (
