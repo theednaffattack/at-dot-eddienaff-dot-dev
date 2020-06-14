@@ -4,23 +4,73 @@ import dynamic from "next/dynamic";
 
 const FilterModal = dynamic(() => import("./filter-modal"));
 const HotelViewModal = dynamic(() => import("./hotel-view-modal"));
-// const MapViewModal = dynamic(() => import("./map-view-modal"));
+const SidelistModal = dynamic(() => import("./sidelist-modal"));
 
 import { Flex } from "./primitives/styled-rebass";
 import { useRouter } from "next/router";
+import { ModalViewStates } from "./entry-layout";
+import { users } from "./helpers";
+
+export interface AuthorizedLayoutModalOverlayState {
+  sidebar: ModalViewStates;
+  filterModal: ModalViewStates;
+}
+
+export type AuthorizedLayoutModalOverlayActions =
+  | { type: "sidebarOpen"; action: "overlayModalOpen" }
+  | { type: "sidebarClosed"; action: "overlayModalClosed" }
+  | { type: "filterModalOpen"; action: "overlayModalOpen" }
+  | { type: "filterModalClosed"; action: "overlayModalClosed" };
+
+function authorizedLayoutModalOverlayReducer(
+  // @ts-ignore
+  state: AuthorizedLayoutModalOverlayState,
+  action: AuthorizedLayoutModalOverlayActions
+): AuthorizedLayoutModalOverlayState {
+  switch (action.type) {
+    case "sidebarOpen":
+      return { sidebar: "isOpen", filterModal: state.filterModal };
+    case "sidebarClosed":
+      return { sidebar: "isClosed", filterModal: state.filterModal };
+    case "filterModalOpen":
+      return { sidebar: state.sidebar, filterModal: "isOpen" };
+    case "filterModalClosed":
+      return { sidebar: state.sidebar, filterModal: "isClosed" };
+    default:
+      return { sidebar: "isClosed", filterModal: "isClosed" };
+  }
+}
+
+function initAuthorizedLayoutModalOverlay(
+  initialState: AuthorizedLayoutModalOverlayState
+): AuthorizedLayoutModalOverlayState {
+  return initialState;
+}
 
 const AuthorizedLayout = ({ children, title }: any) => {
   const { children: subChildren } = children;
 
+  const [modalOverlayState, modalOverlayDispatch] = React.useReducer<
+    (
+      state: AuthorizedLayoutModalOverlayState,
+      action: AuthorizedLayoutModalOverlayActions
+    ) => AuthorizedLayoutModalOverlayState,
+    AuthorizedLayoutModalOverlayState
+  >(
+    authorizedLayoutModalOverlayReducer,
+    { sidebar: "isClosed", filterModal: "isClosed" },
+    initAuthorizedLayoutModalOverlay
+  );
+
+  const newChildren = React.cloneElement(subChildren, {
+    modalOverlayState,
+    modalOverlayDispatch,
+  });
+
   const router = useRouter();
-  const filterModalViewController =
-    router.query && router.query.filterModal ? "isOpen" : "isClosed";
 
   const viewHotelModalViewController =
     router.query && router.query.viewHotelModal ? "isOpen" : "isClosed";
-
-  // const mapViewModalViewController =
-  //   router.query && router.query.mapViewModal ? "isOpen" : "isClosed";
 
   return (
     <>
@@ -29,7 +79,6 @@ const AuthorizedLayout = ({ children, title }: any) => {
       </Head>
       <Flex
         m={[0]}
-        // minHeight="100vh"
         flexDirection="column"
         width={1}
         sx={{
@@ -41,13 +90,24 @@ const AuthorizedLayout = ({ children, title }: any) => {
           overflow: children.title === "Messages" ? "hidden" : "auto",
         }}
       >
-        {subChildren}
+        {newChildren}
       </Flex>
-      {filterModalViewController === "isOpen" ? (
-        <FilterModal viewState={filterModalViewController} />
-      ) : null}
+
       {viewHotelModalViewController === "isOpen" ? (
         <HotelViewModal viewState="isOpen" />
+      ) : null}
+      {modalOverlayState.filterModal === "isOpen" ? (
+        <FilterModal
+          viewState={modalOverlayState}
+          modalDispatch={modalOverlayDispatch}
+        />
+      ) : null}
+      {modalOverlayState.sidebar === "isOpen" ? (
+        <SidelistModal
+          modalState={modalOverlayState.sidebar}
+          modalDispatch={modalOverlayDispatch}
+          userInfo={users[0]}
+        />
       ) : null}
       {/* {mapViewModalViewController === "isOpen" ? (
         <MapViewModal viewState="isOpen" />
