@@ -1,8 +1,7 @@
 import React from "react";
 
-import { AbFlex, Box, Flex } from "./primitives/styled-rebass";
+import { AbFlex, Box, Button, Flex } from "./primitives/styled-rebass";
 import { HeaderIcons as Icon } from "./header-icons";
-import Link from "next/link";
 import { FlyOverMenuStatuses, OverlayModalsActions } from "./hotel-view-modal";
 
 interface AuthenticatedViewHotelModalHeaderProps {
@@ -50,39 +49,43 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
       {/* <Text>{title}</Text> */}
       <AbFlex position="absolute" pr={[2, 2, 2, 2, 4, 4, 4]} right={0}>
         <Box pr={2}>
-          {/* <Link
-            href="/test?dayPlansModal=isOpen&referer=/test?viewHotelModal=isOpen"
-            as="/test"
-          > */}
-          <a
+          <Button
+            type="button"
+            p={0}
+            bg="transparent"
             onClick={(e) => {
               e.preventDefault();
               setSidebarViewStatus({ type: "openDayPlansSidebar" });
             }}
           >
             <Icon name="dayPlans" fill="#aaaaaa" size="20px" />
-          </a>
-          {/* </Link> */}
+          </Button>
         </Box>
         <Box pr={2}>
-          <Link
-            href="/test?shareModal=isOpen&referer=/test?viewHotelModal=isOpen"
-            as="/test"
+          <Button
+            type="button"
+            p={0}
+            bg="transparent"
+            onClick={(e) => {
+              e.preventDefault();
+              setSidebarViewStatus({ type: "openDayPlansSidebar" });
+            }}
           >
-            <a>
-              <Icon name="share" fill="#aaaaaa" size="20px" />
-            </a>
-          </Link>
+            <Icon name="share" fill="#aaaaaa" size="20px" />
+          </Button>
         </Box>
-        <Box pr={[3, 3, 3, 3, 0, 0, 0]}>
-          <Link
-            href="/test?moreModal=isOpen&referer=/test?viewHotelModal=isOpen"
-            as="/test"
+        <Box pr={[3, 3, 3, 3, 0, 0, 4]}>
+          <Button
+            type="button"
+            p={0}
+            bg="transparent"
+            onClick={(e) => {
+              e.preventDefault();
+              setSidebarViewStatus({ type: "openDayPlansSidebar" });
+            }}
           >
-            <a>
-              <Icon name="more_vertical" fill="#aaaaaa" size="20px" />
-            </a>
-          </Link>
+            <Icon name="more_vertical" fill="#aaaaaa" size="20px" />
+          </Button>
         </Box>
       </AbFlex>
     </Flex>
