@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 
 export const breakWidths = [1, 1, 1, "960px"];
 
-type ModalViewStates = "isOpen" | "isClosed";
+export type ModalViewStates = "isOpen" | "isClosed";
 
 export type ModalViewActions =
   | "openLoginModal"
