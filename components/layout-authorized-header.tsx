@@ -2,13 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
-import { Flex, Text } from "./primitives/styled-rebass";
+import { Flex, Text, Button } from "./primitives/styled-rebass";
 import { size, device } from "./styles/theme";
 import { icons } from "./helpers";
 import Icon from "./icon";
 import Link from "next/link";
 
-interface LayoutAuthorizedHeaderProps {}
+import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
+
+interface LayoutAuthorizedHeaderProps extends ClonedChildrenFromAuthLayout {}
 
 export const authLayoutWidths = [
   size.mobileS,
@@ -20,7 +22,10 @@ export const authLayoutWidths = [
   size.laptopL,
 ];
 
-export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({}) => {
+export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
   return (
     <Flex
       mt={[3, 3, 3, 3, 3, 3, 4]}
@@ -35,7 +40,10 @@ export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({}
         alignItems="center"
         pb={[3, 3, 3, 3, 0, 0, 0]}
       >
-        <MenuButton />
+        <MenuButton
+          modalOverlayDispatch={modalOverlayDispatch}
+          modalOverlayState={modalOverlayState}
+        />
         <NavIcons />
         <ActivityAndSearchIcons />
       </Flex>
@@ -63,13 +71,36 @@ const ActivityAndSearchIcons: React.FC<ActivityAndSearchIconsProps> = () => {
   );
 };
 
-interface MenuButtonProps {}
+interface MenuButtonProps extends ClonedChildrenFromAuthLayout {}
 
-const MenuButton: React.FC<MenuButtonProps> = () => {
+const MenuButton: React.FC<MenuButtonProps> = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
   return (
     <FlexMenuButton alignItems="center" justifyContent="center">
       <Flex>
-        <Icon name="menu" size="20px" fill="#aaa" />
+        <Button
+          type="button"
+          bg="transparent"
+          onClick={() => {
+            console.log("dispatching", modalOverlayState);
+            if (modalOverlayState.sidebar === "isClosed") {
+              modalOverlayDispatch({
+                type: "sidebarOpen",
+                action: "overlayModalOpen",
+              });
+            }
+            if (modalOverlayState.sidebar === "isOpen") {
+              modalOverlayDispatch({
+                type: "sidebarClosed",
+                action: "overlayModalClosed",
+              });
+            }
+          }}
+        >
+          <Icon name="menu" size="20px" fill="#aaa" />
+        </Button>
       </Flex>
       <Flex ml={2} alignItems="center" justifyContent="center">
         <Text color="#aaa">Menu</Text>
