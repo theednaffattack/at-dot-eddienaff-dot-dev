@@ -5,6 +5,7 @@ import React from "react";
 import { Button, Card, Flex, Text } from "./primitives/styled-rebass";
 import { Thread, MessageThreadsState } from "../pages/messages";
 import Icon from "./icon";
+import { User } from "*/add-new-message.graphql";
 
 interface MessagePageComponentThreadsPaneProps {
   messageThreads: MessageThreadsState<Thread[]>;
@@ -14,11 +15,11 @@ interface MessagePageComponentThreadsPaneProps {
   selectedThreadId: string | null;
 }
 
-export interface User {
-  userId: string;
-  name?: string;
-  profilePicUri?: string;
-}
+// export interface User {
+//   userId: string;
+//   name?: string;
+//   profilePicUri?: string;
+// }
 
 export const messageThreadListPadding = [3, 3, 3, 3, 4, 4, 4];
 const messageThreadsPaneWidths = [1, 1, 1, 1, 0.4, 0.4, 0.4];
@@ -200,7 +201,7 @@ const MessageThreadsListItem: React.FC<MessageThreadsListItemProps> = ({
           bg="green"
           sx={{
             borderRadius: "10px",
-            backgroundImage: `url(${item.last_messenger.profilePicUri})`,
+            backgroundImage: `url(${item.last_messenger.profileImageUri})`,
             backgroundSize: "cover",
           }}
         ></Flex>
