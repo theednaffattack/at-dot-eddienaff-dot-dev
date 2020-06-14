@@ -12,7 +12,7 @@ const Path = styled.path<{ fill?: string }>`
     fill: ${({ fill }) => (fill ? fill : "#fff")};
   }
 
-  @media ${device.laptop} {
+  @media ${device.tablet} {
     fill: ${({ fill }) => (fill ? fill : "#aaa")};
   }
 `;
