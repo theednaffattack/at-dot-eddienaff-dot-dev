@@ -3,7 +3,8 @@ import React from "react";
 import { Button, Flex, Text } from "./primitives/styled-rebass";
 import { IconProps } from "./icon-types";
 import Icon from "./icon";
-import { User } from "./messages-page-component-threads-pane";
+import { User } from "*/add-new-message.graphql";
+// import { User } from "./messages-page-component-threads-pane";
 
 interface NamePlateProps {
   invitees: User[];
@@ -35,7 +36,7 @@ export const MessagesPageComponentSingleMessageThreadPaneNamePlate: React.FC<Nam
           width={1 / 2}
           mr="auto"
           fontSize={[3, 3, 3, 3, 3, 4, 4]}
-          key={invitees[0].userId}
+          key={invitees[0].id ? invitees[0].id : "no-id"}
         >
           {invitees[0].name}
         </Text>
