@@ -45,7 +45,7 @@ export const AuthenticatedModalHeader: React.FC<AuthenticatedModalHeaderProps> =
       >
         <Icon active={false} name="close" fill="#444" size="20px" />
       </AbFlex>
-      <Text>{title}</Text>
+      <Text fontSize={3}>{title}</Text>
     </Flex>
   );
 };
