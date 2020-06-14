@@ -3,7 +3,7 @@ import React from "react";
 import { Card, Flex, Text, Image } from "./primitives/styled-rebass";
 import { HotelViewCardProps } from "./hotel-view-modal";
 import Icon from "./icon";
-import { users } from "../pages/messages";
+import { users } from "./helpers";
 
 export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
   bg,
@@ -61,8 +61,8 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
         >
           {slicedUsers.map((user, index) => (
             <ImageCircle
-              key={`${index}-${user.userId}`}
-              imgUri={user.profilePicUri}
+              key={`${index}-${user.id}`}
+              imgUri={user.profileImageUri}
               index={index}
             />
           ))}
@@ -73,7 +73,7 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
 };
 
 interface ImageCircleProps {
-  imgUri?: string;
+  imgUri?: string | null | undefined;
   index: number;
 }
 
