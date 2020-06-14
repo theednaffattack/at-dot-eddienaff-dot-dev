@@ -32,6 +32,7 @@ export interface IconProps {
     | "bookmarkOutline"
     | "call_button"
     | "chat"
+    | "check_mark"
     | "chevronDown"
     | "close"
     | "comment"
