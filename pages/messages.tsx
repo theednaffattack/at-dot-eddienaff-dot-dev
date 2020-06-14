@@ -8,16 +8,20 @@ import { Flex } from "../components/primitives/styled-rebass";
 import { NextPage, NextPageContext } from "next";
 import {
   MessagePageComponentThreadsPane,
-  User,
   Message,
 } from "../components/messages-page-component-threads-pane";
 import { MessagesPageComponentSingleMessageThreadPane } from "../components/messages-page-component-single-message-thread-pane";
 import { LayoutAuthorizedHeader } from "../components/layout-authorized-header";
 import { MessagesInput } from "../components/messages-input";
+import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
+import { users } from "../components/helpers";
+import { User } from "*/add-new-message.graphql";
 
-interface MessagesPageProps extends NextPageContext {}
+interface MessagesPageProps
+  extends NextPageContext,
+    ClonedChildrenFromAuthLayout {}
 
-interface MessagePageComponent {
+interface MessagePageComponent extends ClonedChildrenFromAuthLayout {
   // pathname: NextContext["pathname"];
   // query: NextContext["query"];
 }
@@ -52,42 +56,16 @@ const initialMessageThreadsState: MessageThreadsState<Thread[]> = {
   loading: true,
 };
 
-export const users: User[] = [
-  {
-    userId: "user-1",
-    name: "Ryu Ruggins",
-    profilePicUri:
-      "https://images.unsplash.com/photo-1544435253-f0ead49638fa?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
-  },
-  {
-    userId: "user-2",
-    name: "Barbora Polednova",
-    profilePicUri:
-      "https://images.unsplash.com/photo-1546422401-68b415cbf8de?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
-  },
-  {
-    userId: "user-3",
-    name: "Diana Palmer",
-    profilePicUri:
-      "https://images.unsplash.com/photo-1505033575518-a36ea2ef75ae?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
-  },
-  {
-    userId: "user-4",
-    name: "Juliana Sousa",
-    profilePicUri:
-      "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80",
-  },
-];
-
 const setDataMessageThreadsState: MessageThreadsState<Thread[]> = {
   data: [
     {
       id: "thread-1",
       invitees: [
         {
-          userId: "user-2",
+          id: "user-2",
           name: "Barbora Polednova",
-          profilePicUri:
+          images: [],
+          profileImageUri:
             "https://images.unsplash.com/photo-1546422401-68b415cbf8de?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;w=1000&amp;q=80",
         },
       ],
@@ -225,7 +203,10 @@ function messageThreadsReducer(
   }
 }
 
-const MessagePageComponent: React.FC<MessagePageComponent> = ({}) => {
+const MessagePageComponent: React.FC<MessagePageComponent> = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
   // @ts-ignore
   const [messageThreadsState, messageThreadsDispatch] = React.useReducer(
     messageThreadsReducer,
@@ -276,7 +257,10 @@ const MessagePageComponent: React.FC<MessagePageComponent> = ({}) => {
         width={1}
         overflowY="hidden"
       >
-        <LayoutAuthorizedHeader />
+        <LayoutAuthorizedHeader
+          modalOverlayDispatch={modalOverlayDispatch}
+          modalOverlayState={modalOverlayState}
+        />
         <Flex flex={1} width={1} height="100%" overflowY="hidden">
           {/* LEFT (MESSAGE THREADS) PANE */}
           <MessagePageComponentThreadsPane
@@ -302,8 +286,16 @@ const MessagePageComponent: React.FC<MessagePageComponent> = ({}) => {
 };
 
 const Messages: NextPage<MessagesPageProps, {}> &
-  NextPageStaticVariableProps = ({}) => {
-  return <MessagePageComponent />;
+  NextPageStaticVariableProps = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
+  return (
+    <MessagePageComponent
+      modalOverlayDispatch={modalOverlayDispatch}
+      modalOverlayState={modalOverlayState}
+    />
+  );
 };
 
 Messages.displayName = `MessagesPage`;

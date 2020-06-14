@@ -1,16 +1,35 @@
 import React from "react";
 import { NextPage, NextPageContext } from "next";
 
-import { getLayout } from "../components/layout-authorized";
+import {
+  getLayout,
+  AuthorizedLayoutModalOverlayActions,
+  AuthorizedLayoutModalOverlayState,
+} from "../components/layout-authorized";
 import { NextPageStaticVariableProps } from "../typings/types";
 import { withApollo } from "../lib/with-apollo_v2";
 import { TravelingPageComponent } from "../components/traveling-page-component";
 
-interface TravelingPageProps extends NextPageContext {}
+export interface ClonedChildrenFromAuthLayout {
+  modalOverlayState: AuthorizedLayoutModalOverlayState;
+  modalOverlayDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
+}
+
+interface TravelingPageProps
+  extends NextPageContext,
+    ClonedChildrenFromAuthLayout {}
 
 const Traveling: NextPage<TravelingPageProps, {}> &
-  NextPageStaticVariableProps = ({}) => {
-  return <TravelingPageComponent />;
+  NextPageStaticVariableProps = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
+  return (
+    <TravelingPageComponent
+      modalOverlayDispatch={modalOverlayDispatch}
+      modalOverlayState={modalOverlayState}
+    />
+  );
 };
 
 Traveling.displayName = `TravelingPage`;
