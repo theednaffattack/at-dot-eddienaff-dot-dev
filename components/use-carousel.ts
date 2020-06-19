@@ -135,6 +135,7 @@ export function useCarousel(
   const [state, dispatch] = useReducer(carouselReducer, initialCarouselState);
   const [container, setContainer] = useState<HTMLElement | null>(null);
   const { ref, onMouseDown } = useSwipeable({
+    preventDefaultTouchmoveEvent: true,
     onSwiping(e) {
       const sign = e.deltaX > 0 ? -1 : 1;
       if (container) {
