@@ -3,9 +3,9 @@ import React from "react";
 
 // import { device } from "./styles/theme";
 import { Button, Card, Flex, Text } from "./primitives/styled-rebass";
-import { Thread, MessageThreadsState } from "../pages/messages";
 import Icon from "./icon";
 import { User } from "*/add-new-message.graphql";
+import { MessageThreadsState, Thread } from "./messages-page-component";
 
 interface MessagePageComponentThreadsPaneProps {
   messageThreads: MessageThreadsState<Thread[]>;

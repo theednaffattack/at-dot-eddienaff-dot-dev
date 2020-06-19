@@ -5,8 +5,9 @@ import { Flex, Text } from "./primitives/styled-rebass";
 import { MessageBubbleSvg } from "./message-bubble";
 import { MessagesPageComponentSingleMessageThreadPaneNamePlate } from "./messages-page-component-single-message-thread-pane-name-plate";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
-import { Thread, MessageThreadsState } from "../pages/messages";
+// import { Thread, MessageThreadsState } from "../pages/messages";
 import { User } from "*/add-new-message.graphql";
+import { MessageThreadsState, Thread } from "./messages-page-component";
 
 interface MessagesPageComponentSingleMessageThreadPaneProps {
   invitees: User[];
