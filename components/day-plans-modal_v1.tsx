@@ -26,26 +26,15 @@ interface DayPlansModalProps {
   teamId?: string;
   userInfo?: MeQuery["me"] | undefined;
   sidebarViewStatus: FlyOverMenuStatuses;
-  // setSidebarViewStatus: React.Dispatch<FlyOverMenuActions>;
   overlayModalDispatch: React.Dispatch<OverlayModalsActions>;
 }
 
 const DayPlansModal: React.FunctionComponent<DayPlansModalProps> = ({
-  // modalState,
-  // teamId,
-  // userInfo,
   overlayModalDispatch,
   sidebarViewStatus,
-  // viewState,
 }) => {
   useLockBodyScroll();
-  // const router = useRouter();
 
-  // const {
-  //   query: { referer: refererBase },
-  // } = router;
-  // const referer =
-  //   typeof refererBase === "string" ? refererBase : refererBase[0];
   return (
     <>
       <Head>
@@ -55,23 +44,25 @@ const DayPlansModal: React.FunctionComponent<DayPlansModalProps> = ({
         <UniversalPortal selector="#modal">
           <AbFlex
             position="fixed"
-            // bg="transparent"
-            bg="rgba(0, 0, 0, 0.7)" // "#eee" //
+            bg="rgba(0, 0, 0, 0.7)"
             color="#444"
-            // flexDirection="column"
             top={0}
             width={1}
             left={0}
             right={0}
             bottom={0}
             zIndex={19}
+            onClick={(event) => {
+              event.preventDefault();
+              if (event.target === event.currentTarget) {
+                overlayModalDispatch({ type: "closeDayPlansSidebar" });
+              }
+            }}
           >
             <Flex
               p={2}
               bg="#eee"
-              // width={sidebarViewStatus === "isOpen" ? "400px" : 0}
               flexDirection="column"
-              // alignItems="center"
               overflowY="scroll"
               overflowX="hidden"
               sx={{
