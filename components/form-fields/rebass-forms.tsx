@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 import { props as systemProps } from "@styled-system/should-forward-prop";
 import { SxProps, BoxProps } from "rebass/styled-components";
 import { BordersProps } from "styled-system";
+import { FieldProps } from "formik";
 
 import { Box, Flex } from "../primitives/styled-rebass";
 
@@ -9,7 +10,8 @@ type RebassFormProps = {
   className: string;
   sx: SxProps;
   variant: string;
-} & BoxProps;
+} & BoxProps &
+  FieldProps;
 
 type ButtonRefType = HTMLButtonElement;
 
@@ -67,13 +69,11 @@ export const Input = forwardRef<InputRefType, BoxProps & BordersProps>(
           display: "block",
           width: "100%",
           p: 2,
+          pl: 3,
           appearance: "none",
           fontSize: "inherit",
           lineHeight: "inherit",
-          // border: "1px solid",
-          // borderRadius: "default",
           color: "inherit",
-          // bg: "transparent",
         }}
       />
     );
@@ -87,13 +87,14 @@ const DownArrow: React.FC<SxProps> = (props) => (
 );
 
 export const Select = forwardRef<SelectRefType, RebassFormProps>(
-  (props, ref) => (
+  ({ field, ...props }, ref) => (
     <Flex {...getMarginProps(props)}>
       <Box
         ref={ref}
         as="select"
         tx="forms"
         variant="select"
+        {...field}
         {...omitMarginProps(props)}
         sx={{
           display: "block",
@@ -253,46 +254,50 @@ const CheckboxIcon = (props: any) => (
 );
 
 export const Checkbox = forwardRef<InputRefType, RebassFormProps>(
-  ({ className, sx, variant = "checkbox", ...props }, ref) => (
-    <Box>
-      <Box
-        ref={ref}
-        as="input"
-        type="checkbox"
-        {...props}
-        sx={{
-          position: "absolute",
-          opacity: 0,
-          zIndex: -1,
-          width: 1,
-          height: 1,
-          overflow: "hidden",
-        }}
-      />
-      <Box
-        as={CheckboxIcon}
-        aria-hidden="true"
-        tx="forms"
-        variant={variant}
-        className={className}
-        sx={sx}
-        {...getSystemProps(props)}
-        __css={{
-          mr: 2,
+  ({ className, sx, variant = "checkbox", field, form, ...props }, ref) => {
+    console.log("THE HELL ARE PROPS?", props);
+    return (
+      <Box>
+        <Box
+          ref={ref}
+          as="input"
+          type="checkbox"
+          {...field}
+          {...props}
+          sx={{
+            position: "absolute",
+            opacity: 0,
+            zIndex: -1,
+            width: 1,
+            height: 1,
+            overflow: "hidden",
+          }}
+        />
+        <Box
+          as={CheckboxIcon}
+          aria-hidden="true"
+          tx="forms"
+          variant={variant}
+          className={className}
+          sx={sx}
+          {...getSystemProps(props)}
+          __css={{
+            mr: 2,
 
-          borderRadius: 4,
-          color: "prime_pink",
-          "input:checked ~ &": {
-            color: "primary",
-          },
-          "input:focus ~ &": {
-            color: "primary",
-            bg: "highlight",
-          },
-        }}
-      />
-    </Box>
-  )
+            borderRadius: 4,
+            color: "prime_pink",
+            "input:checked ~ &": {
+              color: "primary",
+            },
+            "input:focus ~ &": {
+              color: "primary",
+              bg: "highlight",
+            },
+          }}
+        />
+      </Box>
+    );
+  }
 );
 
 export const Slider = forwardRef<InputRefType, RebassFormProps>(
