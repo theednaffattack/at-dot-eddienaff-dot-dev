@@ -170,7 +170,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
             </Flex>
             <Flex>
               <Text fontFamily="main" fontSize={[1]}>
-                Agreee to our{" "}
+                Agree to our{" "}
                 <Link href="terms_and_conditions">
                   <a>Terms & Stuff</a>
                 </Link>
