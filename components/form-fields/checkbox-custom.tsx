@@ -72,3 +72,26 @@ export const ToggleCheckbox = ({ field, form }: FieldProps & InputProps) => {
     </CustomLabel>
   );
 };
+
+export const ToggleCheckboxBetter = ({
+  field,
+  form,
+}: FieldProps & InputProps) => {
+  return (
+    <CustomLabel>
+      <HiddenInput
+        checked={form.values[field.name]}
+        name={field.name}
+        value={form.values[field.name]}
+        onChange={() => {
+          const nextValue = !form.values[field.name];
+
+          form.setFieldValue(field.name, nextValue);
+        }}
+        // {...props}
+        type="checkbox"
+      />
+      <SlideRail checked={form.values[field.name]} />
+    </CustomLabel>
+  );
+};
