@@ -83,7 +83,7 @@ export interface CarouselContainerProps {
   slidesPresented?: number;
 }
 
-export const CarouselContainer: React.FC<CarouselContainerProps> = ({
+export const CarouselContainerWithFavoriteButton: React.FC<CarouselContainerProps> = ({
   children,
   slidesPresented = 1,
   interval = 5000,
@@ -145,6 +145,50 @@ export const CarouselContainer: React.FC<CarouselContainerProps> = ({
             active={false}
           />
         </CustomButton>
+      </Carousel>
+    );
+  }
+  return <div>NO SLIDES</div>;
+};
+
+export const CarouselContainerWithoutFavoriteButton: React.FC<CarouselContainerProps> = ({
+  children,
+  slidesPresented = 1,
+  interval = 5000,
+}) => {
+  const slides = React.Children.toArray(children);
+  const length = slides.length;
+  const numActive = Math.min(length, slidesPresented);
+  const [active, setActive, handlers, style] = useCarousel(length, interval, {
+    slidesPresented: numActive,
+  });
+  const beforeIndices = makeIndices(slides.length - 1, -1, numActive);
+  const afterIndices = makeIndices(0, +1, numActive);
+
+  // console.log({ slides, length, numActive, active });
+  if (length > 0) {
+    return (
+      <Carousel>
+        <CarouselIndicators bottom={[3, 3, 3, 3, 3, 4, 4]}>
+          {slides.map((_, index) => (
+            <CarouselIndicatorSingle
+              onClick={() => setActive(index)}
+              key={index}
+              active={active === index ? "isActive" : "isNotActive"}
+            />
+          ))}
+        </CarouselIndicators>
+        <CarouselContent {...handlers} style={style}>
+          {beforeIndices.map((i) => (
+            <CarouselChild key={i + "-before"}>{slides[i]}</CarouselChild>
+          ))}
+          {slides.map((slide, index) => (
+            <CarouselChild key={index + "-slide-child"}>{slide}</CarouselChild>
+          ))}
+          {afterIndices.map((i) => (
+            <CarouselChild key={i + "-after"}>{slides[i]}</CarouselChild>
+          ))}
+        </CarouselContent>
       </Carousel>
     );
   }
