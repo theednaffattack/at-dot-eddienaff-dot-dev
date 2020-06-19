@@ -9,8 +9,14 @@ import Icon from "./icon";
 import Link from "next/link";
 
 import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
+import {
+  AuthorizedLayoutModalOverlayActions,
+  AuthorizedLayoutModalOverlayState,
+} from "./layout-authorized";
 
-interface LayoutAuthorizedHeaderProps extends ClonedChildrenFromAuthLayout {}
+interface LayoutAuthorizedHeaderProps extends ClonedChildrenFromAuthLayout {
+  title?: string;
+}
 
 export const authLayoutWidths = [
   size.mobileS,
@@ -25,6 +31,7 @@ export const authLayoutWidths = [
 export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
   modalOverlayDispatch,
   modalOverlayState,
+  title,
 }) => {
   return (
     <Flex
@@ -38,34 +45,87 @@ export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
         width={authLayoutWidths}
         borderBottom="2px rgba(170, 170, 170, 0.6) solid"
         alignItems="center"
-        pb={[3, 3, 3, 3, 0, 0, 0]}
+        pb={[2, 2, 2, 2, 0, 0, 0]}
       >
         <MenuButton
           modalOverlayDispatch={modalOverlayDispatch}
           modalOverlayState={modalOverlayState}
         />
-        <NavIcons />
-        <ActivityAndSearchIcons />
+
+        {title === "Settings" ? (
+          <Text mx="auto" fontSize={[3, 3, 3, 3, 3, 4, 4]}>
+            {title}
+          </Text>
+        ) : null}
+        {title === "Settings" ? null : (
+          <NavIcons
+            modalOverlayDispatch={modalOverlayDispatch}
+            modalState={modalOverlayState.profile}
+          />
+        )}
+        <ActivityAndSearchIcons
+          modalDispatch={modalOverlayDispatch}
+          modalState={modalOverlayState.activity}
+        />
       </Flex>
     </Flex>
   );
 };
 
-interface ActivityAndSearchIconsProps {}
+interface ActivityAndSearchIconsProps {
+  modalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
+  modalState: AuthorizedLayoutModalOverlayState["activity"];
+}
 
-const ActivityAndSearchIcons: React.FC<ActivityAndSearchIconsProps> = () => {
+const ActivityAndSearchIcons: React.FC<ActivityAndSearchIconsProps> = ({
+  modalDispatch,
+}) => {
   return (
     <Flex>
       <Flex flexDirection="column" justifyContent="flex-start">
         <Flex alignItems="center" justifyContent="center">
-          <Icon name="activity" size="20px" fill="#aaa" active={false} />
+          <Button
+            type="button"
+            bg="transparent"
+            p={0}
+            onClick={() =>
+              modalDispatch({ type: "activityOpen", action: "setOpen" })
+            }
+            height="30px"
+            width="30px"
+            borderRadius="50%"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Icon name="activity" size="20px" fill="#aaa" active={false} />
+          </Button>
         </Flex>
         <Flex pt={2} alignItems="center" justifyContent="center">
           <Icon name="dot" size="6px" fill="#e9486d" active={false} />
         </Flex>
       </Flex>
       <Flex ml={[2, 2, 2, 2, 2, 3, 3]}>
-        <Icon name="search" size="20px" fill="#aaa" active={false} />
+        <Button
+          type="button"
+          bg="transparent"
+          p={0}
+          onClick={() =>
+            modalDispatch({ type: "activityOpen", action: "setOpen" })
+          }
+          height="30px"
+          width="30px"
+          borderRadius="50%"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Icon name="search" size="20px" fill="#aaa" active={false} />
+        </Button>
       </Flex>
     </Flex>
   );
@@ -102,14 +162,17 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           <Icon name="menu" size="20px" fill="#aaa" />
         </Button>
       </Flex>
-      <Flex ml={2} alignItems="center" justifyContent="center">
+      <FlexMain ml={2} alignItems="center" justifyContent="center">
         <Text color="#aaa">Menu</Text>
-      </Flex>
+      </FlexMain>
     </FlexMenuButton>
   );
 };
 
-interface NavIconsProps {}
+interface NavIconsProps {
+  modalOverlayDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
+  modalState: AuthorizedLayoutModalOverlayState["profile"];
+}
 
 const standardNavIconSize = "30px";
 
@@ -139,7 +202,20 @@ const FlexMain = styled(Flex)`
   }
 `;
 
-const NavIcons: React.FC<NavIconsProps> = () => {
+// const FlexSmallScreensVisible = styled(Flex)`
+//   @media ${device.tabletMax} {
+//     display: flex;
+//   }
+
+//   @media ${device.laptop} {
+//     display: none;
+//   }
+// `;
+
+const NavIcons: React.FC<NavIconsProps> = ({
+  modalOverlayDispatch,
+  modalState,
+}) => {
   const router = useRouter();
   return (
     <FlexMain
@@ -148,47 +224,102 @@ const NavIcons: React.FC<NavIconsProps> = () => {
       justifyContent="center"
       flexWrap="nowrap"
     >
-      {icons.map((icon) => (
-        <Flex
-          key={icon.name}
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          borderBottom={
-            router.pathname === icon.route
-              ? "2px #e9486d solid"
-              : "2px transparent solid"
-          }
-          width={1 / 5}
-          pb={3}
-        >
-          <Link href={icon.route}>
-            <a
-              style={{
-                textDecoration: "none",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
+      {icons.map((icon) => {
+        if (icon.name === "profile") {
+          return (
+            <Flex
+              key={icon.name}
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              borderBottom={
+                router.pathname === icon.route
+                  ? "2px #e9486d solid"
+                  : "2px transparent solid"
+              }
+              width={1 / 5}
+              pb={3}
             >
-              <Icon
-                name={icon["name"]}
-                size={
-                  icon.route === "/traveling" ? "40px" : standardNavIconSize
-                }
-                fill="#aaa"
-                active={router.pathname === icon.route}
-              />
-              <Text
-                color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
-                pt={2}
+              <Button
+                p={0}
+                bg="transparent"
+                onClick={(event) => {
+                  event.preventDefault();
+                  if (modalState.status === "isClosed") {
+                    modalOverlayDispatch({
+                      type: "profileOpen",
+                      action: { setMode: "view", setStatus: "isOpen" },
+                    });
+                  }
+                  //
+                }}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
               >
-                {icon.label}
-              </Text>
-            </a>
-          </Link>
-        </Flex>
-      ))}
+                <Icon
+                  name={icon["name"]}
+                  size={
+                    icon.route === "/traveling" ? "40px" : standardNavIconSize
+                  }
+                  fill="#aaa"
+                  active={router.pathname === icon.route}
+                />
+                <Text
+                  color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                  pt={2}
+                >
+                  {icon.label}
+                </Text>
+              </Button>
+            </Flex>
+          );
+        } else {
+          return (
+            <Flex
+              key={icon.name}
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              borderBottom={
+                router.pathname === icon.route
+                  ? "2px #e9486d solid"
+                  : "2px transparent solid"
+              }
+              width={1 / 5}
+              pb={3}
+            >
+              <Link href={icon.route}>
+                <a
+                  style={{
+                    textDecoration: "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Icon
+                    name={icon["name"]}
+                    size={
+                      icon.route === "/traveling" ? "40px" : standardNavIconSize
+                    }
+                    fill="#aaa"
+                    active={router.pathname === icon.route}
+                  />
+                  <Text
+                    color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                    pt={2}
+                  >
+                    {icon.label}
+                  </Text>
+                </a>
+              </Link>
+            </Flex>
+          );
+        }
+      })}
     </FlexMain>
   );
 };

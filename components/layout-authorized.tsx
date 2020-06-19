@@ -5,22 +5,41 @@ import dynamic from "next/dynamic";
 const FilterModal = dynamic(() => import("./filter-modal"));
 const HotelViewModal = dynamic(() => import("./hotel-view-modal"));
 const SidelistModal = dynamic(() => import("./sidelist-modal"));
+const ProfileModal = dynamic(() => import("./profile-modal"));
 
 import { Flex } from "./primitives/styled-rebass";
 import { useRouter } from "next/router";
 import { ModalViewStates } from "./entry-layout";
 import { users } from "./helpers";
+import ActivityModal from "./activity-modal";
+
+interface ProfileModalStates {
+  mode: "view" | "edit" | "inactive";
+  status: ModalViewStates;
+}
 
 export interface AuthorizedLayoutModalOverlayState {
   sidebar: ModalViewStates;
+  profile: ProfileModalStates;
+  activity: ModalViewStates;
   filterModal: ModalViewStates;
+}
+
+interface ProfileModalActions {
+  setMode: ProfileModalStates["mode"];
+  setStatus: ProfileModalStates["status"];
 }
 
 export type AuthorizedLayoutModalOverlayActions =
   | { type: "sidebarOpen"; action: "overlayModalOpen" }
   | { type: "sidebarClosed"; action: "overlayModalClosed" }
   | { type: "filterModalOpen"; action: "overlayModalOpen" }
-  | { type: "filterModalClosed"; action: "overlayModalClosed" };
+  | { type: "filterModalClosed"; action: "overlayModalClosed" }
+  | { type: "activityOpen"; action: "setOpen" }
+  | { type: "activityClosed"; action: "setClosed" }
+  | { type: "profileOpen"; action: ProfileModalActions }
+  | { type: "profileClosed"; action: ProfileModalActions }
+  | { type: "openProfileFromSidebar"; action: ProfileModalActions };
 
 function authorizedLayoutModalOverlayReducer(
   // @ts-ignore
@@ -29,15 +48,82 @@ function authorizedLayoutModalOverlayReducer(
 ): AuthorizedLayoutModalOverlayState {
   switch (action.type) {
     case "sidebarOpen":
-      return { sidebar: "isOpen", filterModal: state.filterModal };
+      return {
+        sidebar: "isOpen",
+        filterModal: state.filterModal,
+        profile: { status: "isClosed", mode: "inactive" },
+        activity: state.activity,
+      };
     case "sidebarClosed":
-      return { sidebar: "isClosed", filterModal: state.filterModal };
+      return {
+        sidebar: "isClosed",
+        filterModal: state.filterModal,
+        profile: state.profile,
+        activity: state.activity,
+      };
     case "filterModalOpen":
-      return { sidebar: state.sidebar, filterModal: "isOpen" };
+      return {
+        sidebar: state.sidebar,
+        filterModal: "isOpen",
+        profile: { status: "isClosed", mode: "inactive" },
+        activity: state.activity,
+      };
     case "filterModalClosed":
-      return { sidebar: state.sidebar, filterModal: "isClosed" };
+      return {
+        sidebar: state.sidebar,
+        filterModal: "isClosed",
+        profile: state.profile,
+        activity: state.activity,
+      };
+    case "profileOpen":
+      return {
+        sidebar: state.sidebar,
+        filterModal: state.filterModal,
+        profile: { status: "isOpen", mode: "view" },
+        activity: state.activity,
+      };
+    case "profileClosed":
+      return {
+        sidebar: state.sidebar,
+        filterModal: state.filterModal,
+        profile: {
+          status: action.action.setStatus,
+          mode: action.action.setMode,
+        },
+        activity: state.activity,
+      };
+    case "openProfileFromSidebar":
+      return {
+        sidebar: "isClosed",
+        filterModal: state.filterModal,
+        profile: {
+          status: action.action.setStatus,
+          mode: action.action.setMode,
+        },
+        activity: state.activity,
+      };
+    case "activityOpen":
+      return {
+        sidebar: state.sidebar,
+        filterModal: "isClosed",
+        profile: { status: "isClosed", mode: "inactive" },
+        activity: "isOpen",
+      };
+    case "activityClosed":
+      return {
+        sidebar: state.sidebar,
+        filterModal: state.filterModal,
+        profile: state.profile,
+        activity: "isClosed",
+      };
+
     default:
-      return { sidebar: "isClosed", filterModal: "isClosed" };
+      return {
+        sidebar: "isClosed",
+        filterModal: "isClosed",
+        profile: { status: "isClosed", mode: "inactive" },
+        activity: "isClosed",
+      };
   }
 }
 
@@ -58,7 +144,12 @@ const AuthorizedLayout = ({ children, title }: any) => {
     AuthorizedLayoutModalOverlayState
   >(
     authorizedLayoutModalOverlayReducer,
-    { sidebar: "isClosed", filterModal: "isClosed" },
+    {
+      sidebar: "isClosed",
+      filterModal: "isClosed",
+      profile: { status: "isClosed", mode: "inactive" },
+      activity: "isClosed",
+    },
     initAuthorizedLayoutModalOverlay
   );
 
@@ -105,6 +196,20 @@ const AuthorizedLayout = ({ children, title }: any) => {
       {modalOverlayState.sidebar === "isOpen" ? (
         <SidelistModal
           modalState={modalOverlayState.sidebar}
+          modalDispatch={modalOverlayDispatch}
+          userInfo={users[0]}
+        />
+      ) : null}
+      {modalOverlayState.profile.status === "isOpen" ? (
+        <ProfileModal
+          modalState={modalOverlayState.profile}
+          modalDispatch={modalOverlayDispatch}
+          userInfo={users[0]}
+        />
+      ) : null}
+      {modalOverlayState.activity === "isOpen" ? (
+        <ActivityModal
+          modalState={modalOverlayState.activity}
           modalDispatch={modalOverlayDispatch}
           userInfo={users[0]}
         />
