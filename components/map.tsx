@@ -7,8 +7,13 @@ import { MapViewZoomButtonContainer } from "./map-view-modal";
 import { Pins } from "./pins";
 import { RequestDataInterface } from "./temp.request.data";
 import { PolylineOverlay } from "./polyline-overlay";
-import { DisplayDirections } from "./display-directions";
+import {
+  DisplayDirections,
+  CustomMarker,
+  CustomWrapper,
+} from "./display-directions";
 import { DirectionsLoading } from "./directions-loading";
+import Icon from "./icon";
 
 const MapCardPopoverNoSSR = dynamic(() => import("./map-card-popover"), {
   ssr: false,
@@ -107,10 +112,10 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
     "init" | "isRequesting" | "hasRequested"
   >("init");
 
-  // // to get the origin based on click
-  // const [originData, setOriginData] = React.useState<[number, number] | null>(
-  //   null
-  // );
+  // to get the origin based on click
+  const [originData, setOriginData] = React.useState<[number, number] | null>(
+    null
+  );
 
   // // to get the destination based on click
   // const [destinationData, setDestinationData] = React.useState<
@@ -126,6 +131,8 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
   React.useEffect(() => {
     if (requestData === "isRequesting") {
       navigator.geolocation.getCurrentPosition(function(position) {
+        setOriginData([position.coords.longitude, position.coords.latitude]);
+
         const theUri = buildUri({
           origin: [position.coords.longitude, position.coords.latitude],
           // origin: [-122.1470994, 38.0464928],
@@ -185,14 +192,22 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
             lineWidth={3}
             points={directionsData?.routes[0].geometry.coordinates}
           />
-          <DisplayDirections
-            distance={directionsData.routes[0].distance}
-            duration={directionsData.routes[0].duration}
-            steps={directionsData.routes[0].legs[0].steps}
-          />
+          <CustomWrapper
+            x={20}
+            y={90}
+            captureScroll={true}
+            captureClick={true}
+            captureDoubleClick={true}
+            captureDrag={true}
+          >
+            <DisplayDirections
+              distance={directionsData.routes[0].distance}
+              duration={directionsData.routes[0].duration}
+              steps={directionsData.routes[0].legs[0].steps}
+            />
+          </CustomWrapper>
         </>
       ) : null}
-      {/* <Marker latitude={lngLat[1]} longitude={lngLat[0]} /> */}
 
       {popupVisible === "isVisible" ? (
         <Popup
@@ -225,6 +240,15 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
             }}
           />
         </Popup>
+      ) : null}
+      {originData ? (
+        <CustomMarker
+          key="user-pin"
+          longitude={originData[0]}
+          latitude={originData[1]}
+        >
+          <Icon active={false} name="user_map_pointer" size="50px" fill="" />
+        </CustomMarker>
       ) : null}
 
       {name && price && lngLat[0] && lngLat[1] ? (
