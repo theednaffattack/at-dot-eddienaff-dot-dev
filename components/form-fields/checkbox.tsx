@@ -17,7 +17,7 @@ const Icon = styled.svg`
 // Hide checkbox visually but remain accessible to screen readers.
 // Source: https://polished.js.org/docs/#hidevisually
 const HiddenCheckbox: any = styled.input.attrs({
-  type: "checkbox"
+  type: "checkbox",
 })`
   border: 0;
   clip: rect(0 0 0 0);
@@ -38,11 +38,11 @@ const StyledCheckbox = styled.div<{ checked: boolean }>`
   margin: 0px;
   box-sizing: border-box; 
   height: 20px;
-  background: ${props => (props.checked ? "" : "papayawhip")};
+  background: ${(props) => (props.checked ? "" : "papayawhip")};
   border-radius: 7px;
-  border: ${props => (!props.checked ? "1px rgba(0,0,0,0.3) solid" : "")};
+  border: ${(props) => (!props.checked ? "1px rgba(0,0,0,0.3) solid" : "")};
   transition: all 150ms;
-  /* background-image:  ${props =>
+  /* background-image:  ${(props) =>
     props.checked
       ? "linear-gradient(90deg, rgb(210,48,120) 6%, rgb(254,97,97) 74%, rgb(255,121,85) 100%);"
       : ""} */
@@ -52,23 +52,23 @@ const StyledCheckbox = styled.div<{ checked: boolean }>`
   /* } */
 
   ${Icon} {
-    visibility: ${props => (props.checked ? "visible" : "hidden")};
+    visibility: ${(props) => (props.checked ? "visible" : "hidden")};
   }
 `;
 
 const CheckBox = ({ field, form, ...props }: FieldProps & InputProps) => (
   <CheckboxContainer>
     <HiddenCheckbox
-      checked={form.values.keepMeSignedIn}
+      checked={form.values[field.name]}
       name={field.name}
       onChange={() => {
-        const nextValue = !form.values.keepMeSignedIn;
+        const nextValue = !form.values[field.name];
 
-        form.setFieldValue("keepMeSignedIn", nextValue);
+        form.setFieldValue(field.name, nextValue);
       }}
       {...props}
     />
-    <StyledCheckbox checked={form.values.keepMeSignedIn}>
+    <StyledCheckbox checked={form.values[field.name]}>
       <Icon viewBox="0 0 24 24">
         <polyline points="20 6 9 17 4 12" />
       </Icon>
