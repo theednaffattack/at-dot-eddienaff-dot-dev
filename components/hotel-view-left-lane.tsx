@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import {
-  CarouselContainer,
+  CarouselContainerWithFavoriteButton,
   CarouselChild,
 } from "./example-florian-rappl-carousel-too";
 import { Flex, Image } from "./primitives/styled-rebass";
@@ -40,7 +40,7 @@ export const HotelViewLeftLane: React.FC<HotelViewLeftLaneProps> = ({
       width={laneWidths}
       sx={{ position: "relative" }}
     >
-      <CarouselContainer>
+      <CarouselContainerWithFavoriteButton>
         <CarouselChild>
           <Image
             src="https://source.unsplash.com/random/1024x768?boat"
@@ -56,7 +56,7 @@ export const HotelViewLeftLane: React.FC<HotelViewLeftLaneProps> = ({
             srcSet=""
           />
         </CarouselChild>
-      </CarouselContainer>
+      </CarouselContainerWithFavoriteButton>
     </Flex>
   );
 };
