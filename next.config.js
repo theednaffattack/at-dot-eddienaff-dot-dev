@@ -2,6 +2,7 @@ require("dotenv").config();
 const internalIp = require("internal-ip");
 const {
   PHASE_DEVELOPMENT_SERVER,
+  PHASE_SECURE_DEVELOPMENT_SERVER,
   PHASE_PRODUCTION_BUILD,
 } = require("next/constants");
 
@@ -31,6 +32,8 @@ const config = (phase) => {
   const clientIpAddress = internalIp.v4.sync();
   // when started in development mode `next dev` or `npm run dev` regardless of the value of STAGING environmental variable
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
+
+  const isSecureDev = phase === PHASE_SECURE_DEVELOPMENT_SERVER;
   // when `next build` or `npm run build` is used
   const isProd =
     phase === PHASE_PRODUCTION_BUILD && process.env.STAGING !== "1";
@@ -63,6 +66,9 @@ const config = (phase) => {
       WEBSOCKET_URL: (() => {
         if (isDev) {
           return `ws://${clientIpAddress}:${process.env.GRAPHQL_PORT}/subscriptions`;
+        }
+        if (isSecureDev) {
+          return `wss://${process.env.NGROK_API_DOMAIN}/subscriptions`;
         }
         if (isProd) {
           return `wss://${process.env.PRODUCTION_API_DOMAIN}/subscriptions`;
