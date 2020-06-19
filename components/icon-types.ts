@@ -4,6 +4,11 @@ export interface PathKeyArgsType {
   fill?: string;
 }
 
+export interface BookingsKeyArgsType {
+  fillForeground?: string;
+  fillBackground?: string;
+}
+
 export interface TabKeyArgs extends PathKeyArgsType {
   active?: boolean;
   activeColor?: string;
@@ -27,9 +32,12 @@ export interface IconProps {
     | "activity"
     | "activities"
     | "advance"
+    | "arrow_right"
+    | "arrow_right_stick"
     | "bar"
     | "bookings"
     | "bookmarkOutline"
+    | "bus"
     | "call_button"
     | "chat"
     | "check_mark"
@@ -43,10 +51,14 @@ export interface IconProps {
     | "emoji"
     | "explore"
     | "favorite"
+    | "follow"
+    | "horizontal_line"
     | "image_attached"
+    | "location"
     | "logout"
     | "love"
     | "mapDot"
+    | "mapDotEndpoint"
     | "mapPin"
     | "mapPinToo"
     | "menu"
@@ -56,6 +68,7 @@ export interface IconProps {
     | "nearMe"
     | "nightClub"
     | "parking"
+    | "plane"
     | "plus"
     | "plus_skinny"
     | "profile"
@@ -67,11 +80,16 @@ export interface IconProps {
     | "send"
     | "settings"
     | "share_arrow"
+    | "ship"
     | "sidelist"
     | "star"
     | "subscription"
     | "sun"
     | "swimming"
+    | "train"
     | "traveling"
+    | "user_map_pointer"
+    | "weather_rainy"
+    | "weather_sunny"
     | "wifi";
 }
