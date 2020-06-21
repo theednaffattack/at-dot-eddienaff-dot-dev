@@ -65,7 +65,10 @@ export const SideListModal: React.FunctionComponent<SideListModalProps> = ({
               {/* END - PROFILE VIEW */}
 
               {/* START - LINK BUTTONS */}
-              <SidelistModalIconLinkButtons />
+              <SidelistModalIconLinkButtons
+                modalDispatch={modalDispatch}
+                modalState={modalState}
+              />
               {/* END - LINK BUTTONS */}
             </Flex>
           </AbFlex>
