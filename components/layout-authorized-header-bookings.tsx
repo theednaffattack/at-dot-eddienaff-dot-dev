@@ -149,7 +149,6 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           type="button"
           bg="transparent"
           onClick={() => {
-            console.log("dispatching", modalOverlayState);
             if (modalOverlayState.sidebar === "isClosed") {
               modalOverlayDispatch({
                 type: "sidebarOpen",
@@ -222,6 +221,7 @@ const NavIcons: React.FC<NavIconsProps> = ({
   modalState,
 }) => {
   const router = useRouter();
+
   return (
     <FlexMain
       mx="auto"
@@ -238,7 +238,7 @@ const NavIcons: React.FC<NavIconsProps> = ({
               alignItems="center"
               justifyContent="center"
               borderBottom={
-                router.pathname === icon.route
+                router.pathname === icon.href
                   ? "2px #e9486d solid"
                   : "2px transparent solid"
               }
@@ -267,13 +267,15 @@ const NavIcons: React.FC<NavIconsProps> = ({
                 <Icon
                   name={icon["name"]}
                   size={
-                    icon.route === "/traveling" ? "40px" : standardNavIconSize
+                    icon.href === "/traveling" ? "40px" : standardNavIconSize
                   }
                   fill="#aaa"
-                  active={router.pathname === icon.route}
+                  active={icon.href.includes(router.pathname)}
                 />
                 <Text
-                  color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                  color={
+                    icon.href.includes(router.pathname) ? "#e9486d" : "#aaa"
+                  }
                   pt={2}
                 >
                   {icon.label}
@@ -289,14 +291,14 @@ const NavIcons: React.FC<NavIconsProps> = ({
               alignItems="center"
               justifyContent="center"
               borderBottom={
-                router.pathname === icon.route
+                icon.href.includes(router.pathname)
                   ? "2px #e9486d solid"
                   : "2px transparent solid"
               }
               width={1 / 5}
               pb={3}
             >
-              <Link href={icon.route}>
+              <Link href={icon.href}>
                 <a
                   style={{
                     textDecoration: "none",
@@ -308,13 +310,15 @@ const NavIcons: React.FC<NavIconsProps> = ({
                   <Icon
                     name={icon["name"]}
                     size={
-                      icon.route === "/traveling" ? "40px" : standardNavIconSize
+                      icon.href === "/traveling" ? "40px" : standardNavIconSize
                     }
                     fill="#aaa"
-                    active={router.pathname === icon.route}
+                    active={icon.href.includes(router.pathname)}
                   />
                   <Text
-                    color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                    color={
+                      icon.href.includes(router.pathname) ? "#e9486d" : "#aaa"
+                    }
                     pt={2}
                   >
                     {icon.label}
