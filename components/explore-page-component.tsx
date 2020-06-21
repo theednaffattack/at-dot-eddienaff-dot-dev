@@ -6,8 +6,8 @@ import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 import { Flex } from "./primitives/styled-rebass";
 import { LayoutAuthorizedHeaderBookings } from "./layout-authorized-header-bookings";
 import { ExploreTabs } from "./explore-tabs";
-import { ExploreTabDiscover } from "./explore-tabs-discover";
-const ExploreTabActivities = dynamic(() => import("./explore-tab-activities"));
+import { ExploreTabActivities } from "./explore-tabs-activities";
+const ExploreTabExplore = dynamic(() => import("./explore-tabs-explore"));
 
 interface ExplorePageComponentProps extends ClonedChildrenFromAuthLayout {
   // pathname: NextContext["pathname"];
@@ -55,8 +55,8 @@ export const ExplorePageComponent: React.FC<ExplorePageComponentProps> = ({
         />
 
         <ExploreTabs>
-          <ExploreTabDiscover label="Discover" />
           <ExploreTabActivities label="Activities" />
+          <ExploreTabExplore label="Explore" />
         </ExploreTabs>
       </Flex>
     </>
