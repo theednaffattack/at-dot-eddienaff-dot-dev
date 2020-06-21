@@ -13,11 +13,12 @@ import {
   OverlayModalsStateInterface,
 } from "./hotel-view-modal";
 import Icon from "./icon";
+import { ParsedUrlQueryValue } from "../hooks/use-params";
 
 interface HotelViewMapViewCardProps extends HotelViewCardProps {
   router: any;
   coordinates: number[][];
-  name: string;
+  name: ParsedUrlQueryValue;
   overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
   overlayModalsState: OverlayModalsStateInterface;
   price: number;
@@ -90,7 +91,13 @@ export const HotelViewMapViewCard: React.FC<HotelViewMapViewCardProps> = ({
                 // )
               }
             >
-              Check it >
+              Check it{" "}
+              <Icon
+                fill="rgba(255,255,255,0.5"
+                size="15px"
+                name="arrow_right"
+                active={false}
+              />
             </CustomButton>
           </Flex>
         </Flex>
