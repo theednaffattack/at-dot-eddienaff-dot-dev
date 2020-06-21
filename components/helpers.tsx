@@ -8,11 +8,12 @@ import { Flex, Image, Text, Box } from "./primitives/styled-rebass";
 import { FollowButton } from "./follow-button";
 
 interface IconsInterface {
+  asPath: string; // LinkProps["as"];
   name: IconProps["name"];
   label?: string;
   fill: string;
   size: string;
-  route: string;
+  href: string; // LinkProps["href"];
   active: boolean;
 }
 // ================================================
@@ -25,7 +26,8 @@ export const icons: IconsInterface[] = [
     fill: "#aaa",
     name: "traveling",
     label: "Traveling",
-    route: "/traveling",
+    href: "/traveling",
+    asPath: "/traveling",
     size: "20px",
   },
   {
@@ -33,7 +35,8 @@ export const icons: IconsInterface[] = [
     fill: "#aaa",
     label: "Explore",
     name: "explore",
-    route: "/explore",
+    href: "/explore?tab=Explore",
+    asPath: "/explore",
     size: "20px",
   },
   {
@@ -42,14 +45,16 @@ export const icons: IconsInterface[] = [
     name: "saved",
     label: "Saved",
     size: "20px",
-    route: "/saved",
+    href: "/saved",
+    asPath: "/saved",
   },
   {
     active: false,
     fill: "#aaa",
     label: "Chat",
     name: "chat",
-    route: "/messages",
+    href: "/messages",
+    asPath: "/messages",
     size: "20px",
   },
   {
@@ -57,7 +62,8 @@ export const icons: IconsInterface[] = [
     fill: "#aaa",
     label: "Profile",
     name: "profile",
-    route: "/profile",
+    href: "/profile",
+    asPath: "/profile",
     size: "20px",
   },
 ];
