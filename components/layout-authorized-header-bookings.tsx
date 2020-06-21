@@ -21,13 +21,16 @@ interface LayoutAuthorizedHeaderBookingsProps
 
 export const authLayoutWidths = [
   size.mobileS,
-  size.mobileM,
-  size.mobileS,
+  "100%", // size.mobileM,
+  "100%", // size.mobileS,
   size.tablet,
   size.laptop,
   size.laptop,
   size.laptopL,
 ];
+
+const authLayoutPaddings = [2, 2, 2, 2, 2, 2, 2];
+// const authLayoutPaddings = 0;
 
 export const LayoutAuthorizedHeaderBookings: React.FC<LayoutAuthorizedHeaderBookingsProps> = ({
   modalOverlayDispatch,
@@ -43,7 +46,9 @@ export const LayoutAuthorizedHeaderBookings: React.FC<LayoutAuthorizedHeaderBook
       px={[2, 2, 2, 2, 4, 4, 0]}
     >
       <Flex
-        width={authLayoutWidths}
+        // width={authLayoutWidths}
+        width={1}
+        pr={authLayoutPaddings}
         alignItems="center"
         pb={[2, 2, 2, 2, 0, 0, 0]}
       >
