@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useRouterQuery } from "./use-router-query";
 
-type ParsedUrlQueryValue = string | string[] | undefined;
+export type ParsedUrlQueryValue = string | string[] | undefined;
 
 export interface ParsedUrlQuery {
   [key: string]: ParsedUrlQueryValue;
@@ -52,6 +52,17 @@ export function useParams() {
 
   return extractRouterParams(router.query, query);
 }
+
+// const {} = useTypedParams(["referer", "string"], ["coordinates", "number[]"])
+// export function useTypedParams(arrayOfTuples: [string, string][]) {
+//   const params = useParams();
+//   for (const param of params) {
+
+//   }
+//   const rawValue = params[key];
+
+//   return extractRouterParams(router.query, query);
+// }
 
 export function useParam(key: string): undefined | string | string[];
 export function useParam(key: string, returnType: "string"): string;

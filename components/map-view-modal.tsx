@@ -11,7 +11,10 @@ import { AuthenticatedModalHeader } from "./authenticated-modal-header";
 import Icon from "./icon";
 import { IconProps } from "./icon-types";
 import { ViewportActions, ViewportState } from "./map";
-import { convertNumerals, OverlayModalsActions } from "./hotel-view-modal";
+import {
+  convertLngLatNumerals,
+  OverlayModalsActions,
+} from "./hotel-view-modal";
 const MapNoSSR = dynamic(() => import("./map"), {
   ssr: false,
 });
@@ -48,7 +51,7 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
   const name = typeof nameBase === "string" ? nameBase : nameBase[0];
   const price = typeof priceBase === "string" ? priceBase : priceBase[0];
 
-  const asNumbers = convertNumerals(coordinates);
+  const asNumbers = convertLngLatNumerals(coordinates);
 
   return (
     <>

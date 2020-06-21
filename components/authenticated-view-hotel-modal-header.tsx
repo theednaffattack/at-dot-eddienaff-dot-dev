@@ -3,11 +3,12 @@ import React from "react";
 import { AbFlex, Box, Button, Flex } from "./primitives/styled-rebass";
 import { HeaderIcons as Icon } from "./header-icons";
 import { FlyOverMenuStatuses, OverlayModalsActions } from "./hotel-view-modal";
+import { ParsedUrlQueryValue, useParam } from "../hooks/use-params";
 
 interface AuthenticatedViewHotelModalHeaderProps {
   bg?: string;
   mt?: string | number;
-  referer?: string;
+  referer?: ParsedUrlQueryValue;
   router: any;
   title: string;
 
@@ -16,14 +17,11 @@ interface AuthenticatedViewHotelModalHeaderProps {
 }
 
 export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelModalHeaderProps> = ({
-  // bg,
-  // mt = 4,
   referer,
   router,
   setSidebarViewStatus,
-  // sidebarViewStatus,
-  // title,
 }) => {
+  const tab = useParam("tab", "string");
   return (
     <Flex
       // pt={mt}\
@@ -40,9 +38,16 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
         position="absolute"
         pl={4}
         left={0}
-        onClick={() =>
-          router.push(`${referer ? referer : "/index"}`, `${referer}`)
-        }
+        onClick={() => {
+          if (tab) {
+            router.push(
+              `${referer ? `${referer}?tab=${tab}` : "/index"}`,
+              referer
+            );
+          } else {
+            router.push(`${referer ? referer : "/index"}`, `${referer}`);
+          }
+        }}
       >
         <Icon name="close" fill="#fff" size="17px" />
       </AbFlex>

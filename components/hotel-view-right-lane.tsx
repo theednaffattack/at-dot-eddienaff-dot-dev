@@ -10,6 +10,7 @@ import {
   OverlayModalsActions,
   OverlayModalsStateInterface,
 } from "./hotel-view-modal";
+import { ParsedUrlQueryValue } from "../hooks/use-params";
 
 interface HotelViewRightLaneProps {
   cardWidths: (string | number)[];
@@ -17,7 +18,7 @@ interface HotelViewRightLaneProps {
   hotelCardPadding: number[];
   laneWidths: number[];
   laneMarginTops: number[];
-  name: string;
+  name: ParsedUrlQueryValue;
   overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
   overlayModalsState: OverlayModalsStateInterface;
   price: number;

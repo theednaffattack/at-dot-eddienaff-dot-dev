@@ -32,6 +32,9 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({
   modalOverlayDispatch,
   modalOverlayState,
 }) => {
+  const asPath = "/traveling";
+  const href = "/traveling";
+  const referer = "/traveling";
   return (
     <React.Fragment>
       <NextSeo
@@ -80,16 +83,19 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({
           <Flex width={1} flex={1} mx="auto" overflowY="auto" flexWrap="wrap">
             {Hotels.map((hotel) => (
               <TravelingPageListingItem
-                key={hotel.id}
+                asPath={asPath}
                 city={hotel.city}
                 comments={hotel.comments}
                 coordinates={hotel.coordinates}
+                href={href}
                 id={hotel.id}
                 images={hotel.images}
+                key={hotel.id}
                 likes={hotel.likes}
                 name={hotel.name}
                 original_price={hotel.original_price}
                 price={hotel.price}
+                referer={referer}
               />
             ))}
           </Flex>
@@ -115,4 +121,5 @@ export interface HotelInterface {
   original_price?: string;
   price: string;
   coordinates: number[][];
+  referer?: string;
 }

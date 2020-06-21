@@ -14,6 +14,8 @@ import { useLockBodyScroll } from "./use-lock-body-scroll";
 import { AuthenticatedViewHotelModalHeader } from "./authenticated-view-hotel-modal-header";
 import { HotelViewLeftLane } from "./hotel-view-left-lane";
 import { HotelViewRightLane } from "./hotel-view-right-lane";
+// @ts-ignore
+import { useParam, useParams, ParsedUrlQueryValue } from "../hooks/use-params";
 
 interface HotelViewModalProps {
   userInfo?: MeQuery["me"] | undefined;
@@ -33,7 +35,7 @@ export type FlyOverMenuStatuses = "isOpen" | "isClosed";
 
 interface HotelDataInterface {
   coordinates: number[][] | null;
-  name: string | null;
+  name: ParsedUrlQueryValue;
   price: number | null;
 }
 
@@ -97,7 +99,7 @@ function overlayModalsActionsReducer(
         dayPlansSidebar: state.dayPlansSidebar,
         mapViewOverlay: {
           status: "isClosed",
-          hotelData: { coordinates: null, name: null, price: null },
+          hotelData: { coordinates: null, name: undefined, price: null },
         },
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
@@ -139,7 +141,7 @@ function overlayModalsActionsReducer(
           status: "isClosed",
           hotelData: {
             coordinates: null,
-            name: null,
+            name: undefined,
             price: null,
           },
         },
@@ -163,7 +165,7 @@ const initialOverlayModalsState: OverlayModalsStateInterface = {
   dayPlansSidebar: "isClosed",
   mapViewOverlay: {
     status: "isClosed",
-    hotelData: { coordinates: null, name: null, price: null },
+    hotelData: { coordinates: null, name: undefined, price: null },
   },
   shareMenu: "isClosed",
   moreMenu: "isClosed",
@@ -172,31 +174,40 @@ const initialOverlayModalsState: OverlayModalsStateInterface = {
 const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
   viewState,
 }) => {
-  // @ts-ignore
   const [overlayModalsState, overlayModalsDispatch] = React.useReducer(
     overlayModalsActionsReducer,
     initialOverlayModalsState
   );
   useLockBodyScroll();
+  // const referer = useParam("referer", "string");
+  const { coordinates, name, price, referer } = useParams();
   const router = useRouter();
 
-  const {
-    query: {
-      referer: refererBase,
-      coordinates,
-      name: nameBase,
-      price: priceBase,
-    },
-  } = router;
-  const referer =
-    typeof refererBase === "string"
-      ? refererBase
-      : Array.isArray(refererBase)
-      ? refererBase[0]
-      : "none";
-  const asNumbers = convertNumerals(coordinates);
-  const name = typeof nameBase === "string" ? nameBase : nameBase[0];
-  const price = typeof priceBase === "string" ? priceBase : priceBase[0];
+  console.log("VIEW REFERERS - HotelViewModal - ", {
+    coordinates,
+    name,
+    price,
+    referer,
+    router,
+  });
+
+  // const {
+  //   query: {
+  //     // referer: refererBase,
+  //     coordinates,
+  //     name: nameBase,
+  //     price: priceBase,
+  //   },
+  // } = router;
+  // const referer =
+  //   typeof refererBase === "string"
+  //     ? refererBase
+  //     : Array.isArray(refererBase)
+  //     ? refererBase[0]
+  //     : "none";
+  const asNumbers = convertLngLatNumerals(coordinates);
+  // const name = typeof nameBase === "string" ? nameBase : nameBase[0];
+  // const price = typeof priceBase === "string" ? priceBase : priceBase[0];
   // const numeralCoorindates = coordinates[0].map((lngLat) => parseFloat(lngLat));
   return (
     <>
@@ -273,7 +284,13 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
                   overlayModalsDispatch={overlayModalsDispatch}
                   overlayModalsState={overlayModalsState}
                   name={name}
-                  price={parseFloat(price)}
+                  price={
+                    typeof price === "string"
+                      ? parseFloat(price)
+                      : Array.isArray(price)
+                      ? Number(price[0])
+                      : -1
+                  }
                   router={router}
                 />
                 {/* END: RIGHT LANE */}
@@ -290,7 +307,11 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
 
 export default HotelViewModal;
 
-export function convertNumerals(lngLat: string | string[]): number[] {
+export function convertLngLatNumerals(lngLat: ParsedUrlQueryValue): number[] {
+  // type ParsedUrlQueryValue = string | string[] | undefined,
+  // so we do checks...
+  if (lngLat === undefined) throw new Error("Expecting lngLat to be defined.");
+
   // if it's a string lngLat should look like: "-93.23432, 45.940004"
   // so split on the comma
   if (typeof lngLat === "string") {
@@ -300,8 +321,13 @@ export function convertNumerals(lngLat: string | string[]): number[] {
     );
     return numeralCoorindates;
   }
-  // if it's already an array return as-is.
+  // if it's already an array of strings (["-93.23432", "45.940004"]) convert to numbers.
   // if (Array.isArray(lngLat)) {
-  return lngLat.map((string) => parseFloat(string));
+  let numberCoordinates: number[] = [];
+  for (const coordinate of lngLat) {
+    numberCoordinates = [...numberCoordinates, parseFloat(coordinate)];
+  }
+  return numberCoordinates;
+  // return lngLat.map((string) => parseFloat(string));
   // }
 }
