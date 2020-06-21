@@ -12,7 +12,6 @@ import Icon from "./icon";
 const Carousel = styled.div`
   position: relative;
   overflow: hidden;
-  /* outline: 2px pink solid; */
 `;
 
 const CarouselIndicators = styled.ol<BottomProps>`
