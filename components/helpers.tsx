@@ -425,8 +425,8 @@ export const primarySidebarLinks: SidebarLinkInterface[] = [
     name: "nearMe",
   },
   {
-    asPath: "/activities",
-    href: "/activities",
+    asPath: "/explore",
+    href: "/explore?tab=Activities",
     iconName: "activities",
     label: "Activities",
     name: "activities",
