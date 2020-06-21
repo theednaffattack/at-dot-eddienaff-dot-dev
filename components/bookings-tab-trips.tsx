@@ -1,9 +1,6 @@
-import { Field } from "formik";
 import React from "react";
 
-import { Flex, Text } from "./primitives/styled-rebass";
-import { ToggleCheckboxBetter } from "./form-fields/checkbox-custom";
-import { Checkbox } from "./form-fields/rebass-forms";
+import { Flex } from "./primitives/styled-rebass";
 
 export interface GeneralSettingsFormikValues {
   explore_search: boolean;
@@ -25,9 +22,11 @@ interface BookingsTabTripsProps {
   };
 }
 
-export const BookingsTabTrips: React.FC<BookingsTabTripsProps> = ({
-  handleChange,
-}) => {
+export const BookingsTabTrips: React.FC<BookingsTabTripsProps> = (
+  {
+    // handleChange,
+  }
+) => {
   return (
     <Flex flexDirection="column" bg="#eee" flex={1} p={4}>
       {/* START - THEME SETTING (SELECT PULLDOWN) */}
