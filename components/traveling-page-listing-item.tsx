@@ -5,17 +5,23 @@ import { TravelingPageTitlePriceAndOptions } from "./traveling-page-title-price-
 import { TravelingPageLocationLikesAndComments } from "./traveling-page-location-like-and-comments";
 import { HotelInterface } from "./traveling-page-component";
 
-interface TravelingPageListingItemProps extends HotelInterface {}
+interface TravelingPageListingItemProps extends HotelInterface {
+  asPath: string;
+  href: string;
+}
 
 export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> = ({
+  asPath,
   city,
   comments,
   coordinates,
+  href,
   images,
   likes,
   name,
   price,
   original_price,
+  referer,
 }) => {
   return (
     <Flex
@@ -46,10 +52,13 @@ export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> =
         </Flex>
         <Flex width={2 / 3} pl={3} flexDirection="column">
           <TravelingPageTitlePriceAndOptions
+            asPath={asPath}
+            href={href}
             name={name}
             price={price}
             original_price={original_price ?? ""}
             coordinates={coordinates}
+            referer={referer}
           />
           <TravelingPageLocationLikesAndComments
             city={city}

@@ -10,6 +10,9 @@ import { ExplorePlacesToVisitLargeCard } from "./explore-places-to-vist-large-ca
 interface ExplorePlacesToVisitProps {}
 
 export const ExplorePlacesToVisit: React.FC<ExplorePlacesToVisitProps> = ({}) => {
+  const asPath = "/explore";
+  const href = "/explore";
+  const referer = "/explore&tab=Explore";
   return (
     <Flex flexDirection="column" sx={{ position: "relative" }}>
       <Flex p={3}>
@@ -30,15 +33,18 @@ export const ExplorePlacesToVisit: React.FC<ExplorePlacesToVisitProps> = ({}) =>
         {Hotels.map((hotel) => (
           <TravelingPageListingItem
             key={hotel.id}
+            asPath={asPath}
             city={hotel.city}
             comments={hotel.comments}
             coordinates={hotel.coordinates}
+            href={href}
             id={hotel.id}
             images={hotel.images}
             likes={hotel.likes}
             name={hotel.name}
             original_price={hotel.original_price}
             price={hotel.price}
+            referer={referer}
           />
         ))}
       </Flex>
