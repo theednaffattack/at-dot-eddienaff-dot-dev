@@ -14,7 +14,6 @@ export const ExploreFeatureCardList: React.FC<ExploreFeatureCardListProps> = ({
   return (
     <Flex flexDirection="row" flexWrap="wrap" as="ul" p={3} m={0}>
       {data.map((item, index) => {
-        console.log(`MODULUS ${index} -`, index % 2 === 0);
         return (
           <Flex
             as="li"
@@ -24,7 +23,6 @@ export const ExploreFeatureCardList: React.FC<ExploreFeatureCardListProps> = ({
             pl={index % 2 !== 0 ? 2 : undefined}
             width={1 / 2}
             pb={3}
-            // border="crimson"
           >
             <Flex
               flex={1}
