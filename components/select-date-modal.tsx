@@ -1,92 +1,96 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
-import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import {
-  AbFlex,
-  Card,
-  Button,
-  Flex,
-  StyledHr,
-  Text,
-} from "./primitives/styled-rebass";
+import { AbFlex, Card, Button, Flex, Text } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
-import AvatarPlaceholder from "./avatar-placeholder";
-import { ModalViewActions, ModalStateInterface } from "./entry-layout";
-
-type ModalStates = "isOpen" | "isClosed";
+import {
+  AuthorizedLayoutModalOverlayActions,
+  AuthorizedLayoutModalOverlayState,
+} from "./layout-authorized";
+import Icon from "./icon";
+const Calendar = dynamic(() => import("./calendar"));
 
 // select date, settings, activity, sidelist
 
 interface SelectDateModalProps {
   userInfo?: MeQuery["me"] | undefined;
-  selectDateModalState: ModalStates;
-  setSelectDateModalState: React.Dispatch<React.SetStateAction<ModalStates>>;
-  teamId?: string;
-  modalState: ModalStateInterface;
-  modalDispatch: React.Dispatch<ModalViewActions>;
+  modalState: AuthorizedLayoutModalOverlayState["selectDate"];
+  modalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
 }
 
 export const SelectDateModal: React.FunctionComponent<SelectDateModalProps> = ({
-  selectDateModalState,
-  setSelectDateModalState,
-  teamId,
-  userInfo,
+  modalDispatch,
+  modalState,
+  // userInfo,
 }) => {
+  const [calendarShowing, setCalendarShowing] = React.useState<
+    "check-in" | "check-out"
+  >("check-in");
   return (
     <>
-      {selectDateModalState === "isOpen" ? (
-        <UniversalPortal selector="#modal">
+      {modalState === "isOpen" ? (
+        <UniversalPortal selector="#overlay_modal">
           <AbFlex
             position="absolute"
             bg="rgba(0, 0, 0, 0.7)"
             top={0}
             width={1}
-            // left={150}
+            left={0}
             right={0}
             bottom={0}
-            zIndex={9}
+            zIndex={16}
+            alignItems="center"
+            justifyContent="center"
           >
-            <Card p={0} pb={3} width={1}>
+            <Card p={0} pb={3} width={1} mx={3} sx={{ borderRadius: "20px" }}>
               <Flex
                 p={2}
                 mb={2}
-                flexDirection="column"
                 alignItems="center"
-                justifyContent="center"
-                style={{ position: "relative" }}
+                sx={{
+                  position: "relative",
+                }}
               >
-                <Text>SelectDate</Text>
-              </Flex>
-              <StyledHr my={0} />
-              <Flex
-                px={2}
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <AvatarPlaceholder />
-                <Flex my={3} flexDirection="column">
-                  <Text>{userInfo ? userInfo.name : ""}</Text>
-                  <Text>{userInfo?.email}</Text>
-                </Flex>
-                <Flex my={3} flexDirection="column">
-                  <Text>TEAM ID</Text>
-
-                  {teamId ? teamId : "no team ID"}
-                </Flex>
-                {/* <Button type="button" onClick={()=>}>Logout</Button> */}
-                <Link href="/logout" passHref={true}>
-                  <a>logout</a>
-                </Link>
-
                 <Button
                   type="button"
-                  onClick={() => setSelectDateModalState("isClosed")}
+                  p={0}
+                  mt={2}
+                  ml={2}
+                  bg="transparent"
+                  height="25px"
+                  width="25px"
+                  borderRadius="50%"
+                  onClick={() =>
+                    modalDispatch({
+                      action: "overlayModalClosed",
+                      type: "selectDateClosed",
+                    })
+                  }
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #aaa",
+                    justifyContent: "center",
+                  }}
                 >
-                  Close
+                  <Icon active={false} fill="#aaa" name="close" size="12px" />
                 </Button>
+                <Flex
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                  }}
+                >
+                  <Text>Select {calendarShowing} Date</Text>
+                </Flex>
               </Flex>
+              <Calendar
+                selecting={calendarShowing}
+                setSelection={setCalendarShowing}
+              />
             </Card>
           </AbFlex>
         </UniversalPortal>
@@ -96,3 +100,5 @@ export const SelectDateModal: React.FunctionComponent<SelectDateModalProps> = ({
     </>
   );
 };
+
+export default SelectDateModal;
