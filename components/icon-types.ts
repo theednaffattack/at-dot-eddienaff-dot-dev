@@ -33,6 +33,7 @@ export interface IconProps {
     | "activities"
     | "advance"
     | "architecture"
+    | "arrow_left"
     | "arrow_right"
     | "arrow_right_stick"
     | "bar"
