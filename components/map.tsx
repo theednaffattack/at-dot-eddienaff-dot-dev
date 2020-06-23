@@ -86,7 +86,7 @@ function buildUri({
 
 interface HooksMapProps {
   lngLat: number[];
-  name: string;
+  name: string | null;
   price: string;
 }
 
@@ -232,7 +232,7 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
               city: "Benicia",
               distanceKm: "3",
               state: "CA",
-              name,
+              name: name ? name : "",
               id: "fake=id",
               price: parseInt(price),
               reviewCount: 600,
