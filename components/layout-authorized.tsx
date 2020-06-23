@@ -4,8 +4,9 @@ import dynamic from "next/dynamic";
 
 const FilterModal = dynamic(() => import("./filter-modal"));
 const HotelViewModal = dynamic(() => import("./hotel-view-modal"));
-const SidelistModal = dynamic(() => import("./sidelist-modal"));
 const ProfileModal = dynamic(() => import("./profile-modal"));
+const SelectDateModal = dynamic(() => import("./select-date-modal"));
+const SidelistModal = dynamic(() => import("./sidelist-modal"));
 
 import { Flex } from "./primitives/styled-rebass";
 import { useRouter } from "next/router";
@@ -18,11 +19,18 @@ interface ProfileModalStates {
   status: ModalViewStates;
 }
 
+interface HotelViewerStates {
+  status: string;
+  data: { coordinates: number[][]; name: string | null; price: string };
+}
+
 export interface AuthorizedLayoutModalOverlayState {
-  sidebar: ModalViewStates;
-  profile: ProfileModalStates;
   activity: ModalViewStates;
   filterModal: ModalViewStates;
+  hotelViewer: HotelViewerStates;
+  profile: ProfileModalStates;
+  selectDate: ModalViewStates;
+  sidebar: ModalViewStates;
 }
 
 interface ProfileModalActions {
@@ -31,15 +39,27 @@ interface ProfileModalActions {
 }
 
 export type AuthorizedLayoutModalOverlayActions =
-  | { type: "sidebarOpen"; action: "overlayModalOpen" }
-  | { type: "sidebarClosed"; action: "overlayModalClosed" }
-  | { type: "filterModalOpen"; action: "overlayModalOpen" }
-  | { type: "filterModalClosed"; action: "overlayModalClosed" }
   | { type: "activityOpen"; action: "setOpen" }
   | { type: "activityClosed"; action: "setClosed" }
+  | { type: "filterModalOpen"; action: "overlayModalOpen" }
+  | { type: "filterModalClosed"; action: "overlayModalClosed" }
+  | {
+      type: "hotelViewerModalOpen";
+      action: "overlayModalOpen";
+      data: { coordinates: number[][]; price: string; name: string | null };
+    }
+  | {
+      type: "hotelViewerModalClosed";
+      action: "overlayModalClosed";
+      data: { coordinates: number[][]; price: string; name: string | null };
+    }
+  | { type: "openProfileFromSidebar"; action: ProfileModalActions }
   | { type: "profileOpen"; action: ProfileModalActions }
   | { type: "profileClosed"; action: ProfileModalActions }
-  | { type: "openProfileFromSidebar"; action: ProfileModalActions };
+  | { type: "selectDateOpen"; action: "overlayModalOpen" }
+  | { type: "selectDateClosed"; action: "overlayModalClosed" }
+  | { type: "sidebarOpen"; action: "overlayModalOpen" }
+  | { type: "sidebarClosed"; action: "overlayModalClosed" };
 
 function authorizedLayoutModalOverlayReducer(
   // @ts-ignore
@@ -47,82 +67,148 @@ function authorizedLayoutModalOverlayReducer(
   action: AuthorizedLayoutModalOverlayActions
 ): AuthorizedLayoutModalOverlayState {
   switch (action.type) {
-    case "sidebarOpen":
+    case "activityOpen":
       return {
-        sidebar: "isOpen",
-        filterModal: state.filterModal,
+        activity: "isOpen",
+        filterModal: "isClosed",
+        hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
-        activity: state.activity,
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
       };
-    case "sidebarClosed":
+    case "activityClosed":
       return {
-        sidebar: "isClosed",
+        activity: "isClosed",
         filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
         profile: state.profile,
-        activity: state.activity,
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
       };
     case "filterModalOpen":
       return {
-        sidebar: state.sidebar,
-        filterModal: "isOpen",
-        profile: { status: "isClosed", mode: "inactive" },
         activity: state.activity,
+        filterModal: "isOpen",
+        hotelViewer: state.hotelViewer,
+        profile: { status: "isClosed", mode: "inactive" },
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
       };
     case "filterModalClosed":
       return {
-        sidebar: state.sidebar,
-        filterModal: "isClosed",
-        profile: state.profile,
         activity: state.activity,
+        filterModal: "isClosed",
+        hotelViewer: state.hotelViewer,
+        profile: state.profile,
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
       };
+    case "hotelViewerModalClosed":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: {
+          status: "isClosed",
+          data: { coordinates: [[-1, -1]], name: null, price: "-1" },
+        },
+        profile: state.profile,
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
+      };
+    case "hotelViewerModalOpen":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: {
+          status: "isOpen",
+          data: {
+            coordinates: action.data.coordinates,
+            name: action.data.name,
+            price: action.data.price,
+          },
+        },
+        profile: state.profile,
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
+      };
+    case "openProfileFromSidebar":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: {
+          status: action.action.setStatus,
+          mode: action.action.setMode,
+        },
+        selectDate: state.selectDate,
+        sidebar: "isClosed",
+      };
+
     case "profileOpen":
       return {
         sidebar: state.sidebar,
         filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
         profile: { status: "isOpen", mode: "view" },
+        selectDate: state.selectDate,
         activity: state.activity,
       };
     case "profileClosed":
       return {
-        sidebar: state.sidebar,
+        activity: state.activity,
         filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
         profile: {
           status: action.action.setStatus,
           mode: action.action.setMode,
         },
-        activity: state.activity,
-      };
-    case "openProfileFromSidebar":
-      return {
-        sidebar: "isClosed",
-        filterModal: state.filterModal,
-        profile: {
-          status: action.action.setStatus,
-          mode: action.action.setMode,
-        },
-        activity: state.activity,
-      };
-    case "activityOpen":
-      return {
+        selectDate: state.selectDate,
         sidebar: state.sidebar,
-        filterModal: "isClosed",
-        profile: { status: "isClosed", mode: "inactive" },
-        activity: "isOpen",
       };
-    case "activityClosed":
+    case "selectDateClosed":
       return {
-        sidebar: state.sidebar,
+        activity: state.activity,
         filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
         profile: state.profile,
-        activity: "isClosed",
+        selectDate: "isClosed",
+        sidebar: state.sidebar,
       };
-
+    case "selectDateOpen":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: { status: "isClosed", mode: "inactive" },
+        selectDate: "isOpen",
+        sidebar: state.sidebar,
+      };
+    case "sidebarOpen":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: { status: "isClosed", mode: "inactive" },
+        selectDate: state.selectDate,
+        sidebar: "isOpen",
+      };
+    case "sidebarClosed":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: state.profile,
+        selectDate: state.selectDate,
+        sidebar: "isClosed",
+      };
     default:
       return {
-        sidebar: "isClosed",
-        filterModal: "isClosed",
-        profile: { status: "isClosed", mode: "inactive" },
         activity: "isClosed",
+        filterModal: "isClosed",
+        hotelViewer: state.hotelViewer,
+        profile: { status: "isClosed", mode: "inactive" },
+        selectDate: state.selectDate,
+        sidebar: "isClosed",
       };
   }
 }
@@ -145,10 +231,15 @@ const AuthorizedLayout = ({ children, title }: any) => {
   >(
     authorizedLayoutModalOverlayReducer,
     {
-      sidebar: "isClosed",
-      filterModal: "isClosed",
-      profile: { status: "isClosed", mode: "inactive" },
       activity: "isClosed",
+      filterModal: "isClosed",
+      hotelViewer: {
+        status: "isClosed",
+        data: { coordinates: [[0, 0]], name: null, price: "-1" },
+      },
+      profile: { status: "isClosed", mode: "inactive" },
+      selectDate: "isClosed",
+      sidebar: "isClosed",
     },
     initAuthorizedLayoutModalOverlay
   );
@@ -185,7 +276,19 @@ const AuthorizedLayout = ({ children, title }: any) => {
       </Flex>
 
       {viewHotelModalViewController === "isOpen" ? (
-        <HotelViewModal viewState="isOpen" />
+        <HotelViewModal
+          layoutModalState={modalOverlayState}
+          layoutModalDispatch={modalOverlayDispatch}
+          viewState="isOpen"
+        />
+      ) : null}
+
+      {modalOverlayState.hotelViewer.status === "isOpen" ? (
+        <HotelViewModal
+          layoutModalState={modalOverlayState}
+          layoutModalDispatch={modalOverlayDispatch}
+          viewState="isOpen"
+        />
       ) : null}
       {modalOverlayState.filterModal === "isOpen" ? (
         <FilterModal
@@ -210,6 +313,14 @@ const AuthorizedLayout = ({ children, title }: any) => {
       {modalOverlayState.activity === "isOpen" ? (
         <ActivityModal
           modalState={modalOverlayState.activity}
+          modalDispatch={modalOverlayDispatch}
+          userInfo={users[0]}
+        />
+      ) : null}
+
+      {modalOverlayState.selectDate === "isOpen" ? (
+        <SelectDateModal
+          modalState={modalOverlayState.selectDate}
           modalDispatch={modalOverlayDispatch}
           userInfo={users[0]}
         />
