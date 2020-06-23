@@ -3,25 +3,29 @@ import React from "react";
 import { AbFlex, Box, Button, Flex } from "./primitives/styled-rebass";
 import { HeaderIcons as Icon } from "./header-icons";
 import { FlyOverMenuStatuses, OverlayModalsActions } from "./hotel-view-modal";
-import { ParsedUrlQueryValue, useParam } from "../hooks/use-params";
+// import { ParsedUrlQueryValue } from "../hooks/use-params";
+import {
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 
 interface AuthenticatedViewHotelModalHeaderProps {
   bg?: string;
   mt?: string | number;
-  referer?: ParsedUrlQueryValue;
-  router: any;
   title: string;
-
+  layoutModalState: AuthorizedLayoutModalOverlayState;
+  layoutModalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
   sidebarViewStatus: FlyOverMenuStatuses;
   setSidebarViewStatus: React.Dispatch<OverlayModalsActions>;
 }
 
 export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelModalHeaderProps> = ({
-  referer,
-  router,
+  // referer,
+  // router,
+  layoutModalDispatch,
   setSidebarViewStatus,
 }) => {
-  const tab = useParam("tab", "string");
+  // const tab = useParam("tab", "string");
   return (
     <Flex
       // pt={mt}\
@@ -39,14 +43,22 @@ export const AuthenticatedViewHotelModalHeader: React.FC<AuthenticatedViewHotelM
         pl={4}
         left={0}
         onClick={() => {
-          if (tab) {
-            router.push(
-              `${referer ? `${referer}?tab=${tab}` : "/index"}`,
-              referer
-            );
-          } else {
-            router.push(`${referer ? referer : "/index"}`, `${referer}`);
-          }
+          layoutModalDispatch({
+            action: "overlayModalClosed",
+            type: "hotelViewerModalClosed",
+            data: { coordinates: [[0, 0]], name: "", price: "-1" },
+          });
+          // href={`${href}?referer=${referer}&viewHotelModal=isOpen&
+          // coordinates=${coordinates}&price=${price}&name=${name}`}
+
+          // if (tab) {
+          //   router.push(
+          //     `${referer ? `${referer}?tab=${tab}` : "/index"}`,
+          //     referer
+          //   );
+          // } else {
+          //   router.push(`${referer ? referer : "/index"}`, `${referer}`);
+          // }
         }}
       >
         <Icon name="close" fill="#fff" size="17px" />

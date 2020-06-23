@@ -9,8 +9,6 @@ interface AuthenticatedModalHeaderProps {
   bg?: string;
   mt?: string | number;
   closeFunc: () => void;
-  referer?: string;
-  router: any;
   title: string;
   viewState: ModalStates;
 }
