@@ -255,7 +255,6 @@ const CheckboxIcon = (props: any) => (
 
 export const Checkbox = forwardRef<InputRefType, RebassFormProps>(
   ({ className, sx, variant = "checkbox", field, form, ...props }, ref) => {
-    console.log("THE HELL ARE PROPS?", props);
     return (
       <Box>
         <Box
