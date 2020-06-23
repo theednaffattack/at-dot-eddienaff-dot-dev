@@ -16,7 +16,6 @@ import Icon from "./icon";
 import { ParsedUrlQueryValue } from "../hooks/use-params";
 
 interface HotelViewMapViewCardProps extends HotelViewCardProps {
-  router: any;
   coordinates: number[][];
   name: ParsedUrlQueryValue;
   overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
@@ -90,8 +89,15 @@ export const HotelViewMapViewCard: React.FC<HotelViewMapViewCardProps> = ({
                 //   "/traveling"
                 // )
               }
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              Check it{" "}
+              <Text fontFamily="main" mr={2}>
+                Check it
+              </Text>
               <Icon
                 fill="rgba(255,255,255,0.5"
                 size="15px"

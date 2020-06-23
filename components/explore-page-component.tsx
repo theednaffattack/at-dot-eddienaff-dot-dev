@@ -56,13 +56,18 @@ export const ExplorePageComponent: React.FC<ExplorePageComponentProps> = ({
 
         <ExploreTabs>
           <ExploreTabActivities label="Activities" />
-          <ExploreTabExplore label="Explore" />
+          <ExploreTabExplore
+            modalOverlayDispatch={modalOverlayDispatch}
+            modalOverlayState={modalOverlayState}
+            label="Explore"
+          />
         </ExploreTabs>
       </Flex>
     </>
   );
 };
 
-export interface ExploreTabsProps {
+export interface ExploreTabsProps
+  extends Partial<ClonedChildrenFromAuthLayout> {
   label: string;
 }

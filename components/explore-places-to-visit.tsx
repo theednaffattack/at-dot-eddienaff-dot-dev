@@ -6,10 +6,15 @@ import { Hotels } from "./helpers";
 import { TravelingPageListingItem } from "./traveling-page-listing-item";
 import { ExploreNewsletterSignup } from "./explore-newsletter-signup";
 import { ExplorePlacesToVisitLargeCard } from "./explore-places-to-vist-large-card";
+import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 
-interface ExplorePlacesToVisitProps {}
+interface ExplorePlacesToVisitProps
+  extends Partial<ClonedChildrenFromAuthLayout> {}
 
-export const ExplorePlacesToVisit: React.FC<ExplorePlacesToVisitProps> = ({}) => {
+export const ExplorePlacesToVisit: React.FC<ExplorePlacesToVisitProps> = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
   const asPath = "/explore";
   const href = "/explore";
   const referer = "/explore&tab=Explore";
@@ -45,6 +50,8 @@ export const ExplorePlacesToVisit: React.FC<ExplorePlacesToVisitProps> = ({}) =>
             original_price={hotel.original_price}
             price={hotel.price}
             referer={referer}
+            modalOverlayDispatch={modalOverlayDispatch}
+            modalOverlayState={modalOverlayState}
           />
         ))}
       </Flex>

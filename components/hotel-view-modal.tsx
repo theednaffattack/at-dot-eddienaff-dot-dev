@@ -1,6 +1,5 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
-import { useRouter } from "next/router";
 import { CardProps } from "rebass/styled-components";
 import Head from "next/head";
 import dynamic from "next/dynamic";
@@ -16,11 +15,17 @@ import { HotelViewLeftLane } from "./hotel-view-left-lane";
 import { HotelViewRightLane } from "./hotel-view-right-lane";
 // @ts-ignore
 import { useParam, useParams, ParsedUrlQueryValue } from "../hooks/use-params";
+import {
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 
 interface HotelViewModalProps {
   userInfo?: MeQuery["me"] | undefined;
   viewState: "isOpen" | "isClosed";
   teamId?: string;
+  layoutModalState: AuthorizedLayoutModalOverlayState;
+  layoutModalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
 }
 
 export interface HotelViewCardProps {
@@ -172,6 +177,8 @@ const initialOverlayModalsState: OverlayModalsStateInterface = {
 };
 
 const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
+  layoutModalDispatch,
+  layoutModalState,
   viewState,
 }) => {
   const [overlayModalsState, overlayModalsDispatch] = React.useReducer(
@@ -179,36 +186,7 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
     initialOverlayModalsState
   );
   useLockBodyScroll();
-  // const referer = useParam("referer", "string");
-  const { coordinates, name, price, referer } = useParams();
-  const router = useRouter();
 
-  console.log("VIEW REFERERS - HotelViewModal - ", {
-    coordinates,
-    name,
-    price,
-    referer,
-    router,
-  });
-
-  // const {
-  //   query: {
-  //     // referer: refererBase,
-  //     coordinates,
-  //     name: nameBase,
-  //     price: priceBase,
-  //   },
-  // } = router;
-  // const referer =
-  //   typeof refererBase === "string"
-  //     ? refererBase
-  //     : Array.isArray(refererBase)
-  //     ? refererBase[0]
-  //     : "none";
-  const asNumbers = convertLngLatNumerals(coordinates);
-  // const name = typeof nameBase === "string" ? nameBase : nameBase[0];
-  // const price = typeof priceBase === "string" ? priceBase : priceBase[0];
-  // const numeralCoorindates = coordinates[0].map((lngLat) => parseFloat(lngLat));
   return (
     <>
       <Head>
@@ -239,6 +217,8 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
               <MapViewModal
                 viewState={overlayModalsState.mapViewOverlay.status}
                 overlayModalsDispatch={overlayModalsDispatch}
+                layoutModalDispatch={layoutModalDispatch}
+                layoutModalState={layoutModalState}
                 // sidebarViewStatus={overlayModalsState.dayPlansSidebar}
                 // overlayModalDispatch={overlayModalsDispatch}
                 // viewState={overlayModalsState.dayPlansSidebar}
@@ -248,10 +228,10 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
               <AuthenticatedViewHotelModalHeader
                 sidebarViewStatus={overlayModalsState.dayPlansSidebar}
                 setSidebarViewStatus={overlayModalsDispatch}
+                layoutModalDispatch={layoutModalDispatch}
+                layoutModalState={layoutModalState}
                 bg="#eee"
-                referer={referer}
                 mt={0}
-                router={router}
                 title="View Hotel"
               />
             </AbFlex>
@@ -277,21 +257,23 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
                 {/* BEG: RIGHT LANE */}
                 <HotelViewRightLane
                   cardWidths={cardWidths}
-                  coordinates={[asNumbers]}
+                  coordinates={layoutModalState.hotelViewer.data.coordinates}
                   hotelCardPadding={hotelCardPadding}
                   laneMarginTops={laneMarginTops}
                   laneWidths={laneWidths}
                   overlayModalsDispatch={overlayModalsDispatch}
                   overlayModalsState={overlayModalsState}
+                  layoutModalDispatch={layoutModalDispatch}
+                  layoutModalState={layoutModalState}
                   name={name}
                   price={
-                    typeof price === "string"
-                      ? parseFloat(price)
-                      : Array.isArray(price)
-                      ? Number(price[0])
+                    typeof layoutModalState.hotelViewer.data.price === "string"
+                      ? parseFloat(layoutModalState.hotelViewer.data.price)
+                      : Array.isArray(layoutModalState.hotelViewer.data.price)
+                      ? Number(layoutModalState.hotelViewer.data.price[0])
                       : -1
                   }
-                  router={router}
+                  // router={router}
                 />
                 {/* END: RIGHT LANE */}
               </Flex>
@@ -307,27 +289,27 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
 
 export default HotelViewModal;
 
-export function convertLngLatNumerals(lngLat: ParsedUrlQueryValue): number[] {
-  // type ParsedUrlQueryValue = string | string[] | undefined,
-  // so we do checks...
-  if (lngLat === undefined) throw new Error("Expecting lngLat to be defined.");
+// export function convertLngLatNumerals(lngLat: number[]): number[] {
+//   // type ParsedUrlQueryValue = string | string[] | undefined,
+//   // so we do checks...
+//   if (lngLat === undefined) throw new Error("Expecting lngLat to be defined.");
 
-  // if it's a string lngLat should look like: "-93.23432, 45.940004"
-  // so split on the comma
-  if (typeof lngLat === "string") {
-    const lngLatAsArray = lngLat.split(",");
-    const numeralCoorindates = lngLatAsArray.map((coordinate) =>
-      parseFloat(coordinate)
-    );
-    return numeralCoorindates;
-  }
-  // if it's already an array of strings (["-93.23432", "45.940004"]) convert to numbers.
-  // if (Array.isArray(lngLat)) {
-  let numberCoordinates: number[] = [];
-  for (const coordinate of lngLat) {
-    numberCoordinates = [...numberCoordinates, parseFloat(coordinate)];
-  }
-  return numberCoordinates;
-  // return lngLat.map((string) => parseFloat(string));
-  // }
-}
+//   // if it's a string lngLat should look like: "-93.23432, 45.940004"
+//   // so split on the comma
+//   // if (typeof lngLat === "string") {
+//   //   const lngLatAsArray = lngLat.split(",");
+//   //   const numeralCoorindates = lngLatAsArray.map((coordinate) =>
+//   //     parseFloat(coordinate)
+//   //   );
+//   //   return numeralCoorindates;
+//   // }
+//   // if it's already an array of strings (["-93.23432", "45.940004"]) convert to numbers.
+//   // if (Array.isArray(lngLat)) {
+//   let numberCoordinates: number[] = [];
+//   for (const coordinate of lngLat) {
+//     numberCoordinates = [...numberCoordinates, parseFloat(coordinate)];
+//   }
+//   return numberCoordinates;
+//   // return lngLat.map((string) => parseFloat(string));
+//   // }
+// }

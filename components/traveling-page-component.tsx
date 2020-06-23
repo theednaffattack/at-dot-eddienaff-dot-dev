@@ -13,7 +13,7 @@ import { size } from "./styles/theme";
 import { Hotels } from "./helpers";
 import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 
-interface TravelingPageComponent extends ClonedChildrenFromAuthLayout {
+interface TravelingPageComponentProps extends ClonedChildrenFromAuthLayout {
   // pathname: NextContext["pathname"];
   // query: NextContext["query"];
 }
@@ -28,7 +28,7 @@ const localLayoutWidths = [
   size.laptopL,
 ];
 
-export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({
+export const TravelingPageComponent: React.FC<TravelingPageComponentProps> = ({
   modalOverlayDispatch,
   modalOverlayState,
 }) => {
@@ -92,6 +92,8 @@ export const TravelingPageComponent: React.FC<TravelingPageComponent> = ({
                 images={hotel.images}
                 key={hotel.id}
                 likes={hotel.likes}
+                modalOverlayDispatch={modalOverlayDispatch}
+                modalOverlayState={modalOverlayState}
                 name={hotel.name}
                 original_price={hotel.original_price}
                 price={hotel.price}

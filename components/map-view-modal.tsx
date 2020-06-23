@@ -5,16 +5,16 @@ import dynamic from "next/dynamic";
 
 import { AbFlex, Button, Flex, Box } from "./primitives/styled-rebass";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
-import { useRouter } from "next/router";
 import { AuthenticatedModalHeader } from "./authenticated-modal-header";
 // import { MapCardPopover } from "./map-card-popover";
 import Icon from "./icon";
 import { IconProps } from "./icon-types";
 import { ViewportActions, ViewportState } from "./map";
+import { OverlayModalsActions } from "./hotel-view-modal";
 import {
-  convertLngLatNumerals,
-  OverlayModalsActions,
-} from "./hotel-view-modal";
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 const MapNoSSR = dynamic(() => import("./map"), {
   ssr: false,
 });
@@ -24,34 +24,39 @@ type ModalStates = "isOpen" | "isClosed";
 interface MapViewModalProps {
   overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
   viewState: ModalStates;
+
+  layoutModalState: AuthorizedLayoutModalOverlayState;
+  layoutModalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
 }
 
 const contentRef = React.createRef<HTMLDivElement>();
 
 const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
+  // layoutModalDispatch,
+  layoutModalState,
   overlayModalsDispatch,
   viewState,
 }) => {
   useLockBodyScroll();
-  const router = useRouter();
+  // const router = useRouter();
 
-  // const contentRect = useRect(contentRef);
+  // // const contentRect = useRect(contentRef);
 
-  const {
-    query: {
-      referer: refererBase,
-      coordinates,
-      name: nameBase,
-      price: priceBase,
-    },
-  } = router;
+  // const {
+  //   query: {
+  //     referer: refererBase,
+  //     coordinates,
+  //     name: nameBase,
+  //     price: priceBase,
+  //   },
+  // } = router;
 
-  const referer =
-    typeof refererBase === "string" ? refererBase : refererBase[0];
-  const name = typeof nameBase === "string" ? nameBase : nameBase[0];
-  const price = typeof priceBase === "string" ? priceBase : priceBase[0];
+  // const referer =
+  //   typeof refererBase === "string" ? refererBase : refererBase[0];
+  // const name = typeof nameBase === "string" ? nameBase : nameBase[0];
+  // const price = typeof priceBase === "string" ? priceBase : priceBase[0];
 
-  const asNumbers = convertLngLatNumerals(coordinates);
+  // const asNumbers = convertLngLatNumerals(coordinates);
 
   return (
     <>
@@ -76,8 +81,8 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
                 overlayModalsDispatch({ type: "closeMapViewOverlay" })
               }
               viewState={viewState}
-              referer={referer}
-              router={router}
+              // referer={referer}
+              // router={router}
               title="Map View"
               mt={5}
             />
@@ -87,7 +92,11 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
               sx={{ position: "relative" }}
               ref={contentRef}
             >
-              <MapNoSSR lngLat={asNumbers} name={name} price={price} />
+              <MapNoSSR
+                lngLat={layoutModalState.hotelViewer.data.coordinates[0]}
+                name={layoutModalState.hotelViewer.data.name}
+                price={layoutModalState.hotelViewer.data.price}
+              />
               {/* <MapCardPopover /> */}
               {/* <MapViewZoomButtonContainer /> */}
             </Flex>

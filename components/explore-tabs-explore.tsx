@@ -12,13 +12,10 @@ import { ExploreFeatureCardList } from "./explore-feature-card-list";
 import { fauxFeatureCards } from "./helpers";
 import { ExplorePlacesToVisit } from "./explore-places-to-visit";
 
-export const ExploreTabExplore: React.FC<ExploreTabsProps> = ({}) => {
-  // const laneWidths = [1, 1, 1, 1, 1 / 2, 1 / 2, 1 / 2];
-
-  // const imageMarginRight = [0, 0, 0, 0, 3, 3, 3];
-
-  // const laneMarginTops = [1, 1, 1, 1, 4, 4, 4];
-
+export const ExploreTabExplore: React.FC<ExploreTabsProps> = ({
+  modalOverlayDispatch,
+  modalOverlayState,
+}) => {
   return (
     <Flex
       width={1}
@@ -122,7 +119,10 @@ export const ExploreTabExplore: React.FC<ExploreTabsProps> = ({}) => {
       <ExploreFeatureCardList data={fauxFeatureCards} />
       {/* END - FEATURE CARDS */}
       {/* START - PLACES TO VISIT SECTION */}
-      <ExplorePlacesToVisit />
+      <ExplorePlacesToVisit
+        modalOverlayDispatch={modalOverlayDispatch}
+        modalOverlayState={modalOverlayState}
+      />
       {/* END - PLACES TO VISIT SECTION */}
     </Flex>
   );

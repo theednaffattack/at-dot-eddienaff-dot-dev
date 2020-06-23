@@ -1,6 +1,6 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Head from "next/head";
 
 import {
@@ -43,13 +43,7 @@ const FilterModal: React.FunctionComponent<FilterModalProps> = ({
   viewState,
 }) => {
   useLockBodyScroll();
-  const router = useRouter();
 
-  // const {
-  //   query: { referer: refererBase },
-  // } = router;
-  // const referer =
-  //   typeof refererBase === "string" ? refererBase : refererBase[0];
   return (
     <>
       <Head>
@@ -105,8 +99,8 @@ const FilterModal: React.FunctionComponent<FilterModalProps> = ({
                       })
                     }
                     viewState="isOpen"
-                    referer={""}
-                    router={router}
+                    // referer={""}
+                    // router={router}
                     title="Filters"
                   />
 

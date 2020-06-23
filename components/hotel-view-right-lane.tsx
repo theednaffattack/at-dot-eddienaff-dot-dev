@@ -5,12 +5,15 @@ import { HotelViewInfoCard } from "./hotel-view-info-card";
 import { HotelViewFeaturesCard } from "./hotel-view-features-card";
 import { HotelViewMapViewCard } from "./hotel-view-map-view-card";
 import { HotelViewListCard } from "./hotel-view-list-card";
-import { NextRouter } from "next/router";
 import {
   OverlayModalsActions,
   OverlayModalsStateInterface,
 } from "./hotel-view-modal";
 import { ParsedUrlQueryValue } from "../hooks/use-params";
+import {
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 
 interface HotelViewRightLaneProps {
   cardWidths: (string | number)[];
@@ -21,8 +24,9 @@ interface HotelViewRightLaneProps {
   name: ParsedUrlQueryValue;
   overlayModalsDispatch: React.Dispatch<OverlayModalsActions>;
   overlayModalsState: OverlayModalsStateInterface;
+  layoutModalState: AuthorizedLayoutModalOverlayState;
+  layoutModalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
   price: number;
-  router: NextRouter;
 }
 
 export const HotelViewRightLane: React.FC<HotelViewRightLaneProps> = ({
@@ -34,8 +38,9 @@ export const HotelViewRightLane: React.FC<HotelViewRightLaneProps> = ({
   name,
   overlayModalsDispatch,
   overlayModalsState,
+  layoutModalState,
+  layoutModalDispatch,
   price,
-  router,
 }) => {
   return (
     <Flex
@@ -65,13 +70,13 @@ export const HotelViewRightLane: React.FC<HotelViewRightLaneProps> = ({
         price={price}
         p={hotelCardPadding}
         bg="#fff"
-        router={router}
         width={cardWidths}
       />
       <HotelViewListCard
+        modalDispatch={layoutModalDispatch}
+        modalState={layoutModalState.selectDate}
         p={hotelCardPadding}
         bg="#fff"
-        router={router}
         width={cardWidths}
       />
     </Flex>

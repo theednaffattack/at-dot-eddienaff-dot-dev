@@ -4,8 +4,11 @@ import { Flex, Image } from "./primitives/styled-rebass";
 import { TravelingPageTitlePriceAndOptions } from "./traveling-page-title-price-and-options";
 import { TravelingPageLocationLikesAndComments } from "./traveling-page-location-like-and-comments";
 import { HotelInterface } from "./traveling-page-component";
+import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 
-interface TravelingPageListingItemProps extends HotelInterface {
+interface TravelingPageListingItemProps
+  extends HotelInterface,
+    Partial<ClonedChildrenFromAuthLayout> {
   asPath: string;
   href: string;
 }
@@ -18,6 +21,8 @@ export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> =
   href,
   images,
   likes,
+  modalOverlayDispatch,
+  modalOverlayState,
   name,
   price,
   original_price,
@@ -54,6 +59,8 @@ export const TravelingPageListingItem: React.FC<TravelingPageListingItemProps> =
           <TravelingPageTitlePriceAndOptions
             asPath={asPath}
             href={href}
+            modalOverlayDispatch={modalOverlayDispatch}
+            modalOverlayState={modalOverlayState}
             name={name}
             price={price}
             original_price={original_price ?? ""}

@@ -2,9 +2,14 @@ import React from "react";
 
 import { Card, CustomButton, Box, Text } from "./primitives/styled-rebass";
 import { HotelViewCardProps } from "./hotel-view-modal";
+import {
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 
 interface HotelViewListCardProps extends HotelViewCardProps {
-  router: any;
+  modalState: AuthorizedLayoutModalOverlayState["selectDate"];
+  modalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
 }
 
 const roomRules = [
@@ -18,8 +23,10 @@ const roomRules = [
 
 export const HotelViewListCard: React.FC<HotelViewListCardProps> = ({
   bg,
+  modalDispatch,
+  // modalState,
   p,
-  router,
+  // router,
   width,
 }) => {
   return (
@@ -69,13 +76,13 @@ export const HotelViewListCard: React.FC<HotelViewListCardProps> = ({
           height="40px"
           type="submit"
           onClick={() =>
-            router.push(
-              "/traveling?mapViewModal=isOpen&referer=/traveling",
-              "/traveling"
-            )
+            modalDispatch({
+              action: "overlayModalOpen",
+              type: "selectDateOpen",
+            })
           }
         >
-          Book a Room
+          <Text fontFamily="main"> Book a Room</Text>
         </CustomButton>
       </Box>
     </Card>
