@@ -67,17 +67,18 @@ function selectionDatesReducer(
         ],
       };
 
-      case "validationErrorCheckInCannotOccurBeforeTodaysDate":
-        return{
-          from: state.from,
-          to: state.to,
-          validationErrors: [
-            ...state.validationErrors,
-            {
-              message:
-                "The check-in date cannot be on or before today's date. Please try again.",
-            },
-          ],}:
+    case "validationErrorCheckInCannotOccurBeforeTodaysDate":
+      return {
+        from: state.from,
+        to: state.to,
+        validationErrors: [
+          ...state.validationErrors,
+          {
+            message:
+              "The check-in date cannot be on or before today's date. Please try again.",
+          },
+        ],
+      };
 
     default:
       return { from: null, to: null, validationErrors: [] };
