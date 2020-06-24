@@ -6,7 +6,7 @@ import { NextPageContext, NextPage } from "next";
 import { Button } from "../components/primitives/styled-rebass";
 import { getLayout } from "../components/layout.v2";
 import { InputField } from "../components/form-fields/input-field";
-import { useForgotPasswordMutation } from "../__generated__/__intermediate__/lib/mutations/forgot-password.graphql-45fb3cb153db88a8356083d0e021e7e13bbf348f";
+import { useForgotPasswordMutation } from "../lib/mutations/forgot-password.graphql";
 import { DisplayResponseData } from "./user/change-password/[token]";
 import { withApollo } from "../lib/with-apollo_v2";
 import { NextPageStaticVariableProps } from "../typings/types";
@@ -17,7 +17,7 @@ const ForgotPassword: NextPage<ForgotPasswordProps> &
   NextPageStaticVariableProps = () => {
   const [
     forgotPasswordFunc,
-    { data: returnData }
+    { data: returnData },
   ] = useForgotPasswordMutation();
   return (
     <Formik
@@ -27,8 +27,8 @@ const ForgotPassword: NextPage<ForgotPasswordProps> &
         try {
           let forgotResponse = await forgotPasswordFunc({
             variables: {
-              email: data.email
-            }
+              email: data.email,
+            },
           });
 
           console.log("forgotResponse", forgotResponse);
@@ -63,7 +63,7 @@ const ForgotPassword: NextPage<ForgotPasswordProps> &
         }
       }}
       initialValues={{
-        email: ""
+        email: "",
       }}
     >
       {({ handleSubmit }) => (

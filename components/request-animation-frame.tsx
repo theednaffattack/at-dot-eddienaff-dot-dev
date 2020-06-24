@@ -42,7 +42,7 @@ export const DrawCanvas: React.FC<DrawCanvasProps> = ({}) => {
     "canvasIsMounted" | "canvasIsNotMounted"
   >("canvasIsMounted");
 
-  const [locations, setLocations] = React.useState([]);
+  // const [locations, setLocations] = React.useState([]);
 
   const canvasRef = React.useRef<null | HTMLCanvasElement>(null);
 

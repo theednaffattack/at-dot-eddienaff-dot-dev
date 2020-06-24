@@ -6,13 +6,10 @@ import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 import { Flex } from "./primitives/styled-rebass";
 import { LayoutAuthorizedHeaderSettings } from "./layout-authorized-header-settings";
 import { SettingsTabs } from "./settings-tabs";
-import { Formik, Form } from "formik";
-import {
-  SettingsTabGeneral,
-  GeneralSettingsFormikValues,
-} from "./settings-tab-general";
-import SettingsTabsExtrasForm from "./settings-tabs-extras-form";
-
+import { SettingsTabsGeneralForm } from "./settings-tab-general-form";
+const SettingsTabsExtrasForm = dynamic(() =>
+  import("./settings-tabs-extras-form")
+);
 const SettingsTabsProfileForm = dynamic(() =>
   import("./settings-tabs-profile-form")
 );
@@ -26,10 +23,6 @@ export const SettingsPageComponent: React.FC<SettingsPageComponentProps> = ({
   modalOverlayDispatch,
   modalOverlayState,
 }) => {
-  console.log("SETTINGS PAGE COMPONENT JUST DITCHING THE ERROR MESSAGE", {
-    modalOverlayDispatch,
-    modalOverlayState,
-  });
   return (
     <>
       <NextSeo
@@ -67,53 +60,11 @@ export const SettingsPageComponent: React.FC<SettingsPageComponentProps> = ({
         />
 
         <SettingsTabs>
-          <SettingsTabsForm label="General" />
+          <SettingsTabsGeneralForm label="General" />
           <SettingsTabsProfileForm label="Profile" />
           <SettingsTabsExtrasForm label="Extras" />
         </SettingsTabs>
       </Flex>
     </>
-  );
-};
-
-interface SettingsTabsFormProps {
-  label: string;
-}
-
-const SettingsTabsForm: React.FC<SettingsTabsFormProps> = () => {
-  const initialValues: GeneralSettingsFormikValues = {
-    explore_search: false,
-    main_fonts: "modern",
-    new_message_notification: false,
-    night_mode: false,
-    push_notifications: false,
-    theme: "light",
-  };
-  return (
-    <Formik
-      validateOnBlur={false}
-      validateOnChange={false}
-      onSubmit={async (data, { setErrors }) => {
-        console.log("DATA SUBMITTED", { data, setErrors });
-      }}
-      initialValues={initialValues}
-    >
-      {({ handleChange, handleSubmit, values }) => {
-        return (
-          <Form
-            onSubmit={handleSubmit}
-            style={{
-              display: "flex",
-              flex: 1,
-              flexDirection: "column",
-              width: "100%",
-              color: "#444444",
-            }}
-          >
-            <SettingsTabGeneral handleChange={handleChange} values={values} />
-          </Form>
-        );
-      }}
-    </Formik>
   );
 };

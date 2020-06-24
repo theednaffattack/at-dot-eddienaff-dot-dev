@@ -2,14 +2,7 @@ import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
 import Link from "next/link";
 
-import {
-  AbFlex,
-  Card,
-  Button,
-  Flex,
-  StyledHr,
-  Text,
-} from "./primitives/styled-rebass";
+import { AbFlex, Card, Button, Flex, Text } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
 import AvatarPlaceholder from "./avatar-placeholder";
 import { ModalViewActions, ModalStateInterface } from "./entry-layout";
@@ -58,7 +51,6 @@ export const BookingsModal: React.FunctionComponent<BookingsModalProps> = ({
               >
                 <Text>Bookings</Text>
               </Flex>
-              <StyledHr my={0} />
               <Flex
                 px={2}
                 flexDirection="column"

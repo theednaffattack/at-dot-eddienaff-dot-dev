@@ -7,7 +7,7 @@ import {
   Card,
   Button,
   Flex,
-  StyledHr,
+  // StyledHr,
   Text,
 } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
@@ -56,7 +56,7 @@ export const ReviewsModal: React.FunctionComponent<ReviewsModalProps> = ({
               >
                 <Text>Reviews</Text>
               </Flex>
-              <StyledHr my={0} />
+
               <Flex
                 px={2}
                 flexDirection="column"

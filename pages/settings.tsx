@@ -1,9 +1,9 @@
 import React from "react";
+import { NextPage, NextPageContext } from "next";
 
 import { getLayout } from "../components/layout-authorized";
 import { NextPageStaticVariableProps } from "../typings/types";
 import { withApollo } from "../lib/with-apollo_v2";
-import { NextPage, NextPageContext } from "next";
 import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 import { SettingsPageComponent } from "../components/settings-page-component";
 

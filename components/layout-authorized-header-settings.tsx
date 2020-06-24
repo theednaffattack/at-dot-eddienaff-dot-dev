@@ -233,7 +233,7 @@ const NavIcons: React.FC<NavIconsProps> = ({
               alignItems="center"
               justifyContent="center"
               borderBottom={
-                router.pathname === icon.route
+                router.pathname === icon.href
                   ? "2px #e9486d solid"
                   : "2px transparent solid"
               }
@@ -262,13 +262,13 @@ const NavIcons: React.FC<NavIconsProps> = ({
                 <Icon
                   name={icon["name"]}
                   size={
-                    icon.route === "/traveling" ? "40px" : standardNavIconSize
+                    icon.href === "/traveling" ? "40px" : standardNavIconSize
                   }
                   fill="#aaa"
-                  active={router.pathname === icon.route}
+                  active={router.pathname === icon.href}
                 />
                 <Text
-                  color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                  color={router.pathname === icon.href ? "#e9486d" : "#aaa"}
                   pt={2}
                 >
                   {icon.label}
@@ -284,14 +284,14 @@ const NavIcons: React.FC<NavIconsProps> = ({
               alignItems="center"
               justifyContent="center"
               borderBottom={
-                router.pathname === icon.route
+                router.pathname === icon.href
                   ? "2px #e9486d solid"
                   : "2px transparent solid"
               }
               width={1 / 5}
               pb={3}
             >
-              <Link href={icon.route}>
+              <Link href={icon.href}>
                 <a
                   style={{
                     textDecoration: "none",
@@ -303,13 +303,13 @@ const NavIcons: React.FC<NavIconsProps> = ({
                   <Icon
                     name={icon["name"]}
                     size={
-                      icon.route === "/traveling" ? "40px" : standardNavIconSize
+                      icon.href === "/traveling" ? "40px" : standardNavIconSize
                     }
                     fill="#aaa"
-                    active={router.pathname === icon.route}
+                    active={router.pathname === icon.href}
                   />
                   <Text
-                    color={router.pathname === icon.route ? "#e9486d" : "#aaa"}
+                    color={router.pathname === icon.href ? "#e9486d" : "#aaa"}
                     pt={2}
                   >
                     {icon.label}

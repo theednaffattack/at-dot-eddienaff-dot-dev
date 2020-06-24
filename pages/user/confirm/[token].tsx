@@ -7,7 +7,7 @@ import redirect from "../../../utils/redirect";
 import {
   ConfirmUserDocument,
   ConfirmUserMutation,
-  ConfirmUserMutationVariables
+  ConfirmUserMutationVariables,
 } from "../../../lib/mutations/confirm-user.graphql";
 import { NextPageContextApollo } from "../../../typings/types";
 import { FetchResult } from "apollo-link";
@@ -40,8 +40,38 @@ const Confirm: NextPage<{ token: string }, {}> & {
 Confirm.getInitialProps = async (ctx: Context) => {
   const { apolloClient, query } = ctx;
   const { token: tokenBase } = query;
-  const token = typeof tokenBase === "string" ? tokenBase : tokenBase[0];
+  // let token: string;
+  // // if we can't find a token throw an error.
+  // // if token is defined determine it's type and...
+  // // return the string we need.
+  // if (!tokenBase) {
+  //   throw new Error("Token is undefined");
+  // }
+  // if (tokenBase && typeof tokenBase === "string") {
+  //   token = tokenBase;
+  // }
+  // if (tokenBase && Array.isArray(tokenBase)) {
+  //   token = tokenBase[0];
+  // } else {
+  //   if (token) {
+  //     token = "error state, token was not found";
+  //   }
 
+  // }
+
+  const token =
+    tokenBase && typeof tokenBase === "string"
+      ? tokenBase
+      : tokenBase && Array.isArray(tokenBase)
+      ? tokenBase[0]
+      : "unexpected type";
+
+  // bad gate, but not sure what else to try
+  if (token === "unexpected type") {
+    throw new Error(
+      "The token ingested is of an unexpected type. Please request a new token from the appropriate administrator."
+    );
+  }
   let validateToken: void | FetchResult<
     ConfirmUserMutation,
     Record<string, any>,
@@ -51,20 +81,20 @@ Confirm.getInitialProps = async (ctx: Context) => {
   if (apolloClient) {
     console.log("ATTEMPTING TO VALIDATE", {
       token,
-      ConfirmUserDocument
+      ConfirmUserDocument,
     });
     validateToken = await apolloClient
       .mutate<ConfirmUserMutation, ConfirmUserMutationVariables>({
         mutation: ConfirmUserDocument,
         variables: {
-          token
-        }
+          token,
+        },
       })
-      .then(data => {
+      .then((data) => {
         console.log("CAN I SEE CONFIRM USER SUBMISSION DATA¿", { data });
         return data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -76,7 +106,7 @@ Confirm.getInitialProps = async (ctx: Context) => {
   ) {
     console.log("FOUND A VALID TOKEN!", validateToken);
     redirect(ctx, "/test", {
-      asPath: "/test"
+      asPath: "/test",
     });
   } else {
     throw Error("soemthing went wrong, confirmation mutation");

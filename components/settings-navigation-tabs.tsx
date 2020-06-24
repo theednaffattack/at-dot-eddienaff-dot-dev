@@ -1,22 +1,26 @@
 import React from "react";
-
-import { Flex, Text, Button } from "./primitives/styled-rebass";
 import { Formik } from "formik";
-import { SettingsTabGeneral } from "./settings-tab-general";
+
+import { Flex } from "./primitives/styled-rebass";
+import {
+  SettingsTabGeneral,
+  GeneralSettingsFormikValues,
+} from "./settings-tab-general";
 
 interface SettingsNavigationTabsProps {}
 
-interface FormikInitialValues {
-  explore_search: boolean;
-  theme: "light" | "dark";
-}
+interface FormikInitialValues extends GeneralSettingsFormikValues {}
 
 export const SettingsNavigationTabs: React.FC<SettingsNavigationTabsProps> = ({}) => {
   const myInitialValues: FormikInitialValues = {
     explore_search: false,
     theme: "light",
+    main_fonts: "text",
+    night_mode: false,
+    new_message_notification: false,
+    push_notifications: false,
   };
-  // const [currentTabIndex, setCurrentTabIndex] = React.useState<number>(0);
+
   return (
     <Formik
       validateOnBlur={false}

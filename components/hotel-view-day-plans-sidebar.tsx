@@ -7,15 +7,15 @@ import React from "react";
 
 import { AbFlex, Button, Flex, Text } from "./primitives/styled-rebass";
 import Icon from "./icon";
-import { FlyOverMenuActions } from "./hotel-view-modal";
 import { HotelViewDayPlansListItem } from "./hotel-view-day-plans-list-item";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
+import { OverlayModalsActions } from "./hotel-view-modal";
 
 type SidebarStatuses = "isClosed" | "isOpen";
 
 interface HotelViewDayPlansSidebarProps {
   sidebarViewStatus: SidebarStatuses;
-  setSidebarViewStatus: React.Dispatch<FlyOverMenuActions>;
+  setSidebarViewStatus: React.Dispatch<OverlayModalsActions>;
 }
 
 const sidebarWidths = [
@@ -109,24 +109,27 @@ export const HotelViewDayPlansSidebar: React.FC<HotelViewDayPlansSidebarProps> =
         >
           {[
             {
-              title: "Breakfast",
               link: "https://www.google.com",
               id: "0-dayPlan",
+              time: "9:00 AM",
+              title: "Breakfast",
             },
             {
-              title: "Camel Riding",
               link: "https://www.google.com",
               id: "1-dayPlan",
+              time: "9:25 AM",
+              title: "Camel Riding",
             },
             {
-              title: "Paragliding",
               link: "https://www.google.com",
               id: "2-dayPlan",
+              time: "10:00 AM",
+              title: "Paragliding",
             },
           ].map((item) => {
             return (
               <HotelViewDayPlansListItem
-                // as="li"
+                time={item.time}
                 key={item.id}
                 title={item.title}
                 link={item.link}

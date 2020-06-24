@@ -58,7 +58,7 @@ export const ActivityModal: React.FunctionComponent<ActivityModalProps> = ({
               >
                 <Text>Activity</Text>
               </Flex>
-              <StyledHr my={0} />
+              <StyledHr width={1} my={0} />
               <Flex
                 px={2}
                 flexDirection="column"
