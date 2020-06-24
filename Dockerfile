@@ -36,6 +36,8 @@ COPY components/ ./components
 COPY public/ ./public
 COPY utils/ ./utils
 COPY typings/ ./typings
+COPY config/ ./config
+COPY hooks/ ./hooks
 COPY .env .
 
 RUN yarn install --frozen-lockfile && yarn build
