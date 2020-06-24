@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   addDays,
   addMonths,
+  compareAsc,
   endOfMonth,
   endOfWeek,
   format,
@@ -16,6 +17,10 @@ import {
 import { Button, Flex, Text } from "./primitives/styled-rebass";
 import styled from "styled-components";
 import Icon from "./icon";
+import {
+  SelectionDatesActions,
+  SelectionDatesState,
+} from "./select-date-modal";
 
 const flexButtonConfig = {
   display: "flex",
@@ -24,17 +29,22 @@ const flexButtonConfig = {
 };
 
 interface CalendarProps {
-  selecting: "check-in" | "check-out";
-  setSelection: React.Dispatch<React.SetStateAction<"check-in" | "check-out">>;
+  calendarShowing: "check-in" | "check-out";
+  setCalendarShowing: React.Dispatch<
+    React.SetStateAction<"check-in" | "check-out">
+  >;
+  selectionDatesDispatch: React.Dispatch<SelectionDatesActions>;
+  selectionDates: SelectionDatesState;
 }
 
 export const Calendar: React.FC<CalendarProps> = ({
-  selecting,
-  setSelection,
+  calendarShowing,
+  selectionDates,
+  selectionDatesDispatch,
+  setCalendarShowing,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-
   const days = () => {
     const dateFormat = "EEE";
     const days = [];
@@ -92,9 +102,9 @@ export const Calendar: React.FC<CalendarProps> = ({
               width="100%"
               borderRadius={0}
               bg={
-                isSameDay(day, selectedDate)
+                isSameDay(cloneDay, selectedDate)
                   ? "pink"
-                  : isSameDay(day, new Date())
+                  : isSameDay(cloneDay, new Date())
                   ? "lightgoldenrodyellow"
                   : "transparent"
               }
@@ -144,11 +154,39 @@ export const Calendar: React.FC<CalendarProps> = ({
 
   const onDateClick = (day: Date) => {
     setSelectedDate(day);
+    if (calendarShowing === "check-in" && compareAsc(day, new Date()) === -1) {
+      selectionDatesDispatch({
+        type: "validationErrorCheckInCannotOccurBeforeTodaysDate",
+      });
+    }
+    if (calendarShowing === "check-in" && compareAsc(day, new Date()) !== -1) {
+      selectionDatesDispatch({ type: "setFromDate", setFrom: day });
+    }
+    if (
+      calendarShowing === "check-out" &&
+      selectionDates.from &&
+      compareAsc(selectionDates.from, day) === 0
+    ) {
+      selectionDatesDispatch({
+        type: "validationErrorCheckOutCannotOccurBeforeCheckIn",
+      });
+    }
+    if (
+      calendarShowing === "check-out" &&
+      selectionDates.from &&
+      compareAsc(selectionDates.from, day) < 1
+    ) {
+      console.log("COMPARE THE DATES ", compareAsc(selectionDates.from, day));
+      selectionDatesDispatch({ type: "setToDate", setTo: day });
+    }
+
+    // selectionDatesDispatch({ type: "setFromDate", setFrom: day });
   };
 
   const dateFormat = "MMMM yyyy";
   return (
     <Flex flexDirection="column">
+      {JSON.stringify(selectionDates, null, 2)}
       {/* START HEADER */}
       <Flex width={1} alignItems="center">
         <Button type="button" bg="transparent" onClick={prevMonth}>
@@ -177,7 +215,9 @@ export const Calendar: React.FC<CalendarProps> = ({
           href="#"
           onClick={() => {
             console.log("go to check out date selected");
-            setSelection(selecting === "check-in" ? "check-out" : "check-in");
+            setCalendarShowing(
+              calendarShowing === "check-in" ? "check-out" : "check-in"
+            );
           }}
           style={{
             display: "flex",
@@ -185,17 +225,18 @@ export const Calendar: React.FC<CalendarProps> = ({
             alignItems: "center",
           }}
         >
-          {selecting === "check-out" ? (
+          {calendarShowing === "check-out" ? (
             <Icon active={false} fill="#aaa" name="arrow_left" size="15px" />
           ) : null}
           <Text>
-            select {selecting === "check-in" ? "check-out" : "check-in"} date
+            select {calendarShowing === "check-in" ? "check-out" : "check-in"}{" "}
+            date
           </Text>
-          {selecting === "check-in" ? (
+          {calendarShowing === "check-in" ? (
             <Icon active={false} fill="#aaa" name="arrow_right" size="15px" />
           ) : null}{" "}
         </a>
-        {selecting === "check-out" ? (
+        {calendarShowing === "check-out" ? (
           <>
             <Text>or </Text> <Button type="button">done</Button>
           </>
