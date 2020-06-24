@@ -4,6 +4,7 @@
     "codegen": "graphql-let",
     "dev": "yarn codegen && next",
     "build": "yarn codegen && next build",
+    "abuild": "ANALYZE=true yarn codegen && next build",
     "start": "next start"
   },
   "license": "UNLICENSED",
