@@ -273,13 +273,6 @@ function createApolloClient(initialState = {}, req?: NextPageContext["req"]) {
     const token = parseCookies(req).atg;
     console.log("CHECK HEADERS & TOKEN", { _, headers, token });
 
-    // const authLinkToReturn = {
-    //   headers: {
-    //     ...headers,
-    //     cookie: token ? `atg=${token}` : ""
-    //   }
-    // };
-
     return {
       headers: {
         ...headers,
