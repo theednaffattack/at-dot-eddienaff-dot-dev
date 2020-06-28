@@ -73,7 +73,7 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
             top={0}
             right={0}
             bottom={0}
-            zIndex={9}
+            zIndex={11}
           >
             <AuthenticatedModalHeader
               bg="#eee"
