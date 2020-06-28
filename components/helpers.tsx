@@ -1150,3 +1150,161 @@ export const fauxFeatureCards: FeatureCardProps[] = [
 //
 // END - EXPLORE PAGE, DISCOVER TAB, FEATURE CARDS
 //
+
+//
+// START - SAVED PAGE, SAVED CARDS
+//
+export interface SavedCardProps {
+  category: string;
+  city: string;
+  commentsCount: number;
+  image: ImageInterface;
+  kmAway: number;
+  label: string;
+  likesCount: number;
+  price: string;
+  type:
+    | "entertainment-local"
+    | "entertainment-regional"
+    | "entertainment-worldwide"
+    | "vacation";
+  weather: {
+    label: string;
+    name: "weather_sunny" | "weather_rainy";
+    temperature: number;
+    temperatureUnits: string;
+  };
+}
+
+export const fauxSavedCards: SavedCardProps[] = [
+  {
+    category: "dance",
+    city: "New York",
+    commentsCount: 15,
+    image: {
+      uri: "https://source.unsplash.com/random/1024x768?city",
+      alt: "",
+      caption: "",
+    },
+    kmAway: 252,
+    label: "Red Ballet",
+    likesCount: 4000,
+    price: "$967",
+    type: "entertainment-local",
+    weather: {
+      name: "weather_sunny",
+      label: "Sunny",
+      temperature: 25,
+      temperatureUnits: "celsius",
+    },
+  },
+  {
+    type: "entertainment-worldwide",
+    category: "dance",
+    commentsCount: 495,
+    kmAway: 100,
+    image: {
+      uri: "https://source.unsplash.com/random/1024x768?city",
+      alt: "",
+      caption: "",
+    },
+    label: "Mexico City Festival",
+    price: "$967",
+    city: "New York",
+    likesCount: 234,
+    weather: {
+      name: "weather_sunny",
+      label: "Sunny",
+      temperature: 25,
+      temperatureUnits: "celsius",
+    },
+  },
+  {
+    type: "vacation",
+    category: "resort / spa",
+    commentsCount: 900,
+    kmAway: 63,
+    image: {
+      uri: "https://source.unsplash.com/random/1024x768?city",
+      alt: "",
+      caption: "",
+    },
+    label: "Green Lands Hotel & Spa",
+    price: "$967",
+    city: "Philly",
+    likesCount: 3000,
+    weather: {
+      name: "weather_sunny",
+      label: "Sunny",
+      temperature: 25,
+      temperatureUnits: "celsius",
+    },
+  },
+  {
+    type: "entertainment-local",
+    category: "music venue",
+    commentsCount: 288,
+    kmAway: 8,
+    image: {
+      uri: "https://source.unsplash.com/random/1024x768?city",
+      alt: "",
+      caption: "",
+    },
+    label: "Ella's Live",
+    price: "$123",
+    city: "Oakland",
+    likesCount: 100,
+    weather: {
+      name: "weather_rainy",
+      label: "Rainy",
+      temperature: 18,
+      temperatureUnits: "celsius",
+    },
+  },
+  {
+    type: "entertainment-local",
+    category: "dance",
+    commentsCount: 15,
+    kmAway: 6,
+    image: {
+      uri: "https://source.unsplash.com/random/1024x768?city",
+      alt: "",
+      caption: "",
+    },
+    label: "Red Ballet",
+    price: "$967",
+    city: "New York",
+    likesCount: 6000,
+    weather: {
+      name: "weather_sunny",
+      label: "Sunny",
+      temperature: 25,
+      temperatureUnits: "celsius",
+    },
+  },
+  {
+    type: "entertainment-local",
+    category: "music venue",
+    commentsCount: 288,
+    kmAway: 8,
+    image: {
+      uri: "https://source.unsplash.com/random/1024x768?city",
+      alt: "",
+      caption: "",
+    },
+    label: "Ella's Live",
+    price: "$123",
+    city: "Oakland",
+    likesCount: 100,
+    weather: {
+      name: "weather_rainy",
+      label: "Rainy",
+      temperature: 18,
+      temperatureUnits: "celsius",
+    },
+  },
+];
+
+//
+// END - SAVED PAGE, SAVED CARDS
+//

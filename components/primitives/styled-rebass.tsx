@@ -698,19 +698,36 @@ export const CustomButton = styled(Button)<
   ${boxShadow}
 `;
 
-// border-radius: 23px;
+// START GRID LAYOUT COMPONENT - STANDARD
+// from: https://rebassjs.org/guides/css-grid/
 
-// box-shadow: 0px 10px 27px 0px rgba(0, 0, 0, 0.1);
-// background-color: #d23078;
+export function GridLayout(props: BoxProps & { gridGap: number }) {
+  return (
+    <Box
+      {...props}
+      sx={{
+        display: "grid",
+        gridGap: props.gridGap, // theme.space[3]
+      }}
+    />
+  );
+}
 
-// background-image: linear-gradient(
-//   0deg,
-//   rgba(210, 48, 120, 0.2),
-//   rgba(254, 97, 97, 0.2),
-//   rgba(255, 121, 85, 0.2)
-// );
-// /* background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.125)); */
-// 6%,
-//  74%,
-// 100%
+// END GRID LAYOUT COMPONENT - STANDARD
+
+// START GRID LAYOUT COMPONENT - AUTO COLUMNS
+
+export function GridAuto(props: BoxProps & { gridGap: number }) {
+  return (
+    <Box
+      {...props}
+      sx={{
+        display: "grid",
+        gridGap: props.gridGap, // theme.space[3]
+        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+      }}
+    />
+  );
+}
+// END GRID LAYOUT COMPONENT - AUTO COLUMNS
 export { Heading, Image, Text };
