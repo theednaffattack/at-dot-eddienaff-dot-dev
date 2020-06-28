@@ -66,7 +66,7 @@ const MapViewModal: React.FunctionComponent<MapViewModalProps> = ({
       {viewState === "isOpen" ? (
         <UniversalPortal selector="#map_modal">
           <AbFlex
-            position="absolute"
+            position="fixed"
             bg="rgba(0, 0, 0, 0.7)"
             flexDirection="column"
             width={1}

@@ -123,7 +123,7 @@ export const SelectDateModal: React.FunctionComponent<SelectDateModalProps> = ({
       {modalState === "isOpen" ? (
         <UniversalPortal selector="#overlay_modal">
           <AbFlex
-            position="absolute"
+            position="fixed"
             bg="rgba(0, 0, 0, 0.7)"
             top={0}
             width={1}

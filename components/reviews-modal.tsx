@@ -36,7 +36,7 @@ export const ReviewsModal: React.FunctionComponent<ReviewsModalProps> = ({
       {reviewsModalState === "isOpen" ? (
         <UniversalPortal selector="#modal">
           <AbFlex
-            position="absolute"
+            position="fixed"
             bg="rgba(0, 0, 0, 0.7)"
             top={0}
             width={1}
