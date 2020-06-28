@@ -64,6 +64,7 @@ export const theme = {
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
   colors: {
     blue,
+    blues: ["#004170", "#006fbe", "#2d8fd5", "#5aa7de"],
     lightgray: "#f6f6ff",
     text: "rgb(68, 68, 68)",
     thread_bg: "#3f3c62",
@@ -84,7 +85,9 @@ export const theme = {
   fonts: {
     main: "montserrat, sans-serif",
     mono: "Menlo, monospace",
+    monty: "montserrat",
   },
+  fontWeights: [400, 600, 700],
   shadows: {
     small: "0 0 4px rgba(0, 0, 0, .125)",
     large: "0 0 24px rgba(0, 0, 0, .125)",
