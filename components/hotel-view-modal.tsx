@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 
 const MapViewModal = dynamic(() => import("./map-view-modal"));
 const DayPlansModal = dynamic(() => import("./day-plans-modal_v1"));
+const ReviewsModal = dynamic(() => import("./reviews-modal"));
 
 import { AbFlex, Flex } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
@@ -55,7 +56,9 @@ export type OverlayModalsActions =
   | { type: "openShareMenu" }
   | { type: "closeShareMenu" }
   | { type: "openMoreMenu" }
-  | { type: "closeMoreMenu" };
+  | { type: "closeMoreMenu" }
+  | { type: "reviewsOpen" }
+  | { type: "reviewsClosed" };
 
 const hotelCardPadding = [3, 3, 3, 3, 3, 3, 3];
 
@@ -76,6 +79,7 @@ function overlayModalsActionsReducer(
         mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
+        reviews: state.reviews,
       };
     case "closeDayPlansSidebar":
       return {
@@ -83,6 +87,7 @@ function overlayModalsActionsReducer(
         mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
+        reviews: state.reviews,
       };
 
     case "openMapViewOverlay":
@@ -98,6 +103,7 @@ function overlayModalsActionsReducer(
         },
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
+        reviews: state.reviews,
       };
     case "closeMapViewOverlay":
       return {
@@ -108,6 +114,7 @@ function overlayModalsActionsReducer(
         },
         moreMenu: state.moreMenu,
         shareMenu: state.shareMenu,
+        reviews: state.reviews,
       };
 
     case "closeMoreMenu":
@@ -116,6 +123,7 @@ function overlayModalsActionsReducer(
         mapViewOverlay: state.mapViewOverlay,
         moreMenu: "isClosed",
         shareMenu: state.shareMenu,
+        reviews: state.reviews,
       };
     case "openMoreMenu":
       return {
@@ -123,6 +131,7 @@ function overlayModalsActionsReducer(
         mapViewOverlay: state.mapViewOverlay,
         moreMenu: "isOpen",
         shareMenu: state.shareMenu,
+        reviews: state.reviews,
       };
     case "openShareMenu":
       return {
@@ -130,6 +139,7 @@ function overlayModalsActionsReducer(
         mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: "isOpen",
+        reviews: state.reviews,
       };
     case "closeShareMenu":
       return {
@@ -137,6 +147,23 @@ function overlayModalsActionsReducer(
         mapViewOverlay: state.mapViewOverlay,
         moreMenu: state.moreMenu,
         shareMenu: "isClosed",
+        reviews: state.reviews,
+      };
+    case "reviewsClosed":
+      return {
+        dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: state.mapViewOverlay,
+        moreMenu: state.moreMenu,
+        shareMenu: state.shareMenu,
+        reviews: "isClosed",
+      };
+    case "reviewsOpen":
+      return {
+        dayPlansSidebar: state.dayPlansSidebar,
+        mapViewOverlay: state.mapViewOverlay,
+        moreMenu: state.moreMenu,
+        shareMenu: state.shareMenu,
+        reviews: "isOpen",
       };
 
     default:
@@ -152,6 +179,7 @@ function overlayModalsActionsReducer(
         },
         shareMenu: "isClosed",
         moreMenu: "isClosed",
+        reviews: "isClosed",
       };
   }
 }
@@ -164,6 +192,7 @@ export interface OverlayModalsStateInterface {
   };
   shareMenu: FlyOverMenuStatuses;
   moreMenu: FlyOverMenuStatuses;
+  reviews: FlyOverMenuStatuses;
 }
 
 const initialOverlayModalsState: OverlayModalsStateInterface = {
@@ -174,6 +203,7 @@ const initialOverlayModalsState: OverlayModalsStateInterface = {
   },
   shareMenu: "isClosed",
   moreMenu: "isClosed",
+  reviews: "isClosed",
 };
 
 const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
@@ -193,7 +223,7 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
         <title>View Hotel</title>
       </Head>
       {viewState === "isOpen" ? (
-        <UniversalPortal selector="#map_modal">
+        <UniversalPortal selector="#modal">
           <AbFlex
             position="fixed"
             flexDirection="column"
@@ -222,6 +252,13 @@ const HotelViewModal: React.FunctionComponent<HotelViewModalProps> = ({
                 // sidebarViewStatus={overlayModalsState.dayPlansSidebar}
                 // overlayModalDispatch={overlayModalsDispatch}
                 // viewState={overlayModalsState.dayPlansSidebar}
+              />
+            ) : null}
+
+            {overlayModalsState.reviews === "isOpen" ? (
+              <ReviewsModal
+                modalState={overlayModalsState.reviews}
+                modalDispatch={overlayModalsDispatch}
               />
             ) : null}
             <AbFlex position="absolute" left={0} right={0} zIndex={9000}>

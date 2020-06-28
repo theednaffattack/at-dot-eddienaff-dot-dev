@@ -274,12 +274,28 @@ const AuthorizedLayout = ({ children, title }: any) => {
       >
         {newChildren}
       </Flex>
-
+      {/* START - ROUTE BASED MODALS */}
       {viewHotelModalViewController === "isOpen" ? (
         <HotelViewModal
           layoutModalState={modalOverlayState}
           layoutModalDispatch={modalOverlayDispatch}
           viewState="isOpen"
+        />
+      ) : null}
+      {/* END - ROUTE BASED MODALS */}
+
+      {modalOverlayState.activity === "isOpen" ? (
+        <ActivityModal
+          modalState={modalOverlayState.activity}
+          modalDispatch={modalOverlayDispatch}
+          userInfo={users[0]}
+        />
+      ) : null}
+
+      {modalOverlayState.filterModal === "isOpen" ? (
+        <FilterModal
+          viewState={modalOverlayState}
+          modalDispatch={modalOverlayDispatch}
         />
       ) : null}
 
@@ -290,19 +306,6 @@ const AuthorizedLayout = ({ children, title }: any) => {
           viewState="isOpen"
         />
       ) : null}
-      {modalOverlayState.filterModal === "isOpen" ? (
-        <FilterModal
-          viewState={modalOverlayState}
-          modalDispatch={modalOverlayDispatch}
-        />
-      ) : null}
-      {modalOverlayState.sidebar === "isOpen" ? (
-        <SidelistModal
-          modalState={modalOverlayState.sidebar}
-          modalDispatch={modalOverlayDispatch}
-          userInfo={users[0]}
-        />
-      ) : null}
       {modalOverlayState.profile.status === "isOpen" ? (
         <ProfileModal
           modalState={modalOverlayState.profile}
@@ -310,17 +313,16 @@ const AuthorizedLayout = ({ children, title }: any) => {
           userInfo={users[0]}
         />
       ) : null}
-      {modalOverlayState.activity === "isOpen" ? (
-        <ActivityModal
-          modalState={modalOverlayState.activity}
+      {modalOverlayState.selectDate === "isOpen" ? (
+        <SelectDateModal
+          modalState={modalOverlayState.selectDate}
           modalDispatch={modalOverlayDispatch}
           userInfo={users[0]}
         />
       ) : null}
-
-      {modalOverlayState.selectDate === "isOpen" ? (
-        <SelectDateModal
-          modalState={modalOverlayState.selectDate}
+      {modalOverlayState.sidebar === "isOpen" ? (
+        <SidelistModal
+          modalState={modalOverlayState.sidebar}
           modalDispatch={modalOverlayDispatch}
           userInfo={users[0]}
         />

@@ -1,12 +1,22 @@
 import React from "react";
 
 import { Card, Flex, Text, Image } from "./primitives/styled-rebass";
-import { HotelViewCardProps } from "./hotel-view-modal";
+import {
+  HotelViewCardProps,
+  OverlayModalsActions,
+  OverlayModalsStateInterface,
+} from "./hotel-view-modal";
 import Icon from "./icon";
 import { users } from "./helpers";
 
-export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
+interface HotelViewInfoCardProps extends HotelViewCardProps {
+  modalDispatch: React.Dispatch<OverlayModalsActions>;
+  modalState: OverlayModalsStateInterface["reviews"];
+}
+
+export const HotelViewInfoCard: React.FC<HotelViewInfoCardProps> = ({
   bg,
+  modalDispatch,
   p,
   width,
 }) => {
@@ -53,11 +63,15 @@ export const HotelViewInfoCard: React.FC<HotelViewCardProps> = ({
             ))}
           </Flex>
         </Flex>
+
         <Flex
           ml={3}
           alignItems="center"
           sx={{ position: "relative" }}
           width={(slicedUsers.length - 1) * 40 + "px"}
+          onClick={() => {
+            modalDispatch({ type: "reviewsOpen" });
+          }}
         >
           {slicedUsers.map((user, index) => (
             <ImageCircle

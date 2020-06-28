@@ -56,7 +56,13 @@ export const HotelViewRightLane: React.FC<HotelViewRightLaneProps> = ({
         width={cardWidths}
       />
 
-      <HotelViewInfoCard p={hotelCardPadding} bg="#fff" width={cardWidths} />
+      <HotelViewInfoCard
+        p={hotelCardPadding}
+        bg="#fff"
+        width={cardWidths}
+        modalDispatch={overlayModalsDispatch}
+        modalState={overlayModalsState.reviews}
+      />
       <HotelViewFeaturesCard
         p={hotelCardPadding}
         bg="#fff"
