@@ -1,0 +1,5 @@
+#! /bin/bash
+yarn build:server
+docker build -t <DOCKER_REGISTRY_USERNAME>/<DOCKER_IMAGE_NAME>:<DOCKER_TAG> ./PATH/TO/DOCKERFILE 
+docker push <DOCKER_REGISTRY_USERNAME>/<DOCKER_IMAGE_NAME>:<DOCKER_TAG>
+ssh <SSH_USER>@<SERVER_IP> "cd <DIRECTORY_OF_ALREADY_DEPLOYED_DOCKER-COMPOSE.YML_FILE> && docker-compose pull && docker-compose up"

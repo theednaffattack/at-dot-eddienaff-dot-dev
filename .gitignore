@@ -5,3 +5,4 @@ node_modules/
 __generated__
 
 docs/idea
+deploy.sh
