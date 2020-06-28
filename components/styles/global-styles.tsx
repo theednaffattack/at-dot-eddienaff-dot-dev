@@ -15,7 +15,7 @@ body {
   margin: 0;
   padding: 0;
   text-size-adjust: 100%;
-  display: flex;
+  /* display: flex; */
   font-family: "Montserrat", sans-serif;
 }
 *,
