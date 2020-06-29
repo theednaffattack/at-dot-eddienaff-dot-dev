@@ -144,7 +144,6 @@ const MenuButton: React.FC<MenuButtonProps> = ({
           type="button"
           bg="transparent"
           onClick={() => {
-            console.log("dispatching", modalOverlayState);
             if (modalOverlayState.sidebar === "isClosed") {
               modalOverlayDispatch({
                 type: "sidebarOpen",
