@@ -269,7 +269,7 @@ const AuthorizedLayout = ({ children, title }: any) => {
           right: children.title === "Messages" ? 0 : undefined,
           bottom: children.title === "Messages" ? 0 : undefined,
           left: children.title === "Messages" ? 0 : undefined,
-          overflow: children.title === "Messages" ? "hidden" : "auto",
+          overflow: children.title === "Messages" ? "hidden" : undefined,
         }}
       >
         {newChildren}
