@@ -724,7 +724,7 @@ export function GridAuto(props: BoxProps & { gridGap: number }) {
       sx={{
         display: "grid",
         gridGap: props.gridGap, // theme.space[3]
-        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
       }}
     />
   );
