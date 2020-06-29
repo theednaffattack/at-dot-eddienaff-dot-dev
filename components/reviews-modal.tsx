@@ -1,91 +1,69 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
-import Link from "next/link";
 
+import { AbFlex, Flex, GridAuto } from "./primitives/styled-rebass";
+import { useMeQuery } from "../lib/queries/me.graphql";
+import { AuthenticatedModalHeader } from "./authenticated-modal-header";
 import {
-  AbFlex,
-  Card,
-  Button,
-  Flex,
-  // StyledHr,
-  Text,
-} from "./primitives/styled-rebass";
-import { MeQuery } from "../lib/queries/me.graphql";
-import AvatarPlaceholder from "./avatar-placeholder";
-import { ModalViewActions, ModalStateInterface } from "./entry-layout";
-
-type ModalStates = "isOpen" | "isClosed";
+  OverlayModalsActions,
+  OverlayModalsStateInterface,
+} from "./hotel-view-modal";
+import { fauxReviewCards } from "./helpers";
+import { ReviewCard } from "./reviews-review-card";
 
 interface ReviewsModalProps {
-  userInfo?: MeQuery["me"] | undefined;
-  reviewsModalState: ModalStates;
-  setReviewsModalState: React.Dispatch<React.SetStateAction<ModalStates>>;
-  teamId?: string;
-  modalState: ModalStateInterface;
-  modalDispatch: React.Dispatch<ModalViewActions>;
+  modalDispatch: React.Dispatch<OverlayModalsActions>;
+  modalState: OverlayModalsStateInterface["reviews"];
 }
 
-export const ReviewsModal: React.FunctionComponent<ReviewsModalProps> = ({
-  reviewsModalState,
-  setReviewsModalState,
-  teamId,
-  userInfo,
-}) => {
+export function ReviewsModal({ modalDispatch, modalState }: ReviewsModalProps) {
+  let { error, loading } = useMeQuery();
+
   return (
     <>
-      {reviewsModalState === "isOpen" ? (
-        <UniversalPortal selector="#modal">
+      {modalState === "isOpen" ? (
+        <UniversalPortal selector="#map_modal">
           <AbFlex
             position="fixed"
             bg="rgba(0, 0, 0, 0.7)"
             top={0}
             width={1}
-            // left={150}
             right={0}
             bottom={0}
-            zIndex={9}
+            zIndex={34}
           >
-            <Card p={0} pb={3} width={1}>
-              <Flex
-                p={2}
-                mb={2}
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-                style={{ position: "relative" }}
-              >
-                <Text>Reviews</Text>
-              </Flex>
+            <Flex bg="#eee" flexDirection="column" flex={1} width={1}>
+              <AuthenticatedModalHeader
+                closeFunc={() =>
+                  modalDispatch({
+                    type: "reviewsClosed",
+                  })
+                }
+                title="Reviews"
+                viewState={modalState}
+              />
+              {error ? JSON.stringify(error, null, 2) : null}
+              {loading === true ? JSON.stringify(loading, null, 2) : null}
 
-              <Flex
-                px={2}
-                flexDirection="column"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <AvatarPlaceholder />
-                <Flex my={3} flexDirection="column">
-                  <Text>{userInfo ? userInfo.name : ""}</Text>
-                  <Text>{userInfo?.email}</Text>
-                </Flex>
-                <Flex my={3} flexDirection="column">
-                  <Text>TEAM ID</Text>
-
-                  {teamId ? teamId : "no team ID"}
-                </Flex>
-                {/* <Button type="button" onClick={()=>}>Logout</Button> */}
-                <Link href="/logout" passHref={true}>
-                  <a>logout</a>
-                </Link>
-
-                <Button
-                  type="button"
-                  onClick={() => setReviewsModalState("isClosed")}
-                >
-                  Close
-                </Button>
-              </Flex>
-            </Card>
+              <GridAuto gridGap={3} p={3}>
+                {fauxReviewCards.map((item) => {
+                  return (
+                    <ReviewCard
+                      key={item + "review-card"}
+                      averageRating={4}
+                      createdAt="52 mins ago"
+                      likeCount={33}
+                      reviewText="Faaaaaaaaaaaaaaake review text"
+                      user={{
+                        id: "01",
+                        firstName: "Woodruff",
+                        lastName: "Onagonye",
+                      }}
+                    />
+                  );
+                })}
+              </GridAuto>
+            </Flex>
           </AbFlex>
         </UniversalPortal>
       ) : (
@@ -93,4 +71,6 @@ export const ReviewsModal: React.FunctionComponent<ReviewsModalProps> = ({
       )}
     </>
   );
-};
+}
+
+export default ReviewsModal;
