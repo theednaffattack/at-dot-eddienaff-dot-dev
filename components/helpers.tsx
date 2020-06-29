@@ -1308,3 +1308,72 @@ export const fauxSavedCards: SavedCardProps[] = [
 //
 // END - SAVED PAGE, SAVED CARDS
 //
+
+// START - REVIEW CARDS
+export interface ReviewCardProps {
+  averageRating: number;
+  user: Partial<User>;
+  createdAt: string;
+  title?: string;
+  reviewText: string;
+  likeCount: number;
+  // moreDispatch: any;
+  // moreState: any;
+}
+
+export const fauxReviewCards: ReviewCardProps[] = [
+  {
+    user: {
+      id: "one",
+      firstName: "one",
+      lastName: "last-one",
+    },
+    createdAt: "42 mins ago",
+    title: "Another World!",
+    reviewText:
+      "Nunc justo eros, vehicula vel vehicula ut, lacinia a erat. Nam fringilla eros...",
+    averageRating: 3.5,
+    likeCount: 683,
+  },
+  {
+    user: {
+      id: "two",
+      firstName: "two",
+      lastName: "last-two",
+    },
+    createdAt: "42 mins ago",
+    title: "Another Headline!",
+    reviewText:
+      "Nunc justo eros, vehicula vel vehicula ut, lacinia a erat. Nam fringilla eros...",
+    averageRating: 3.5,
+    likeCount: 683,
+  },
+  {
+    user: {
+      id: "three",
+      firstName: "three",
+      lastName: "last-three",
+    },
+    createdAt: "42 mins ago",
+    title: "Another World!",
+    reviewText:
+      "Nunc justo eros, vehicula vel vehicula ut, lacinia a erat. Nam fringilla eros...",
+    averageRating: 3.5,
+    likeCount: 683,
+  },
+  {
+    user: {
+      id: "four",
+      firstName: "four",
+      lastName: "last-four",
+    },
+    createdAt: "42 mins ago",
+    title: "Another Headline!",
+    reviewText:
+      "Nunc justo eros, vehicula vel vehicula ut, lacinia a erat. Nam fringilla eros...",
+    averageRating: 3.5,
+    likeCount: 683,
+  },
+];
+
+// END - REVIEW CARDS
