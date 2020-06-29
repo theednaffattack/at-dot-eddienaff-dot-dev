@@ -8,7 +8,6 @@ import {
   format,
   isSameDay,
   isSameMonth,
-  // parse,
   startOfMonth,
   startOfWeek,
   subMonths,
@@ -186,7 +185,6 @@ export const Calendar: React.FC<CalendarProps> = ({
   const dateFormat = "MMMM yyyy";
   return (
     <Flex flexDirection="column">
-      {JSON.stringify(selectionDates, null, 2)}
       {/* START HEADER */}
       <Flex width={1} alignItems="center">
         <Button type="button" bg="transparent" onClick={prevMonth}>
@@ -241,6 +239,30 @@ export const Calendar: React.FC<CalendarProps> = ({
             <Text>or </Text> <Button type="button">done</Button>
           </>
         ) : null}
+      </Flex>
+
+      <Flex flexDirection="column" px={3}>
+        <Flex py={2}>
+          <Flex minWidth="100px">
+            <Text>Check-in:</Text>
+          </Flex>
+          <Text>
+            {selectionDates.from
+              ? format(selectionDates.from, "EEE, MMMM do, yyyy")
+              : "none selected"}
+          </Text>
+        </Flex>
+
+        <Flex py={2}>
+          <Flex minWidth="100px">
+            <Text>Check-out:</Text>
+          </Flex>
+          <Text>
+            {selectionDates.to
+              ? format(selectionDates.to, "EEE, MMMM do, yyyy")
+              : "none selected"}
+          </Text>
+        </Flex>
       </Flex>
     </Flex>
   );
