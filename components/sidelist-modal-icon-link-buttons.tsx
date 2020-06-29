@@ -20,6 +20,8 @@ const Divider = styled.hr`
 
 const Anchor = styled.a`
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
 `;
 
 interface SidelistModalIconLinkButtonsProps {
@@ -41,8 +43,8 @@ export const SidelistModalIconLinkButtons: React.FC<SidelistModalIconLinkButtons
       >
         {primarySidebarLinks.map((link, linkIndex) => (
           <li key={linkIndex + "-links-" + link.name}>
-            {/* <Link href={link.href} as={link.asPath}> */}
             <Anchor
+              href={link.href}
               onClick={(event) => {
                 event.preventDefault();
 
@@ -54,20 +56,26 @@ export const SidelistModalIconLinkButtons: React.FC<SidelistModalIconLinkButtons
                 });
               }}
             >
-              <Flex alignItems="center" py={3} pl={[2, 2, 2, 2, 4, 4, 4]}>
-                <Icon
-                  active={false}
-                  fill="#aaa"
-                  name={link.iconName}
-                  size="18px"
-                  ml={3}
-                />
-                <Text pl={4} color="#222">
-                  {link.label}
-                </Text>
+              <Flex
+                alignItems="center"
+                py={3}
+                color="#222"
+                // pl={[2, 2, 2, 2, 4, 4, 4]}
+              >
+                <Flex width="95px" justifyContent="center" alignItems="center">
+                  <Icon
+                    active={false}
+                    fill="#aaa"
+                    name={link.iconName}
+                    size={link.iconName === "traveling" ? "25px" : "18px"}
+                  />
+                </Flex>
+
+                <Flex alignItems="center">
+                  <Text>{link.label}</Text>
+                </Flex>
               </Flex>
             </Anchor>
-            {/* </Link> */}
           </li>
         ))}
       </ul>
