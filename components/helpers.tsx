@@ -417,11 +417,11 @@ interface SidebarLinkInterface {
 
 export const primarySidebarLinks: SidebarLinkInterface[] = [
   {
-    asPath: "/discover",
-    href: "/discover",
-    iconName: "discover",
-    name: "discover",
-    label: "Discover",
+    asPath: "/traveling",
+    href: "/traveling",
+    iconName: "traveling",
+    name: "traveling",
+    label: "Traveling",
   },
   {
     asPath: "/near-me",
