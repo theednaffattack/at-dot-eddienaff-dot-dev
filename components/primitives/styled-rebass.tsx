@@ -61,6 +61,7 @@ import {
   layout,
 } from "styled-system";
 import styled, { StyledComponent } from "styled-components";
+import { device } from "../styles/theme";
 
 // import IconBase from "../icon/icon";
 // import MaterialIconBase from "../icon/m-icon";
@@ -730,4 +731,101 @@ export function GridAuto(props: BoxProps & { gridGap: number }) {
   );
 }
 // END GRID LAYOUT COMPONENT - AUTO COLUMNS
+
+export const Anchor = styled.a<ColorProps & LayoutProps & SpaceProps>`
+  ${color}
+  ${layout}
+  ${space}
+  text-decoration: none;
+  position: relative;
+  /* overflow: hidden; */
+  /* display: inline-block; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const AnimatedAnchor = styled.a<{
+  active: boolean;
+  reduceBottom: boolean;
+}>`
+  text-decoration: none;
+  position: relative;
+  width: 100%;
+  /* overflow: hidden; */
+  /* display: inline-block; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px red solid;
+
+  &::after {
+    position: absolute;
+    display: block;
+
+    content: "";
+    width: 100%;
+
+    bottom: ${({ reduceBottom }) => (reduceBottom ? "-18px" : "-22px")};
+    height: 2px;
+
+    background: #e9486d;
+
+    transform: ${({ active }) =>
+      active === true ? undefined : "translate(-100%)"};
+    transition: transform 0.3s;
+  }
+
+  &:hover::after {
+    transform: translateX(0);
+  }
+`;
+
+// START FLEX HOVER
+
+export const FlexHover = styled(Flex)<
+  { active: boolean; reduceBottom: boolean } & FlexMinHeightBordersProps
+>`
+  transform: translateY(2px);
+  overflow: hidden;
+  &::after {
+    position: absolute;
+    display: block;
+
+    content: "";
+    width: 100%;
+
+    bottom: 0;
+    height: 2px;
+
+    background: #e9486d;
+
+    transform: ${({ active }) =>
+      active === true ? undefined : "translate(-100%, 2px)"};
+    transition: transform 0.3s;
+  }
+
+  &:hover::after {
+    transform: translate(0);
+  }
+`;
+
+// START DEVICE HIDDEN STUFF
+
+export const FlexMain = styled(Flex)`
+  @media ${device.tabletMax} {
+    display: none;
+  }
+
+  @media ${device.laptop} {
+    display: flex;
+  }
+`;
+
+export const FlexMenuButton = styled(Flex)`
+  @media ${device.tabletMax} {
+    margin-right: auto;
+  }
+`;
+
 export { Heading, Image, Text };

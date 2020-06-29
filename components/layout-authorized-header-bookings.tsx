@@ -1,18 +1,15 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
 import { Flex, Text, Button } from "./primitives/styled-rebass";
 import { size, device } from "./styles/theme";
-import { icons } from "./helpers";
 import Icon from "./icon";
-import Link from "next/link";
-
 import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 import {
   AuthorizedLayoutModalOverlayActions,
   AuthorizedLayoutModalOverlayState,
 } from "./layout-authorized";
+import { NavIcons } from "./layout-authorized-header-nav-icons";
 
 interface LayoutAuthorizedHeaderBookingsProps
   extends ClonedChildrenFromAuthLayout {
@@ -173,22 +170,22 @@ const MenuButton: React.FC<MenuButtonProps> = ({
   );
 };
 
-interface NavIconsProps {
-  modalOverlayDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
-  modalState: AuthorizedLayoutModalOverlayState["profile"];
-}
+// interface NavIconsProps {
+//   modalOverlayDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
+//   modalState: AuthorizedLayoutModalOverlayState["profile"];
+// }
 
-const standardNavIconSize = "30px";
+// const standardNavIconSize = "30px";
 
-const navBarWidths = [
-  "200px",
-  "200px",
-  "300px",
-  "500px",
-  "500px",
-  "700px",
-  "700px",
-];
+// const navBarWidths = [
+//   "200px",
+//   "200px",
+//   "300px",
+//   "500px",
+//   "500px",
+//   "700px",
+//   "700px",
+// ];
 
 const FlexMenuButton = styled(Flex)`
   @media ${device.tabletMax} {
@@ -216,119 +213,119 @@ const FlexMain = styled(Flex)`
 //   }
 // `;
 
-const NavIcons: React.FC<NavIconsProps> = ({
-  modalOverlayDispatch,
-  modalState,
-}) => {
-  const router = useRouter();
+// const NavIcons: React.FC<NavIconsProps> = ({
+//   modalOverlayDispatch,
+//   modalState,
+// }) => {
+//   const router = useRouter();
 
-  return (
-    <FlexMain
-      mx="auto"
-      width={navBarWidths}
-      justifyContent="center"
-      flexWrap="nowrap"
-    >
-      {icons.map((icon) => {
-        if (icon.name === "profile") {
-          return (
-            <Flex
-              key={icon.name}
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              borderBottom={
-                router.pathname === icon.href
-                  ? "2px #e9486d solid"
-                  : "2px transparent solid"
-              }
-              width={1 / 5}
-              pb={3}
-            >
-              <Button
-                p={0}
-                bg="transparent"
-                onClick={(event) => {
-                  event.preventDefault();
-                  if (modalState.status === "isClosed") {
-                    modalOverlayDispatch({
-                      type: "profileOpen",
-                      action: { setMode: "view", setStatus: "isOpen" },
-                    });
-                  }
-                  //
-                }}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Icon
-                  name={icon["name"]}
-                  size={
-                    icon.href === "/traveling" ? "40px" : standardNavIconSize
-                  }
-                  fill="#aaa"
-                  active={icon.href.includes(router.pathname)}
-                />
-                <Text
-                  color={
-                    icon.href.includes(router.pathname) ? "#e9486d" : "#aaa"
-                  }
-                  pt={2}
-                >
-                  {icon.label}
-                </Text>
-              </Button>
-            </Flex>
-          );
-        } else {
-          return (
-            <Flex
-              key={icon.name}
-              flexDirection="column"
-              alignItems="center"
-              justifyContent="center"
-              borderBottom={
-                icon.href.includes(router.pathname)
-                  ? "2px #e9486d solid"
-                  : "2px transparent solid"
-              }
-              width={1 / 5}
-              pb={3}
-            >
-              <Link href={icon.href}>
-                <a
-                  style={{
-                    textDecoration: "none",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon
-                    name={icon["name"]}
-                    size={
-                      icon.href === "/traveling" ? "40px" : standardNavIconSize
-                    }
-                    fill="#aaa"
-                    active={icon.href.includes(router.pathname)}
-                  />
-                  <Text
-                    color={
-                      icon.href.includes(router.pathname) ? "#e9486d" : "#aaa"
-                    }
-                    pt={2}
-                  >
-                    {icon.label}
-                  </Text>
-                </a>
-              </Link>
-            </Flex>
-          );
-        }
-      })}
-    </FlexMain>
-  );
-};
+//   return (
+//     <FlexMain
+//       mx="auto"
+//       width={navBarWidths}
+//       justifyContent="center"
+//       flexWrap="nowrap"
+//     >
+//       {icons.map((icon) => {
+//         if (icon.name === "profile") {
+//           return (
+//             <Flex
+//               key={icon.name}
+//               flexDirection="column"
+//               alignItems="center"
+//               justifyContent="center"
+//               borderBottom={
+//                 router.pathname === icon.href
+//                   ? "2px #e9486d solid"
+//                   : "2px transparent solid"
+//               }
+//               width={1 / 5}
+//               pb={3}
+//             >
+//               <Button
+//                 p={0}
+//                 bg="transparent"
+//                 onClick={(event) => {
+//                   event.preventDefault();
+//                   if (modalState.status === "isClosed") {
+//                     modalOverlayDispatch({
+//                       type: "profileOpen",
+//                       action: { setMode: "view", setStatus: "isOpen" },
+//                     });
+//                   }
+//                   //
+//                 }}
+//                 style={{
+//                   display: "flex",
+//                   flexDirection: "column",
+//                   alignItems: "center",
+//                 }}
+//               >
+//                 <Icon
+//                   name={icon["name"]}
+//                   size={
+//                     icon.href === "/traveling" ? "40px" : standardNavIconSize
+//                   }
+//                   fill="#aaa"
+//                   active={icon.href.includes(router.pathname)}
+//                 />
+//                 <Text
+//                   color={
+//                     icon.href.includes(router.pathname) ? "#e9486d" : "#aaa"
+//                   }
+//                   pt={2}
+//                 >
+//                   {icon.label}
+//                 </Text>
+//               </Button>
+//             </Flex>
+//           );
+//         } else {
+//           return (
+//             <Flex
+//               key={icon.name}
+//               flexDirection="column"
+//               alignItems="center"
+//               justifyContent="center"
+//               borderBottom={
+//                 icon.href.includes(router.pathname)
+//                   ? "2px #e9486d solid"
+//                   : "2px transparent solid"
+//               }
+//               width={1 / 5}
+//               pb={3}
+//             >
+//               <Link href={icon.href}>
+//                 <a
+//                   style={{
+//                     textDecoration: "none",
+//                     display: "flex",
+//                     flexDirection: "column",
+//                     alignItems: "center",
+//                   }}
+//                 >
+//                   <Icon
+//                     name={icon["name"]}
+//                     size={
+//                       icon.href === "/traveling" ? "40px" : standardNavIconSize
+//                     }
+//                     fill="#aaa"
+//                     active={icon.href.includes(router.pathname)}
+//                   />
+//                   <Text
+//                     color={
+//                       icon.href.includes(router.pathname) ? "#e9486d" : "#aaa"
+//                     }
+//                     pt={2}
+//                   >
+//                     {icon.label}
+//                   </Text>
+//                 </a>
+//               </Link>
+//             </Flex>
+//           );
+//         }
+//       })}
+//     </FlexMain>
+//   );
+// };
