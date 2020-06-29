@@ -79,6 +79,7 @@ export const theme = {
     chat_bg: "#ddddf7", //#ccc6f2
     chat_bubble_me: "#849ffe",
     chat_bubble_them: "#fff",
+    muted_text: "#aaa",
     prime_pink: "#f4327f",
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256],
@@ -102,6 +103,14 @@ export const theme = {
       bg: "white",
       boxShadow: "card",
       borderRadius: 2,
+    },
+    customCard: {
+      p: 2,
+      bg: "#f2f2f2",
+      boxShadow: "0px 13px 33px 0px rgba(0, 0, 0, 0.15)",
+      borderRadius: "20px",
+      flexDirection: "column",
+      minHeight: "200px",
     },
     badge: {
       display: "inline-block",
