@@ -9,7 +9,7 @@ import {
 
 // import { AbFlex } from "../primitives/styled-rebass";
 import { SliderPointer, Arrow } from "./slider-pointer";
-import { SliderPointerKm } from "./slider-pointer-km";
+import { SliderPointerKm, SliderPointerVariable } from "./slider-pointer-km";
 
 // *******************************************************
 // RAIL
@@ -162,6 +162,43 @@ export const HandleKm: React.SFC<IHandleProps> = ({
     >
       ${value}
     </div> */}
+    <div
+      role="slider"
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-valuenow={value}
+      style={{
+        left: `${percent}%`,
+        position: "absolute",
+        marginLeft: "-11px",
+        marginTop: "-6px",
+        zIndex: 2,
+        transform: "translate(0%, -25%)",
+        width: 24,
+        height: 24,
+        cursor: "pointer",
+        borderRadius: "50%",
+        boxShadow: "1px 1px 1px 1px rgba(0, 0, 0, 0.2)",
+        // backgroundColor: "#34568f",
+        backgroundColor: "#d23078",
+        backgroundImage:
+          "linear-gradient(0deg, rgba(210, 48, 120, .2) 6%, rgba(254, 97, 97, .2) 74%, rgba(255, 121, 85, .2) 100%)",
+      }}
+      {...getHandleProps(id)}
+    />
+  </>
+);
+
+export const HandleVariable: React.SFC<IHandleProps & { units?: string }> = ({
+  domain: [min, max],
+  handle: { id, value, percent },
+  getHandleProps,
+  units,
+}) => (
+  <>
+    <Arrow percent={percent} value={value} />
+    <SliderPointerVariable units={units} percent={percent} value={value} />
+
     <div
       role="slider"
       aria-valuemin={min}
