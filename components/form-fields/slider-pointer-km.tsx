@@ -33,6 +33,31 @@ export const SliderPointerKm: React.FC<SliderPointerKmProps> = ({
     </Card>
   );
 };
+export const SliderPointerVariable: React.FC<SliderPointerKmProps & {
+  units?: string;
+}> = ({ percent, value, units }) => {
+  return (
+    <Card
+      height="auto"
+      width="80px"
+      ml="-30px"
+      bg="rgb(68, 68, 68)"
+      color="#fff"
+      sx={{
+        zIndex: 1578,
+        borderRadius: "12px",
+        position: "absolute",
+        left: `${percent}%`,
+        bottom: 30,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {value} {units}
+    </Card>
+  );
+};
 
 const ArrowBase = styled.div<{ percent: number }>`
   background-color: rgb(68, 68, 68);
