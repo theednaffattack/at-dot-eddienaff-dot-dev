@@ -9,6 +9,7 @@ import {
 import { NextPageStaticVariableProps } from "../typings/types";
 import { withApollo } from "../lib/with-apollo_v2";
 import { TravelingPageComponent } from "../components/traveling-page-component";
+import { NextSeo } from "next-seo";
 
 export interface ClonedChildrenFromAuthLayout {
   modalOverlayState: AuthorizedLayoutModalOverlayState;
@@ -25,10 +26,40 @@ const Traveling: NextPage<TravelingPageProps, {}> &
   modalOverlayState,
 }) => {
   return (
-    <TravelingPageComponent
-      modalOverlayDispatch={modalOverlayDispatch}
-      modalOverlayState={modalOverlayState}
-    />
+    <>
+      <NextSeo
+        title="Traveling"
+        description="A traveling page, nothing more."
+        canonical="https://at.eddienaff.dev/"
+        openGraph={{
+          url: "https://at.eddienaff.dev/traveling",
+          title: "Traveling",
+          description: "A beautiful traveling page.",
+          images: [
+            {
+              url: "https://www.example.ie/og-image-01.jpg",
+              width: 800,
+              height: 600,
+              alt: "Og Image Alt",
+            },
+            {
+              url: "https://www.example.ie/og-image-02.jpg",
+              width: 900,
+              height: 800,
+              alt: "Og Image Alt Second",
+            },
+            { url: "https://www.example.ie/og-image-03.jpg" },
+            { url: "https://www.example.ie/og-image-04.jpg" },
+          ],
+          site_name: "SiteName",
+        }}
+      />
+      <TravelingPageComponent
+        title="Traveling"
+        modalOverlayDispatch={modalOverlayDispatch}
+        modalOverlayState={modalOverlayState}
+      />
+    </>
   );
 };
 
