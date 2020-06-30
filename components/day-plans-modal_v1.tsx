@@ -1,25 +1,14 @@
 import React from "react";
 import { UniversalPortal } from "@jesstelford/react-portal-universal";
-// import { useRouter } from "next/router";
 import Head from "next/head";
 
-import {
-  AbFlex,
-  Button,
-  Flex,
-  Text,
-  // Card,
-  // Image,
-  // Heading,
-  // Box,
-} from "./primitives/styled-rebass";
+import { AbFlex, Button, Flex, Text } from "./primitives/styled-rebass";
 import { MeQuery } from "../lib/queries/me.graphql";
 import { useLockBodyScroll } from "./use-lock-body-scroll";
 import Icon from "./icon";
 import { FlyOverMenuStatuses, OverlayModalsActions } from "./hotel-view-modal";
 import { HotelViewDayPlansListItem } from "./hotel-view-day-plans-list-item";
-// import { HotelViewDayPlansListItem } from "./hotel-view-day-plans-list-item";
-// import { AuthenticatedModalHeader } from "./authenticated-modal-header";
+import { fauxDayPlans } from "./helpers";
 
 interface DayPlansModalProps {
   viewState: "isOpen" | "isClosed";
@@ -129,92 +118,7 @@ const DayPlansModal: React.FunctionComponent<DayPlansModalProps> = ({
                   listStyle: "none",
                 }}
               >
-                {[
-                  {
-                    time: "9:00 AM",
-                    title: "Breakfast",
-                    link: "https://www.google.com",
-                    id: "0-dayPlan",
-                  },
-                  {
-                    time: "11:00 AM",
-                    title: "Camel Riding",
-                    link: "https://www.google.com",
-                    id: "1-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "9:00 AM",
-                    title: "Breakfast",
-                    link: "https://www.google.com",
-                    id: "0-dayPlan",
-                  },
-                  {
-                    time: "11:00 AM",
-                    title: "Camel Riding",
-                    link: "https://www.google.com",
-                    id: "1-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                  {
-                    time: "12:00 AM",
-                    title: "Paragliding",
-                    link: "https://www.google.com",
-                    id: "2-dayPlan",
-                  },
-                ].map((item, index) => {
+                {fauxDayPlans.map((item, index) => {
                   return (
                     <li key={`${index}-random`}>
                       <HotelViewDayPlansListItem
