@@ -5,6 +5,7 @@ import {
   SliderRail,
   HandleKm as Handle,
   Track,
+  HandleVariable,
 } from "./compound-slider-components";
 import { Flex } from "../primitives/styled-rebass";
 
@@ -35,17 +36,11 @@ export class SingleSlider extends Component<{ minHeight?: string }> {
 
   render() {
     const {
-      // @ts-ignore
-      state: { values, update },
-      props,
+      state: { values },
     } = this;
 
     return (
-      <Flex
-        width={1}
-        minHeight={props.minHeight ? props.minHeight : undefined}
-        justifyContent="flex-end"
-      >
+      <Flex width={1} justifyContent="flex-end">
         <Slider
           mode={1}
           step={1}
@@ -68,6 +63,77 @@ export class SingleSlider extends Component<{ minHeight?: string }> {
                     handle={handle}
                     domain={domain}
                     getHandleProps={getHandleProps}
+                  />
+                ))}
+              </div>
+            )}
+          </Handles>
+          <Tracks right={false}>
+            {({ tracks, getTrackProps }) => (
+              <Flex width={1} className="slider-tracks">
+                {tracks.map(({ id, source, target }) => (
+                  <Track
+                    key={id}
+                    source={source}
+                    target={target}
+                    getTrackProps={getTrackProps}
+                  />
+                ))}
+              </Flex>
+            )}
+          </Tracks>
+        </Slider>
+      </Flex>
+    );
+  }
+}
+
+export class NearMeFilterDistanceSlider extends Component<{
+  units?: string;
+}> {
+  state = {
+    values: defaultValues.slice(),
+    update: defaultValues.slice(),
+  };
+
+  onUpdate = (update: ReadonlyArray<number>) => {
+    this.setState({ update });
+  };
+
+  onChange = (values: ReadonlyArray<number>) => {
+    this.setState({ values });
+  };
+
+  render() {
+    const {
+      state: { values },
+    } = this;
+
+    return (
+      <Flex width={1} justifyContent="flex-end">
+        <Slider
+          mode={1}
+          step={1}
+          domain={domain}
+          rootStyle={sliderStyle}
+          onUpdate={this.onUpdate}
+          onChange={this.onChange}
+          values={values}
+        >
+          <Rail>
+            {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
+          </Rail>
+
+          <Handles>
+            {({ handles, getHandleProps }) => (
+              <div className="slider-handles">
+                {handles.map((handle) => (
+                  <HandleVariable
+                    key={handle.id}
+                    handle={handle}
+                    domain={domain}
+                    getHandleProps={getHandleProps}
+                    units={this.props.units}
                   />
                 ))}
               </div>
