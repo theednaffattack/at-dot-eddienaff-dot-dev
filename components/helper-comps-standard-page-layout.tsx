@@ -7,24 +7,30 @@ import {
 } from "./layout-authorized-header";
 import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
 import { StandardPageInfoAndFilterButton } from "./helper-comps-standard-page-info-and-filter-button";
+import { DlAccordion, AccordionItem, ContentWrapper } from "./dl-accordion";
 
 interface LazyPageSectionSizerProps extends ClonedChildrenFromAuthLayout {
+  accordionContent?: ReactElement;
+  accordionMinHeight: string;
   children: React.ReactChild | React.ReactChildren;
   title: string;
 }
 
 export function SubAuthHeaderPageLayout({
+  accordionContent,
+  accordionMinHeight,
   children,
   modalOverlayDispatch,
   modalOverlayState,
   title,
 }: LazyPageSectionSizerProps): ReactElement {
+  const [activeIndex, setActiveIndex] = React.useState<null | number>(null);
   return (
     <Flex id="near-me" flexDirection="column" flex={1}>
       <LayoutAuthorizedHeader
         modalOverlayDispatch={modalOverlayDispatch}
         modalOverlayState={modalOverlayState}
-        title="Explore"
+        title={title}
       />
       <Flex
         mt={[3, 3, 3, 3, 3, 3, 4]}
@@ -43,7 +49,54 @@ export function SubAuthHeaderPageLayout({
           }}
         >
           <Flex flexDirection="column">
-            <StandardPageInfoAndFilterButton count={50} title={title} />
+            <StandardPageInfoAndFilterButton
+              activeIndex={activeIndex}
+              setActiveIndex={setActiveIndex}
+              count={50}
+              title={title}
+            >
+              {accordionContent ? (
+                <DlAccordion
+                  activeIndex={activeIndex}
+                  setActiveIndex={setActiveIndex}
+                >
+                  <>
+                    <AccordionItem
+                      index={0}
+                      key={"0-accordion-guts"}
+                      setActiveIndex={setActiveIndex}
+                      activeIndex={activeIndex}
+                    >
+                      <ContentWrapper
+                        bg="#eee"
+                        width={1}
+                        border="1px #aaa solid"
+                        minHeight={
+                          activeIndex === 0
+                            ? accordionMinHeight
+                              ? accordionMinHeight
+                              : "auto"
+                            : 0
+                        }
+                        padding={
+                          activeIndex === 0 ? "15px 20px 15px 20px" : "0 1px"
+                        }
+                        flexDirection="column"
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{
+                          opacity: activeIndex === 0 ? 1 : 0,
+                        }}
+                      >
+                        {accordionContent}
+                      </ContentWrapper>
+                    </AccordionItem>
+                  </>
+                </DlAccordion>
+              ) : (
+                undefined
+              )}
+            </StandardPageInfoAndFilterButton>
           </Flex>
           {children}
         </Flex>
