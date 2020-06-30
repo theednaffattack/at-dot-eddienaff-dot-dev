@@ -47,7 +47,7 @@ export const ExplorePageComponent: React.FC<ExplorePageComponentProps> = ({
           site_name: "Atlas Travel",
         }}
       />
-      <Flex flexDirection="column" flex={1} className="whereAmI">
+      <Flex flexDirection="column" flex={1}>
         <LayoutAuthorizedHeaderBookings
           modalOverlayDispatch={modalOverlayDispatch}
           modalOverlayState={modalOverlayState}
