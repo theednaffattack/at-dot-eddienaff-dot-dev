@@ -1,109 +1,88 @@
-import { NextSeo } from "next-seo";
-import React from "react";
+import React, { ReactElement } from "react";
 
-import {
-  LayoutAuthorizedHeader,
-  // @ts-ignore
-  authLayoutWidths,
-} from "./layout-authorized-header";
-import { Flex } from "./primitives/styled-rebass";
+// import {
+//   LayoutAuthorizedHeader,
+//   // @ts-ignore
+//   authLayoutWidths,
+// } from "./layout-authorized-header";
+import { Flex, Text } from "./primitives/styled-rebass";
 import { TravelingPageListingItem } from "./traveling-page-listing-item";
-import { TravelingPageInfoAndFilterButton } from "./traveling-page-info-and-filter-button";
-import { size } from "./styles/theme";
+// import { TravelingPageInfoAndFilterButton } from "./traveling-page-info-and-filter-button";
+// import { size } from "./styles/theme";
 import { Hotels } from "./helpers";
 import { ClonedChildrenFromAuthLayout } from "../pages/traveling";
+import { SubAuthHeaderTravelingPageLayout } from "./helper-comps-traveling-page-layout";
+// import {
+//   initTravelingPageFiltersState,
+//   travelingPageFiltersReducer,
+//   TravelingPageFiltersStateInterface,
+// } from "./travelilng-filter-state-functions";
+// import { NearMeFilterDistanceSlider } from "./form-fields/single-slider";
+// import { ExploreFeatureCardList } from "./explore-feature-card-list";
+// import { RenderDayPlansList } from "./near-me-render-dayplans-list";
 
 interface TravelingPageComponentProps extends ClonedChildrenFromAuthLayout {
   // pathname: NextContext["pathname"];
   // query: NextContext["query"];
+  title: string;
 }
 
-const localLayoutWidths = [
-  size.mobileS,
-  size.mobileM,
-  size.mobileL,
-  size.tablet,
-  size.laptop,
-  size.laptop,
-  size.laptopL,
-];
+// const initialFiltersState: TravelingPageFiltersStateInterface = {
+//   distance: 267,
+//   features: null,
+//   price: 996,
+//   room: { adults: 2, minors: 0 },
+//   time: { from: new Date(), to: new Date() },
+// };
 
 export const TravelingPageComponent: React.FC<TravelingPageComponentProps> = ({
   modalOverlayDispatch,
   modalOverlayState,
+  title,
 }) => {
   const asPath = "/traveling";
   const href = "/traveling";
   const referer = "/traveling";
   return (
-    <React.Fragment>
-      <NextSeo
-        title="Traveling"
-        description="A traveling page, nothing more."
-        canonical="https://at.eddienaff.dev/"
-        openGraph={{
-          url: "https://at.eddienaff.dev/traveling",
-          title: "Traveling",
-          description: "A beautiful traveling page.",
-          images: [
-            {
-              url: "https://www.example.ie/og-image-01.jpg",
-              width: 800,
-              height: 600,
-              alt: "Og Image Alt",
-            },
-            {
-              url: "https://www.example.ie/og-image-02.jpg",
-              width: 900,
-              height: 800,
-              alt: "Og Image Alt Second",
-            },
-            { url: "https://www.example.ie/og-image-03.jpg" },
-            { url: "https://www.example.ie/og-image-04.jpg" },
-          ],
-          site_name: "SiteName",
-        }}
-      />
-      <Flex justifyContent="center" width={1}>
-        <Flex
-          width={localLayoutWidths}
-          borderBottom="2px rgba(170, 170, 170, 0.6) solid"
+    <SubAuthHeaderTravelingPageLayout
+      // accordionContent={<NearMeFilterDistanceSlider units="km" />}
+      accordionMinHeight="auto"
+      modalOverlayDispatch={modalOverlayDispatch}
+      modalOverlayState={modalOverlayState}
+      title={title}
+    >
+      <React.Fragment>
+        {/* <Flex
           alignItems="center"
-          pb={[3, 3, 3, 3, 0, 0, 0]}
-          flexDirection="column"
+          justifyContent="space-evenly"
+          border="crimson"
         >
-          <LayoutAuthorizedHeader
-            modalOverlayDispatch={modalOverlayDispatch}
-            modalOverlayState={modalOverlayState}
-          />
-          <TravelingPageInfoAndFilterButton
-            modalOverlayDispatch={modalOverlayDispatch}
-          />
-
-          <Flex width={1} flex={1} mx="auto" overflowY="auto" flexWrap="wrap">
-            {Hotels.map((hotel) => (
-              <TravelingPageListingItem
-                asPath={asPath}
-                city={hotel.city}
-                comments={hotel.comments}
-                coordinates={hotel.coordinates}
-                href={href}
-                id={hotel.id}
-                images={hotel.images}
-                key={hotel.id}
-                likes={hotel.likes}
-                modalOverlayDispatch={modalOverlayDispatch}
-                modalOverlayState={modalOverlayState}
-                name={hotel.name}
-                original_price={hotel.original_price}
-                price={hotel.price}
-                referer={referer}
-              />
-            ))}
-          </Flex>
+          <Badge>Time</Badge> <Badge>Price</Badge>
+          <Badge>Features</Badge> <Badge>Room</Badge> <Badge>Distance</Badge>
+        </Flex> */}
+        <Flex width={1} flex={1} mx="auto" overflowY="auto" flexWrap="wrap">
+          {Hotels.map((hotel) => (
+            <TravelingPageListingItem
+              asPath={asPath}
+              city={hotel.city}
+              comments={hotel.comments}
+              coordinates={hotel.coordinates}
+              href={href}
+              id={hotel.id}
+              images={hotel.images}
+              key={hotel.id}
+              likes={hotel.likes}
+              modalOverlayDispatch={modalOverlayDispatch}
+              modalOverlayState={modalOverlayState}
+              name={hotel.name}
+              original_price={hotel.original_price}
+              price={hotel.price}
+              referer={referer}
+            />
+          ))}
         </Flex>
-      </Flex>
-    </React.Fragment>
+      </React.Fragment>
+    </SubAuthHeaderTravelingPageLayout>
   );
 };
 
@@ -124,4 +103,39 @@ export interface HotelInterface {
   price: string;
   coordinates: number[][];
   referer?: string;
+}
+
+function Badge({
+  iconName,
+  children,
+}: {
+  iconName?: string;
+  children: React.ReactChildren | React.ReactChild;
+}): ReactElement {
+  return (
+    <Flex
+      alignItems="center"
+      justifyContent="center"
+      flexWrap="nowrap"
+      sx={{
+        // display: "inline-block",
+        color: "white",
+        bg: "blue",
+        px: 2,
+        py: 1,
+        borderLeft: "1px white solid",
+        // borderRadius: 99999,
+      }}
+    >
+      {iconName}
+      <Text
+        fontSize="13px"
+        sx={{
+          whiteSpace: "nowrap",
+        }}
+      >
+        {children}
+      </Text>
+    </Flex>
+  );
 }
