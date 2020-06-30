@@ -71,7 +71,7 @@ const DayPlansModal: React.FunctionComponent<DayPlansModalProps> = ({
                     : "0",
               }}
             >
-              {/* HEADER */}
+              {/* START - HEADER */}
               <Flex
                 width={1}
                 alignItems="center"
@@ -106,6 +106,7 @@ const DayPlansModal: React.FunctionComponent<DayPlansModalProps> = ({
                 </Flex>
                 <Text>Day Plans</Text>
               </Flex>
+              {/* END - HEADER */}
 
               <Flex
                 as="ul"
