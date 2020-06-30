@@ -12,7 +12,16 @@ export const ExploreFeatureCardList: React.FC<ExploreFeatureCardListProps> = ({
   data,
 }) => {
   return (
-    <Flex flexDirection="row" flexWrap="wrap" as="ul" p={3} m={0}>
+    <Flex
+      flexDirection="row"
+      flexWrap="wrap"
+      flex={1}
+      as="ul"
+      p={0}
+      pb={3}
+      px={3}
+      m={0}
+    >
       {data.map((item, index) => {
         return (
           <Flex
