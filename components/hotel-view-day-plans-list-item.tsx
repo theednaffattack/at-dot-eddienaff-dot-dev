@@ -11,7 +11,6 @@ import {
 } from "./primitives/styled-rebass";
 // @ts-ignore
 import { HotelViewDayPlansListItemHeader } from "./hotel-view-day-plans-list-view-header";
-import Link from "next/link";
 import Icon from "./icon";
 
 interface HotelViewDayPlansListItemProps {
@@ -35,13 +34,13 @@ export const HotelViewDayPlansListItem: React.FC<HotelViewDayPlansListItemProps>
       <HotelViewDayPlansListItemHeader time={time} />
       <Flex pl={2} pr={2} mb={3} flexDirection="column">
         <Flex mt={2} alignItems="center">
-          <Link href={link}>
-            <A>
-              <Heading fontFamily="main" color="#444">
-                {title}
-              </Heading>
-            </A>
-          </Link>
+          {/* <Link href={link}> */}
+          <A href={link}>
+            <Heading fontFamily="main" color="#444">
+              {title}
+            </Heading>
+          </A>
+          {/* </Link> */}
           <Box>
             <Icon name="share_arrow" fill="#888" size="16px" active={false} />
           </Box>
