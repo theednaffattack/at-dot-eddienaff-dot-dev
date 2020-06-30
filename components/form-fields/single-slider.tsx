@@ -19,7 +19,7 @@ const sliderStyle = {
 const domain = [100, 500];
 const defaultValues = [150];
 
-export class SingleSlider extends Component {
+export class SingleSlider extends Component<{ minHeight?: string }> {
   state = {
     values: defaultValues.slice(),
     update: defaultValues.slice(),
@@ -37,10 +37,15 @@ export class SingleSlider extends Component {
     const {
       // @ts-ignore
       state: { values, update },
+      props,
     } = this;
 
     return (
-      <Flex width={1} justifyContent="flex-end">
+      <Flex
+        width={1}
+        minHeight={props.minHeight ? props.minHeight : undefined}
+        justifyContent="flex-end"
+      >
         <Slider
           mode={1}
           step={1}

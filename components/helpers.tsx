@@ -1377,3 +1377,99 @@ export const fauxReviewCards: ReviewCardProps[] = [
 ];
 
 // END - REVIEW CARDS
+
+// START - DAY PLANS
+
+export interface DayPlansInterface {
+  time: string;
+  title: string;
+  link: string;
+  id: string;
+}
+
+export const fauxDayPlans: DayPlansInterface[] = [
+  {
+    time: "9:00 AM",
+    title: "Breakfast",
+    link: "https://www.google.com",
+    id: "0-dayPlan",
+  },
+  {
+    time: "11:00 AM",
+    title: "Camel Riding",
+    link: "https://www.google.com",
+    id: "1-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "9:00 AM",
+    title: "Breakfast",
+    link: "https://www.google.com",
+    id: "0-dayPlan",
+  },
+  {
+    time: "11:00 AM",
+    title: "Camel Riding",
+    link: "https://www.google.com",
+    id: "1-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+  {
+    time: "12:00 AM",
+    title: "Paragliding",
+    link: "https://www.google.com",
+    id: "2-dayPlan",
+  },
+];
