@@ -2,11 +2,17 @@ import React, { ReactElement } from "react";
 import styled from "styled-components";
 import { layout, LayoutProps, space, SpaceProps } from "styled-system";
 
-import { SingleSlider } from "./form-fields/single-slider";
-import { Flex, FlexMinHeightBordersProps } from "./primitives/styled-rebass";
+import {
+  Flex,
+  FlexMinHeightBordersProps,
+  Button,
+} from "./primitives/styled-rebass";
 
 interface DlAccordionProps {
   activeIndex: number | null;
+
+  children: React.ReactChildren | React.ReactChild;
+  minHeight?: string;
   setActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
@@ -40,40 +46,47 @@ export function DlAccordionExample({}: DlAccordionProps) {
     </dl>
   );
 }
-export function DlAccordion({ activeIndex, setActiveIndex }: DlAccordionProps) {
+export function DlAccordion({
+  activeIndex,
+  children,
+  minHeight,
+  setActiveIndex,
+}: DlAccordionProps) {
   return (
     <Flex
+      flexDirection="column"
       justifyContent="center"
       m={0}
-      minHeight={activeIndex !== null ? "118px" : 0}
+      minHeight={
+        activeIndex !== null
+          ? minHeight !== undefined
+            ? minHeight
+            : "auto"
+          : 0
+      }
     >
-      {[1].map((_, index) => (
-        <AccordionItem
-          index={index}
-          key={index ? index + "-accordion-guts" : "xx-accordion-guts"}
-          setActiveIndex={setActiveIndex}
-          activeIndex={activeIndex}
+      {children}
+
+      <AccordionItem
+        index={1}
+        key="button-key-accordion-guts"
+        setActiveIndex={setActiveIndex}
+        activeIndex={activeIndex}
+      >
+        <ContentWrapper
+          width={1}
+          height={activeIndex !== null ? "auto" : 0}
+          id="content-wrapper"
+          flexDirection="column"
+          alignItems="flex-end"
+          justifyContent="center"
+          sx={{
+            opacity: activeIndex !== null ? 1 : 0,
+          }}
         >
-          <ContentWrapper
-            bg="peachpuff"
-            width={1}
-            minHeight={index === activeIndex ? "88px" : 0}
-            padding={
-              activeIndex && index === activeIndex
-                ? "15px 20px 15px 20px"
-                : "0 1px"
-            }
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            sx={{
-              opacity: index === activeIndex ? 1 : 0,
-            }}
-          >
-            <SingleSlider />
-          </ContentWrapper>
-        </AccordionItem>
-      ))}
+          <Button type="button">submit</Button>
+        </ContentWrapper>
+      </AccordionItem>
     </Flex>
   );
 }
@@ -86,13 +99,14 @@ status={index === activeIndex ? "isOpen" : "isClosed"}
 </ContentWrapper> */
 }
 
-const ContentWrapper = styled(Flex)<FlexMinHeightBordersProps>`
+export const ContentWrapper = styled(Flex)<FlexMinHeightBordersProps>`
   /* css animation */
 
   /* overflow: hidden; */
 
   /* add browser prefixes */
   transition: all 0.3s ease;
+  overflow: hidden;
 `;
 
 interface AccordionItemProps {
@@ -102,7 +116,7 @@ interface AccordionItemProps {
   activeIndex: number | null;
 }
 
-function AccordionItem({
+export function AccordionItem({
   children,
 }: // activeIndex,
 // index,
