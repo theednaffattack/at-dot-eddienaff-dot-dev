@@ -2,26 +2,31 @@ import React from "react";
 
 import { Flex, CustomButton, Text, Heading } from "./primitives/styled-rebass";
 import Icon from "./icon";
-import { DlAccordion } from "./dl-accordion";
+import {
+  AuthorizedLayoutModalOverlayState,
+  AuthorizedLayoutModalOverlayActions,
+} from "./layout-authorized";
 
 interface SavedPageInfoAndFilterButtonProps {
+  activeIndex: number | null;
+  children?: React.ReactChildren | React.ReactChild;
   count: number;
+  setActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
   title: string;
 }
 
 export const StandardPageInfoAndFilterButton: React.FC<SavedPageInfoAndFilterButtonProps> = ({
+  activeIndex,
+  children,
   count,
+  setActiveIndex,
   title,
 }) => {
-  const [activeIndex, setActiveIndex] = React.useState<null | number>(null);
+  // const [activeIndex, setActiveIndex] = React.useState<null | number>(null);
 
   return (
     <Flex width={1} flexDirection="column" mx="auto">
-      <Flex
-        height="auto"
-        width={1}
-        // overflowY="hidden"
-      >
+      <Flex height="auto" width={1}>
         <Flex flexDirection="column" mr="auto">
           <Heading
             fontSize={[4, 4, 4, 4, 4, 4, 5]}
@@ -71,6 +76,10 @@ export const StandardPageInfoAndFilterButton: React.FC<SavedPageInfoAndFilterBut
           </Flex>
         </CustomButton>
       </Flex>
+      {children}
+    </Flex>
+  );
+};
 
 interface TravelingPageFilterButtonProps {
   children?: React.ReactChildren | React.ReactChild;
