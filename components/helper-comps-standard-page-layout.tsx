@@ -26,7 +26,13 @@ export function SubAuthHeaderPageLayout({
 }: LazyPageSectionSizerProps): ReactElement {
   const [activeIndex, setActiveIndex] = React.useState<null | number>(null);
   return (
-    <Flex id="near-me" flexDirection="column" flex={1}>
+    <Flex
+      flexDirection="column"
+      flex={1}
+      sx={{
+        position: "relative",
+      }}
+    >
       <LayoutAuthorizedHeader
         modalOverlayDispatch={modalOverlayDispatch}
         modalOverlayState={modalOverlayState}
@@ -44,9 +50,6 @@ export function SubAuthHeaderPageLayout({
           width={authLayoutWidths}
           // alignItems="center"
           pb={[2, 2, 2, 2, 0, 0, 0]}
-          sx={{
-            position: "relative",
-          }}
         >
           <Flex flexDirection="column">
             <StandardPageInfoAndFilterButton
@@ -98,9 +101,9 @@ export function SubAuthHeaderPageLayout({
               )}
             </StandardPageInfoAndFilterButton>
           </Flex>
-          {children}
         </Flex>
       </Flex>
+      {children}
     </Flex>
   );
 }
