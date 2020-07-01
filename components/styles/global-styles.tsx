@@ -24,5 +24,5 @@ body {
   box-sizing: inherit;
 }
 
-#__next {  height: 100%; width: 100%;   }
+#__next {  min-height: 100%; width: 100%;   }
 `;

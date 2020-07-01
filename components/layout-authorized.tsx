@@ -263,6 +263,7 @@ const AuthorizedLayout = ({ children, title }: any) => {
         m={[0]}
         flexDirection="column"
         width={1}
+        minHeight="100%"
         sx={{
           position: children.title === "Messages" ? "absolute" : "relative",
           top: children.title === "Messages" ? 0 : undefined,
