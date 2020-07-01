@@ -1,11 +1,11 @@
-import React, { ReactElement } from "react";
+import React from "react";
 
 // import {
 //   LayoutAuthorizedHeader,
 //   // @ts-ignore
 //   authLayoutWidths,
 // } from "./layout-authorized-header";
-import { Flex, Text } from "./primitives/styled-rebass";
+import { Flex } from "./primitives/styled-rebass";
 import { TravelingPageListingItem } from "./traveling-page-listing-item";
 // import { TravelingPageInfoAndFilterButton } from "./traveling-page-info-and-filter-button";
 // import { size } from "./styles/theme";
@@ -105,37 +105,37 @@ export interface HotelInterface {
   referer?: string;
 }
 
-function Badge({
-  iconName,
-  children,
-}: {
-  iconName?: string;
-  children: React.ReactChildren | React.ReactChild;
-}): ReactElement {
-  return (
-    <Flex
-      alignItems="center"
-      justifyContent="center"
-      flexWrap="nowrap"
-      sx={{
-        // display: "inline-block",
-        color: "white",
-        bg: "blue",
-        px: 2,
-        py: 1,
-        borderLeft: "1px white solid",
-        // borderRadius: 99999,
-      }}
-    >
-      {iconName}
-      <Text
-        fontSize="13px"
-        sx={{
-          whiteSpace: "nowrap",
-        }}
-      >
-        {children}
-      </Text>
-    </Flex>
-  );
-}
+// function Badge({
+//   iconName,
+//   children,
+// }: {
+//   iconName?: string;
+//   children: React.ReactChildren | React.ReactChild;
+// }): ReactElement {
+//   return (
+//     <Flex
+//       alignItems="center"
+//       justifyContent="center"
+//       flexWrap="nowrap"
+//       sx={{
+//         // display: "inline-block",
+//         color: "white",
+//         bg: "blue",
+//         px: 2,
+//         py: 1,
+//         borderLeft: "1px white solid",
+//         // borderRadius: 99999,
+//       }}
+//     >
+//       {iconName}
+//       <Text
+//         fontSize="13px"
+//         sx={{
+//           whiteSpace: "nowrap",
+//         }}
+//       >
+//         {children}
+//       </Text>
+//     </Flex>
+//   );
+// }

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import styled from "styled-components";
-import { layout, LayoutProps, space, SpaceProps } from "styled-system";
+// import { layout, LayoutProps, space, SpaceProps } from "styled-system";
 
 import {
   Flex,
@@ -164,10 +164,10 @@ AccordionItemProps): ReactElement {
 //   }
 // `;
 
-const Accordion = styled.div<LayoutProps & SpaceProps>`
-  ${layout}
-  ${space}
-`;
+// const Accordion = styled.div<LayoutProps & SpaceProps>`
+//   ${layout}
+//   ${space}
+// `;
 
 // const AccordionTrigger = styled.dt<{ status: "isOpen" | "isClosed" }>`
 //   padding: ${({ status }) => (status === "isOpen" ? "15px 20px" : "0 1px")};
