@@ -54,10 +54,24 @@ MapPageComponentProps): ReactElement {
     null
   );
 
+  const [navigatorErrors, setNavigatorErrors] = React.useState<string[]>([]);
+
   React.useEffect(() => {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      setOriginData([position.coords.longitude, position.coords.latitude]);
-    });
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("POSTION", position);
+        setOriginData([position.coords.longitude, position.coords.latitude]);
+      });
+      console.log(
+        "IF CONDITION FIRING - NAVIGATOR.GEO SUCCESSFUL",
+        navigator.geolocation
+      );
+    } else {
+      console.log("ELSE CONDITION FIRING");
+      // Browser doesn't support Geolocation
+      // handleLocationError(false, infoWindow, map.getCenter());
+      setNavigatorErrors([...navigatorErrors, "Geolocation is not available"]);
+    }
     // return () => {
     //   cleanup
     // }
@@ -89,7 +103,22 @@ MapPageComponentProps): ReactElement {
             name={"Fake map name"}
             price={"$1500"}
           />
-        ) : null}
+        ) : (
+          <Flex
+            flex={1}
+            alignItems="center"
+            justifyContent="center"
+            border="lime"
+          >
+            {navigatorErrors && navigatorErrors.length > 0 ? (
+              navigatorErrors.map((error, errorIndex) => (
+                <div key={errorIndex + "-error"}>{error}</div>
+              ))
+            ) : (
+              <Text fontSize={5}>Loading...{navigatorErrors[0]}</Text>
+            )}
+          </Flex>
+        )}
       </Flex>
       <Flex
         flexDirection="column"
@@ -97,7 +126,7 @@ MapPageComponentProps): ReactElement {
         p={3}
         mt="auto"
         width={1}
-        sx={{ position: "absolute", bottom: 0, zIndex: 90 }}
+        sx={{ position: "absolute", bottom: 0, zIndex: 10 }}
       >
         <RenderMapTabDrawer
           data={fauxMapList}
@@ -239,3 +268,17 @@ const fauxMapList: MapAttributes[] = [
     },
   },
 ];
+
+function handleLocationError(
+  browserHasGeolocation: boolean,
+  infoWindow: any,
+  pos: { lng: number; lat: number }
+) {
+  infoWindow.setPosition(pos);
+  infoWindow.setContent(
+    browserHasGeolocation
+      ? "Error: The Geolocation service failed."
+      : "Error: Your browser doesn't support geolocation."
+  );
+  // infoWindow.open(map);
+}

@@ -35,7 +35,7 @@ export const SideListModal: React.FunctionComponent<SideListModalProps> = ({
             left={0}
             right={0}
             bottom={0}
-            zIndex={9}
+            zIndex={19}
             onClick={(event) => {
               event.preventDefault();
               if (event.target === event.currentTarget) {
