@@ -88,9 +88,15 @@ interface HooksMapProps {
   lngLat: number[];
   name: string | null;
   price: string;
+  initPopup?: boolean;
 }
 
-export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
+export const HooksMap: React.FC<HooksMapProps> = ({
+  initPopup = true,
+  lngLat,
+  name,
+  price,
+}) => {
   const [viewportState, viewportDispatch] = React.useReducer(
     viewportReducer,
     {
@@ -125,7 +131,7 @@ export const HooksMap: React.FC<HooksMapProps> = ({ lngLat, name, price }) => {
   // data for the Marker click Popup element
   const [popupVisible, setPopupVisible] = React.useState<
     "isHidden" | "isVisible"
-  >("isVisible");
+  >(initPopup && initPopup === true ? "isVisible" : "isHidden");
 
   // run Mapbox requests based on directionsData(requesat URI set onClick)
   React.useEffect(() => {
