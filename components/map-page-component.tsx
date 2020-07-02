@@ -104,12 +104,7 @@ MapPageComponentProps): ReactElement {
             price={"$1500"}
           />
         ) : (
-          <Flex
-            flex={1}
-            alignItems="center"
-            justifyContent="center"
-            border="lime"
-          >
+          <Flex flex={1} alignItems="center" justifyContent="center">
             {navigatorErrors && navigatorErrors.length > 0 ? (
               navigatorErrors.map((error, errorIndex) => (
                 <div key={errorIndex + "-error"}>{error}</div>
