@@ -829,3 +829,21 @@ export const FlexMenuButton = styled(Flex)`
 `;
 
 export { Heading, Image, Text };
+
+export const UnAuthenticatedAnchor = styled.a`
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  :after {
+    content: "";
+
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+
+    border-color: rgba(255, 255, 255, 0.4);
+    border-width: 0 0 2px;
+    border-style: solid;
+  }
+`;
