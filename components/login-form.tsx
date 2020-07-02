@@ -14,7 +14,7 @@ import { ToggleCheckbox } from "./form-fields/checkbox-custom";
 interface LoginFormProps {}
 
 export const LoginForm: React.FC<LoginFormProps> = ({}) => {
-  const [loginFunc, { data }] = useLoginMutation();
+  const [loginFunc] = useLoginMutation();
 
   return (
     <Formik
@@ -113,7 +113,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
           <Flex alignItems="center" justifyContent="center">
             <Text fontSize={4}>Sign in</Text>
           </Flex>
-          {data ? JSON.stringify(data, null, 2) : null}
+
           <Field
             autoComplete="email"
             label="email"
