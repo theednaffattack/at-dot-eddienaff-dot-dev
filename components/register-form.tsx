@@ -15,8 +15,7 @@ import { useRegisterMutation } from "../lib/mutations/register.graphql";
 interface RegisterFormProps {}
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
-  // @ts-ignore
-  const [registerFunc, { data }] = useRegisterMutation();
+  const [registerFunc] = useRegisterMutation();
 
   return (
     <Formik
