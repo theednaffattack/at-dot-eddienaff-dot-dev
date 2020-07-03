@@ -52,7 +52,7 @@ export const LoginGuts: React.FC<LoginGutsProps> = ({}) => {
     >
       <Flex
         width={1}
-        minHeight="100vh"
+        minHeight="100%"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
@@ -72,6 +72,7 @@ export const LoginGuts: React.FC<LoginGutsProps> = ({}) => {
           borderRadius="8px"
           bg="#f2f2f2"
           p={4}
+          flexDirection="column"
         >
           <LoginForm />
         </Flex>

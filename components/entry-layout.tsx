@@ -119,7 +119,13 @@ const Layout = ({ children, title }: any) => {
       <Head>
         <title>{children && children.title ? children.title : title}</title>
       </Head>
-      <Flex m={[0]} minHeight="100vh" flexDirection="column" width={1}>
+      <Flex
+        m={[0]}
+        minHeight="100%"
+        flexDirection="column"
+        width={1}
+        sx={{ position: "relative" }}
+      >
         {newChildren}
       </Flex>
 

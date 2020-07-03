@@ -16,10 +16,12 @@ export const RegisterGuts: React.FC<RegisterGutsProps> = () => {
     >
       <Flex
         width={1}
-        minHeight="100vh"
+        flex={1}
+        minHeight="100%"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
+        py={3}
         px={4}
       >
         <Flex
