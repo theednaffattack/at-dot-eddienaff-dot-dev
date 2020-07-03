@@ -35,9 +35,9 @@ export const LogoFirstTry: React.FC<LogoProps> = ({}) => {
           </feMerge>
         </filter>
         <linearGradient id="LogoGrad" x1="0%" x2="5.234%" y1="99.863%" y2="0%">
-          <stop offset="0%" stop-color="rgb(255,121,85)" stop-opacity="0.75" />
-          <stop offset="26%" stop-color="rgb(254,97,97)" stop-opacity="0.75" />
-          <stop offset="94%" stop-color="rgb(210,48,120)" stop-opacity="0.75" />
+          <stop offset="0%" stopColor="rgb(255,121,85)" stopOpacity="0.75" />
+          <stop offset="26%" stopColor="rgb(254,97,97)" stopOpacity="0.75" />
+          <stop offset="94%" stopColor="rgb(210,48,120)" stopOpacity="0.75" />
         </linearGradient>
       </defs>
       <g filter="url(#Filter_logo)">
@@ -73,9 +73,9 @@ export function Logo({}: LogoProps): ReactElement {
     >
       <defs>
         <linearGradient id="LogoGrad" x1="0%" x2="5.234%" y1="99.863%" y2="0%">
-          <stop offset="0%" stop-color="rgb(255,121,85)" stop-opacity="0.75" />
-          <stop offset="26%" stop-color="rgb(254,97,97)" stop-opacity="0.75" />
-          <stop offset="94%" stop-color="rgb(210,48,120)" stop-opacity="0.75" />
+          <stop offset="0%" stopColor="rgb(255,121,85)" stopOpacity="0.75" />
+          <stop offset="26%" stopColor="rgb(254,97,97)" stopOpacity="0.75" />
+          <stop offset="94%" stopColor="rgb(210,48,120)" stopOpacity="0.75" />
         </linearGradient>
       </defs>
       <path
