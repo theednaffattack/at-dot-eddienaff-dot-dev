@@ -157,10 +157,8 @@ const MessageList: React.FC<MessageListProps> = ({
       )}
       <div
         ref={messagesEndRef}
-        // ref={refThing}
         style={{
           minHeight: "70px",
-          outline: "2px pink dashed",
           width: "100%",
         }}
       ></div>
