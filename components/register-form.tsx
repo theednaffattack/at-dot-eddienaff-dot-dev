@@ -189,6 +189,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({}) => {
               boxShadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
               borderRadius="23px"
               p="12px"
+              height="40px"
               width="340px"
             >
               <Text fontFamily="montserrat">Sign up</Text>
