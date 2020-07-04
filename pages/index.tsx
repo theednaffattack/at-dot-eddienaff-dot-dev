@@ -50,6 +50,7 @@ const Index: NextPage<IndexProps, {}> & NextPageStaticVariableProps = ({}) => {
           sx={{ position: "relative" }}
         >
           <Box height="70px" width="70px">
+            WHAT
             <Logo />
           </Box>
           <Box my={3} color="#fff">
