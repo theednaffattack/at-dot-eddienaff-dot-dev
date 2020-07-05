@@ -49,12 +49,16 @@ const Index: NextPage<IndexProps, {}> & NextPageStaticVariableProps = ({}) => {
           justifyContent="center"
           sx={{ position: "relative" }}
         >
-          <Box height="70px" width="70px">
-            WHAT
+          <Box color="#fff" height="70px" width="70px">
             <Logo />
           </Box>
           <Box my={3} color="#fff">
-            <Text fontSize={5} fontWeight={600} letterSpacing={15}>
+            <Text
+              fontSize={5}
+              fontWeight={600}
+              letterSpacing={15}
+              sx={{ textIndent: 15 }}
+            >
               ATLAS
             </Text>
           </Box>
