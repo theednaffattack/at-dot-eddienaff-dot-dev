@@ -18,6 +18,10 @@ interface ProfileModalStates {
   mode: "view" | "edit" | "inactive";
   status: ModalViewStates;
 }
+interface SearchStates {
+  mode: "open" | "closed" | "searching" | "inactive";
+  status: ModalViewStates;
+}
 
 interface HotelViewerStates {
   status: string;
@@ -31,11 +35,17 @@ export interface AuthorizedLayoutModalOverlayState {
   profile: ProfileModalStates;
   selectDate: ModalViewStates;
   sidebar: ModalViewStates;
+  search: SearchStates;
 }
 
 interface ProfileModalActions {
   setMode: ProfileModalStates["mode"];
   setStatus: ProfileModalStates["status"];
+}
+
+interface SearchActions {
+  setMode: SearchStates["mode"];
+  setStatus: SearchStates["status"];
 }
 
 export type AuthorizedLayoutModalOverlayActions =
@@ -56,6 +66,8 @@ export type AuthorizedLayoutModalOverlayActions =
   | { type: "openProfileFromSidebar"; action: ProfileModalActions }
   | { type: "profileOpen"; action: ProfileModalActions }
   | { type: "profileClosed"; action: ProfileModalActions }
+  | { type: "searchOpen"; action: SearchActions }
+  | { type: "searchCloseed"; action: SearchActions }
   | { type: "selectDateOpen"; action: "overlayModalOpen" }
   | { type: "selectDateClosed"; action: "overlayModalClosed" }
   | { type: "sidebarOpen"; action: "overlayModalOpen" }
@@ -73,6 +85,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: "isClosed",
         hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -82,6 +95,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: state.filterModal,
         hotelViewer: state.hotelViewer,
         profile: state.profile,
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -91,6 +105,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: "isOpen",
         hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
+        search: { status: "isClosed", mode: "inactive" },
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -100,6 +115,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: "isClosed",
         hotelViewer: state.hotelViewer,
         profile: state.profile,
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -112,6 +128,7 @@ function authorizedLayoutModalOverlayReducer(
           data: { coordinates: [[-1, -1]], name: null, price: "-1" },
         },
         profile: state.profile,
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -128,6 +145,7 @@ function authorizedLayoutModalOverlayReducer(
           },
         },
         profile: state.profile,
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -140,6 +158,7 @@ function authorizedLayoutModalOverlayReducer(
           status: action.action.setStatus,
           mode: action.action.setMode,
         },
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: "isClosed",
       };
@@ -150,6 +169,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: state.filterModal,
         hotelViewer: state.hotelViewer,
         profile: { status: "isOpen", mode: "view" },
+        search: state.search,
         selectDate: state.selectDate,
         activity: state.activity,
       };
@@ -162,6 +182,7 @@ function authorizedLayoutModalOverlayReducer(
           status: action.action.setStatus,
           mode: action.action.setMode,
         },
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
@@ -171,6 +192,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: state.filterModal,
         hotelViewer: state.hotelViewer,
         profile: state.profile,
+        search: state.search,
         selectDate: "isClosed",
         sidebar: state.sidebar,
       };
@@ -180,6 +202,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: state.filterModal,
         hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
+        search: state.search,
         selectDate: "isOpen",
         sidebar: state.sidebar,
       };
@@ -189,6 +212,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: state.filterModal,
         hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: "isOpen",
       };
@@ -198,6 +222,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: state.filterModal,
         hotelViewer: state.hotelViewer,
         profile: state.profile,
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: "isClosed",
       };
@@ -207,6 +232,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: "isClosed",
         hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
+        search: state.search,
         selectDate: state.selectDate,
         sidebar: "isClosed",
       };
@@ -238,6 +264,7 @@ const AuthorizedLayout = ({ children, title }: any) => {
         data: { coordinates: [[0, 0]], name: null, price: "-1" },
       },
       profile: { status: "isClosed", mode: "inactive" },
+      search: { status: "isClosed", mode: "inactive" },
       selectDate: "isClosed",
       sidebar: "isClosed",
     },
