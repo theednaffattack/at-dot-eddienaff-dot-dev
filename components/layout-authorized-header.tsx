@@ -15,6 +15,9 @@ import {
   AuthorizedLayoutModalOverlayState,
 } from "./layout-authorized";
 import { NavIcons } from "./layout-authorized-header-nav-icons";
+import { Input } from "./form-fields/rebass-forms";
+import { Form, Formik, Field } from "formik";
+import styled from "styled-components";
 
 interface LayoutAuthorizedHeaderProps extends ClonedChildrenFromAuthLayout {
   title?: string;
@@ -39,6 +42,7 @@ export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
     <Flex
       mt={[3, 3, 3, 3, 3, 3, 4]}
       // mb={[2, 2, 2, 2, 2, 2, 4]}
+      flexDirection="column"
       justifyContent="center"
       width={1}
       px={[2, 2, 2, 2, 4, 4, 0]}
@@ -73,6 +77,57 @@ export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
           modalState={modalOverlayState.activity}
         />
       </Flex>
+
+      <Formik
+        initialValues={{ search: "" }}
+        onSubmit={() => console.log("SEARCH FORM SUBMITTED")}
+      >
+        {() => {
+          return (
+            <Flex>
+              <Form>
+                <Flex
+                  alignItems="center"
+                  justifyContent="center"
+                  sx={{
+                    position: "relative",
+                  }}
+                >
+                  <Field
+                    id="search"
+                    name="search"
+                    type="input"
+                    shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
+                    component={Input}
+                  />
+
+                  <Button
+                    type="button"
+                    p={0}
+                    bg="#aaa"
+                    height="15px"
+                    width="15px"
+                    borderRadius="50%"
+                    sx={{
+                      position: "absolute",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      // top: 0,
+                      right: "5px",
+                      // width: "16px",
+                      // height: "16px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Icon active={false} name="close" fill="#fff" size="7px" />
+                  </Button>
+                </Flex>
+              </Form>
+            </Flex>
+          );
+        }}
+      </Formik>
     </Flex>
   );
 };
