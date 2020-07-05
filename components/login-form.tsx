@@ -90,7 +90,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({}) => {
           response.data.login &&
           response.data.login.name
         ) {
-          Router.push("/user/profile", "/user/profile");
+          Router.push("/traveling", "/traveling");
           return;
         }
       }}
