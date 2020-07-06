@@ -14,10 +14,9 @@ import {
   AuthorizedLayoutModalOverlayActions,
   AuthorizedLayoutModalOverlayState,
 } from "./layout-authorized";
-import { NavIcons } from "./layout-authorized-header-nav-icons";
+import { NavIcons, navBarWidths } from "./layout-authorized-header-nav-icons";
 import { Input } from "./form-fields/rebass-forms";
 import { Form, Formik, Field } from "formik";
-import styled from "styled-components";
 
 interface LayoutAuthorizedHeaderProps extends ClonedChildrenFromAuthLayout {
   title?: string;
@@ -74,56 +73,104 @@ export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
         )}
         <ActivityAndSearchIcons
           modalDispatch={modalOverlayDispatch}
-          modalState={modalOverlayState.activity}
+          modalState={modalOverlayState}
         />
       </Flex>
 
       <Formik
         initialValues={{ search: "" }}
-        onSubmit={() => console.log("SEARCH FORM SUBMITTED")}
+        onSubmit={(data) => console.log("SEARCH FORM SUBMITTED", data)}
       >
-        {() => {
+        {({ handleSubmit, resetForm }) => {
           return (
-            <Flex>
-              <Form>
-                <Flex
-                  alignItems="center"
-                  justifyContent="center"
-                  sx={{
-                    position: "relative",
-                  }}
+            <Flex justifyContent="center">
+              <Flex
+                width={navBarWidths}
+                style={{
+                  height:
+                    modalOverlayState.search.mode !== "closed" ? "auto" : 0,
+                  display:
+                    modalOverlayState.search.mode === "closed"
+                      ? "none"
+                      : undefined,
+                }}
+              >
+                <Form
+                  onSubmit={handleSubmit}
+                  style={{ display: "flex", width: "100%" }}
                 >
-                  <Field
-                    id="search"
-                    name="search"
-                    type="input"
-                    shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
-                    component={Input}
-                  />
-
-                  <Button
-                    type="button"
-                    p={0}
-                    bg="#aaa"
-                    height="15px"
-                    width="15px"
-                    borderRadius="50%"
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
                     sx={{
-                      position: "absolute",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      // top: 0,
-                      right: "5px",
-                      // width: "16px",
-                      // height: "16px",
-                      cursor: "pointer",
+                      position: "relative",
                     }}
                   >
-                    <Icon active={false} name="close" fill="#fff" size="7px" />
-                  </Button>
-                </Flex>
-              </Form>
+                    <Field
+                      id="search"
+                      name="search"
+                      type="text"
+                      placeholder="search"
+                      shadow="0px 10px 27px 0px rgba(0, 0, 0, 0.1)"
+                      component={Input}
+                    />
+
+                    <Button
+                      type="button"
+                      p={0}
+                      bg="#aaa"
+                      height="15px"
+                      width="15px"
+                      borderRadius="50%"
+                      sx={{
+                        position: "absolute",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        // top: 0,
+                        right: "5px",
+                        // width: "16px",
+                        // height: "16px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        resetForm({ values: { search: "" }, errors: {} });
+                      }}
+                    >
+                      <Icon
+                        active={false}
+                        name="close"
+                        fill="#fff"
+                        size="7px"
+                      />
+                    </Button>
+                  </Flex>
+                  <Flex ml="auto">
+                    <Button
+                      type="submit"
+                      onClick={() =>
+                        modalOverlayDispatch({
+                          type: "isSearching",
+                          action: { setMode: "searching", setStatus: "isOpen" },
+                        })
+                      }
+                    >
+                      search
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        modalOverlayDispatch({
+                          type: "searchClosed",
+                          action: { setMode: "closed", setStatus: "isClosed" },
+                        })
+                      }
+                    >
+                      close
+                    </Button>
+                  </Flex>
+                </Form>
+              </Flex>
             </Flex>
           );
         }}
@@ -134,11 +181,12 @@ export const LayoutAuthorizedHeader: React.FC<LayoutAuthorizedHeaderProps> = ({
 
 interface ActivityAndSearchIconsProps {
   modalDispatch: React.Dispatch<AuthorizedLayoutModalOverlayActions>;
-  modalState: AuthorizedLayoutModalOverlayState["activity"];
+  modalState: AuthorizedLayoutModalOverlayState;
 }
 
 const ActivityAndSearchIcons: React.FC<ActivityAndSearchIconsProps> = ({
   modalDispatch,
+  modalState,
 }) => {
   return (
     <Flex>
@@ -173,7 +221,16 @@ const ActivityAndSearchIcons: React.FC<ActivityAndSearchIconsProps> = ({
           bg="transparent"
           p={0}
           onClick={() =>
-            modalDispatch({ type: "activityOpen", action: "setOpen" })
+            modalDispatch({
+              type:
+                modalState.search.mode === "open"
+                  ? "searchClosed"
+                  : "searchOpen",
+              action:
+                modalState.search.mode === "open"
+                  ? { setMode: "closed", setStatus: "isClosed" }
+                  : { setMode: "open", setStatus: "isOpen" },
+            })
           }
           height="30px"
           width="30px"
