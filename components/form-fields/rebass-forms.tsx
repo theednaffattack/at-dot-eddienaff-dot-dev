@@ -58,14 +58,14 @@ export const Label = forwardRef<LabelRefType, {}>((props, ref) => (
 
 export const Input = forwardRef<
   InputRefType,
-  BoxProps & BordersProps & FieldProps & InputProps
+  BoxProps & BordersProps & Partial<FieldProps> & InputProps
 >(({ field, form, ...props }, ref) => {
   return (
     <Box
       ref={ref}
       as="input"
       type="text"
-      id={field && props.id ? props.id : field.name}
+      id={props.id ? props.id : undefined}
       tx="forms"
       variant="input"
       {...field}
