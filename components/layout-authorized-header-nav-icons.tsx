@@ -17,7 +17,7 @@ interface NavIconsProps {
 
 const standardNavIconSize = "30px";
 
-const navBarWidths = [
+export const navBarWidths = [
   "200px",
   "200px",
   "300px",
