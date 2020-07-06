@@ -263,7 +263,7 @@ function authorizedLayoutModalOverlayReducer(
         filterModal: "isClosed",
         hotelViewer: state.hotelViewer,
         profile: { status: "isClosed", mode: "inactive" },
-        search: state.search,
+        search: { mode: "closed", status: "isClosed" },
         selectDate: state.selectDate,
         sidebar: "isClosed",
       };
