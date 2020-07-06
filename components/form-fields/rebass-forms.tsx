@@ -5,6 +5,7 @@ import { BordersProps } from "styled-system";
 import { FieldProps } from "formik";
 
 import { Box, Flex } from "../primitives/styled-rebass";
+import { InputProps } from "./types";
 
 type RebassFormProps = {
   className: string;
@@ -55,30 +56,33 @@ export const Label = forwardRef<LabelRefType, {}>((props, ref) => (
   <Flex ref={ref} as="label" variant="label" {...props} />
 ));
 
-export const Input = forwardRef<InputRefType, BoxProps & BordersProps>(
-  (props, ref) => {
-    return (
-      <Box
-        ref={ref}
-        as="input"
-        type="text"
-        tx="forms"
-        variant="input"
-        {...props}
-        sx={{
-          display: "block",
-          width: "100%",
-          p: 2,
-          pl: 3,
-          appearance: "none",
-          fontSize: "inherit",
-          lineHeight: "inherit",
-          color: "inherit",
-        }}
-      />
-    );
-  }
-);
+export const Input = forwardRef<
+  InputRefType,
+  BoxProps & BordersProps & FieldProps & InputProps
+>(({ field, form, ...props }, ref) => {
+  return (
+    <Box
+      ref={ref}
+      as="input"
+      type="text"
+      id={field && props.id ? props.id : field.name}
+      tx="forms"
+      variant="input"
+      {...field}
+      {...props}
+      sx={{
+        display: "block",
+        width: "100%",
+        p: 2,
+        pl: 3,
+        appearance: "none",
+        fontSize: "inherit",
+        lineHeight: "inherit",
+        color: "inherit",
+      }}
+    />
+  );
+});
 
 const DownArrow: React.FC<SxProps> = (props) => (
   <SVG {...props}>
