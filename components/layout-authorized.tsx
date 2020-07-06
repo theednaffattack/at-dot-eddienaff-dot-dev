@@ -67,7 +67,8 @@ export type AuthorizedLayoutModalOverlayActions =
   | { type: "profileOpen"; action: ProfileModalActions }
   | { type: "profileClosed"; action: ProfileModalActions }
   | { type: "searchOpen"; action: SearchActions }
-  | { type: "searchCloseed"; action: SearchActions }
+  | { type: "searchClosed"; action: SearchActions }
+  | { type: "isSearching"; action: SearchActions }
   | { type: "selectDateOpen"; action: "overlayModalOpen" }
   | { type: "selectDateClosed"; action: "overlayModalClosed" }
   | { type: "sidebarOpen"; action: "overlayModalOpen" }
@@ -183,6 +184,36 @@ function authorizedLayoutModalOverlayReducer(
           mode: action.action.setMode,
         },
         search: state.search,
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
+      };
+    case "searchClosed":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: state.profile,
+        search: { mode: "closed", status: "isClosed" },
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
+      };
+    case "searchOpen":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: state.profile,
+        search: { mode: "open", status: "isOpen" },
+        selectDate: state.selectDate,
+        sidebar: state.sidebar,
+      };
+    case "isSearching":
+      return {
+        activity: state.activity,
+        filterModal: state.filterModal,
+        hotelViewer: state.hotelViewer,
+        profile: state.profile,
+        search: { mode: "searching", status: "isOpen" },
         selectDate: state.selectDate,
         sidebar: state.sidebar,
       };
