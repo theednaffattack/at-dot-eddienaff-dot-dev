@@ -50,7 +50,7 @@
     "rebass": "^4.0.7",
     "styled-components": "^5.0.1",
     "subscriptions-transport-ws": "^0.9.16",
-    "ws": "^7.2.3"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@babel/core": "7.0.0",
